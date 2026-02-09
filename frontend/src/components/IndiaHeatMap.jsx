@@ -207,6 +207,100 @@ const IndiaHeatMap = () => {
     return value >= 1000000 ? `${(value / 1000000).toFixed(1)}M` : value >= 1000 ? `${(value / 1000).toFixed(1)}K` : value.toLocaleString();
   };
 
+  // Find the mapped state name from selectedState (GeoJSON name)
+  const mappedSelectedState = useMemo(() => {
+    if (!selectedState) return null;
+    // Try to find the mapped state name
+    const mapped = stateNameMapping[selectedState] || selectedState;
+    // Find the state in heatmapData
+    return heatmapData.find(item => 
+      item.state === mapped || 
+      item.state === selectedState ||
+      item.state?.toLowerCase() === mapped?.toLowerCase() ||
+      item.state?.toLowerCase() === selectedState?.toLowerCase()
+    )?.state || mapped;
+  }, [selectedState, heatmapData]);
+
+  // Calculate statistics based on selected metric and selected state
+  const statistics = useMemo(() => {
+    if (!heatmapData.length) {
+      return {
+        total: 0,
+        average: 0,
+        max: 0,
+        min: 0,
+        topState: null,
+        topStateValue: 0,
+        statesCount: 0,
+        isStateSpecific: false,
+        selectedStateName: null
+      };
+    }
+
+    // If a state is selected, show only that state's data
+    if (mappedSelectedState) {
+      const stateData = heatmapData.find(item => 
+        item.state === mappedSelectedState ||
+        item.state?.toLowerCase() === mappedSelectedState?.toLowerCase()
+      );
+
+      if (stateData) {
+        const value = stateData[selectedMetric] || 0;
+        return {
+          total: value,
+          average: value,
+          max: value,
+          min: value,
+          topState: stateData.state,
+          topStateValue: value,
+          statesCount: 1,
+          isStateSpecific: true,
+          selectedStateName: stateData.state
+        };
+      }
+    }
+
+    // Otherwise, show aggregate data for all states
+    const values = heatmapData.map(item => item[selectedMetric] || 0).filter(v => v > 0);
+    if (values.length === 0) {
+      return {
+        total: 0,
+        average: 0,
+        max: 0,
+        min: 0,
+        topState: null,
+        topStateValue: 0,
+        statesCount: 0,
+        isStateSpecific: false,
+        selectedStateName: null
+      };
+    }
+
+    const total = values.reduce((sum, val) => sum + val, 0);
+    const average = total / values.length;
+    const max = Math.max(...values);
+    const min = Math.min(...values);
+    
+    // Find top state
+    const topStateData = heatmapData.reduce((maxItem, item) => {
+      const itemValue = item[selectedMetric] || 0;
+      const maxValue = maxItem[selectedMetric] || 0;
+      return itemValue > maxValue ? item : maxItem;
+    }, heatmapData[0]);
+
+    return {
+      total,
+      average,
+      max,
+      min,
+      topState: topStateData?.state || null,
+      topStateValue: topStateData?.[selectedMetric] || 0,
+      statesCount: values.length,
+      isStateSpecific: false,
+      selectedStateName: null
+    };
+  }, [heatmapData, selectedMetric, mappedSelectedState]);
+
   if (loading || geoLoading) {
     return (
       <Card className="bg-white/10 backdrop-blur-xl border-white/20">
@@ -269,6 +363,209 @@ const IndiaHeatMap = () => {
           })}
         </div>
       </CardHeader>
+      
+      {/* Statistics Section */}
+      <CardContent className="pb-4">
+        {statistics.isStateSpecific && statistics.selectedStateName && (
+          <div className="mb-4 flex items-center justify-between flex-wrap gap-2">
+            <div className="flex items-center gap-2">
+              <div className="w-2 h-2 rounded-full bg-orange-400 animate-pulse"></div>
+              <span className="text-white font-semibold">
+                Showing data for: <span className="text-orange-400">{statistics.selectedStateName}</span>
+              </span>
+            </div>
+            <Button
+              onClick={() => setSelectedState(null)}
+              variant="outline"
+              size="sm"
+              className="bg-white/10 text-white border-white/20 hover:bg-white/20"
+            >
+              Clear Selection
+            </Button>
+          </div>
+        )}
+        <div className={`grid gap-4 mb-6 ${
+          statistics.isStateSpecific 
+            ? "grid-cols-2 md:grid-cols-3 lg:grid-cols-4" 
+            : "grid-cols-2 md:grid-cols-4 lg:grid-cols-5"
+        }`}>
+          {/* Total / Current Value */}
+          <div className="bg-white/10 backdrop-blur-md rounded-lg p-4 border border-white/20">
+            <div className="text-white/60 text-xs mb-1">
+              {statistics.isStateSpecific ? "Current Value" : "Total"}
+            </div>
+            <div className="text-white text-xl font-bold">
+              {formatValue(statistics.total)}
+            </div>
+          </div>
+          
+          {/* Average - Only show if not state-specific */}
+          {!statistics.isStateSpecific && (
+            <div className="bg-white/10 backdrop-blur-md rounded-lg p-4 border border-white/20">
+              <div className="text-white/60 text-xs mb-1">Average</div>
+              <div className="text-white text-xl font-bold">
+                {formatValue(statistics.average)}
+              </div>
+            </div>
+          )}
+          
+          {/* Maximum - Only show if not state-specific */}
+          {!statistics.isStateSpecific && (
+            <div className="bg-white/10 backdrop-blur-md rounded-lg p-4 border border-white/20">
+              <div className="text-white/60 text-xs mb-1">Maximum</div>
+              <div className="text-white text-xl font-bold">
+                {formatValue(statistics.max)}
+              </div>
+            </div>
+          )}
+          
+          {/* Minimum - Only show if not state-specific */}
+          {!statistics.isStateSpecific && (
+            <div className="bg-white/10 backdrop-blur-md rounded-lg p-4 border border-white/20">
+              <div className="text-white/60 text-xs mb-1">Minimum</div>
+              <div className="text-white text-xl font-bold">
+                {formatValue(statistics.min)}
+              </div>
+            </div>
+          )}
+          
+          {/* Top State / Selected State */}
+          <div className="bg-white/10 backdrop-blur-md rounded-lg p-4 border border-white/20">
+            <div className="text-white/60 text-xs mb-1">
+              {statistics.isStateSpecific ? "Selected State" : "Top State"}
+            </div>
+            <div className="text-white text-sm font-semibold truncate" title={statistics.topState || "N/A"}>
+              {statistics.topState || "N/A"}
+            </div>
+            {statistics.topStateValue > 0 && (
+              <div className="text-white/80 text-xs mt-1">
+                {formatValue(statistics.topStateValue)}
+              </div>
+            )}
+          </div>
+          
+          {/* Additional metrics for state-specific view */}
+          {statistics.isStateSpecific && (() => {
+            const stateData = heatmapData.find(s => s.state === statistics.selectedStateName);
+            return (
+              <>
+                <div className="bg-white/10 backdrop-blur-md rounded-lg p-4 border border-white/20">
+                  <div className="text-white/60 text-xs mb-2">All Metrics</div>
+                  <div className="text-white text-xs space-y-1">
+                    <div className="flex justify-between">
+                      <span className="text-white/70">Vehicle Reg:</span>
+                      <span className="font-semibold">{formatValue(stateData?.["vehicle_registration"] || 0)}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-white/70">Accidents:</span>
+                      <span className="font-semibold">{formatValue(stateData?.["accidents"] || 0)}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-white/70">Revenue:</span>
+                      <span className="font-semibold">{formatValue(stateData?.["revenue"] || 0)}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-white/70">Challans:</span>
+                      <span className="font-semibold">{formatValue(stateData?.["challans"] || 0)}</span>
+                    </div>
+                  </div>
+                </div>
+              </>
+            );
+          })()}
+        </div>
+      </CardContent>
+      
+      {/* Insights Section */}
+      <CardContent className="pt-0 pb-4">
+        {(() => {
+          const generateInsight = () => {
+            if (!heatmapData.length) return null;
+            
+            const stateData = statistics.isStateSpecific 
+              ? heatmapData.find(s => s.state === statistics.selectedStateName)
+              : null;
+            
+            const metricLabel = metrics.find(m => m.key === selectedMetric)?.label || selectedMetric;
+            
+            if (statistics.isStateSpecific && stateData) {
+              // State-specific insights
+              const value = stateData[selectedMetric] || 0;
+              const allStatesAvg = heatmapData.reduce((sum, item) => sum + (item[selectedMetric] || 0), 0) / heatmapData.length;
+              const percentage = allStatesAvg > 0 ? ((value / allStatesAvg - 1) * 100).toFixed(1) : 0;
+              const isAboveAvg = value > allStatesAvg;
+              
+              switch (selectedMetric) {
+                case "vehicle_registration":
+                  return isAboveAvg 
+                    ? `${statistics.selectedStateName} has ${Math.abs(percentage)}% more vehicle registrations than the national average, indicating strong transportation growth.`
+                    : `${statistics.selectedStateName} has ${Math.abs(percentage)}% fewer vehicle registrations than the national average, suggesting potential for growth in the transport sector.`;
+                
+                case "accidents":
+                  return isAboveAvg
+                    ? `${statistics.selectedStateName} reports ${Math.abs(percentage)}% more accidents than the national average, highlighting the need for enhanced road safety measures.`
+                    : `${statistics.selectedStateName} has ${Math.abs(percentage)}% fewer accidents than the national average, demonstrating effective road safety initiatives.`;
+                
+                case "revenue":
+                  return isAboveAvg
+                    ? `${statistics.selectedStateName} generates ${Math.abs(percentage)}% more revenue than the national average, showing strong financial performance in transport services.`
+                    : `${statistics.selectedStateName} generates ${Math.abs(percentage)}% less revenue than the national average, indicating opportunities for revenue optimization.`;
+                
+                case "challans":
+                  return isAboveAvg
+                    ? `${statistics.selectedStateName} issues ${Math.abs(percentage)}% more challans than the national average, reflecting active traffic enforcement.`
+                    : `${statistics.selectedStateName} issues ${Math.abs(percentage)}% fewer challans than the national average, suggesting lower traffic violations or enforcement activity.`;
+                
+                default:
+                  return `${statistics.selectedStateName} shows ${formatValue(value)} in ${metricLabel}, ${isAboveAvg ? 'above' : 'below'} the national average.`;
+              }
+            } else {
+              // Aggregate insights
+              const topState = statistics.topState;
+              const topValue = statistics.topStateValue;
+              const avgValue = statistics.average;
+              
+              switch (selectedMetric) {
+                case "vehicle_registration":
+                  return `${topState} leads with ${formatValue(topValue)} vehicle registrations, ${((topValue / avgValue - 1) * 100).toFixed(0)}% above the national average of ${formatValue(avgValue)}.`;
+                
+                case "accidents":
+                  return `${topState} reports the highest number of accidents at ${formatValue(topValue)}, ${((topValue / avgValue - 1) * 100).toFixed(0)}% above the national average, requiring focused safety interventions.`;
+                
+                case "revenue":
+                  return `${topState} generates the highest revenue at ${formatValue(topValue)}, ${((topValue / avgValue - 1) * 100).toFixed(0)}% above the national average, demonstrating strong transport sector performance.`;
+                
+                case "challans":
+                  return `${topState} issues the most challans at ${formatValue(topValue)}, ${((topValue / avgValue - 1) * 100).toFixed(0)}% above the national average, indicating active traffic enforcement.`;
+                
+                default:
+                  return `${topState} leads in ${metricLabel} with ${formatValue(topValue)}, significantly above the national average.`;
+              }
+            }
+          };
+          
+          const insight = generateInsight();
+          if (!insight) return null;
+          
+          return (
+            <div className="bg-gradient-to-r from-orange-500/20 to-orange-600/20 backdrop-blur-md rounded-lg p-4 border border-orange-400/30">
+              <div className="flex items-start gap-3">
+                <div className="w-6 h-6 rounded-full bg-orange-400/30 flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <svg className="w-4 h-4 text-orange-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                  </svg>
+                </div>
+                <div className="flex-1">
+                  <div className="text-white/90 text-sm leading-relaxed">
+                    {insight}
+                  </div>
+                </div>
+              </div>
+            </div>
+          );
+        })()}
+      </CardContent>
+      
       <CardContent>
         <div className="w-full h-[600px] relative bg-gray-900/50 rounded-lg overflow-hidden border border-white/10">
           {geoData && geoData.features && geoData.features.length > 0 ? (
