@@ -39,11 +39,12 @@ except Exception:  # pragma: no cover
 # and pandas may pull in binary deps that can fail (NumPy ABI mismatches).
 pytesseract = None  # type: ignore
 try:
-    from PIL import Image, ImageOps, ImageFilter  # type: ignore
+    from PIL import Image, ImageOps, ImageFilter, ImageEnhance  # type: ignore
 except Exception:  # pragma: no cover
     Image = None  # type: ignore
     ImageOps = None  # type: ignore
     ImageFilter = None  # type: ignore
+    ImageEnhance = None  # type: ignore
 
 # NOTE:
 # This backend originally used pandas for Excel ingest + stats. In some environments, importing
@@ -512,6 +513,31 @@ class AadhaarRulesVerifyResponse(BaseModel):
     aadhaar_number_masked: Optional[str] = None
     vid_last4: Optional[str] = None
     vid_masked: Optional[str] = None
+
+class AadhaarFormVerifyRequest(BaseModel):
+    """Request model for Aadhaar verification with form inputs"""
+    name: str = Field(..., description="Name as per Aadhaar")
+    dob: str = Field(..., description="Date of Birth (DD/MM/YYYY or YYYY-MM-DD)")
+    aadhaar_number: str = Field(..., description="12-digit Aadhaar number")
+    gender: str = Field(..., description="Gender (Male/Female/Other)")
+
+class FieldComparison(BaseModel):
+    """Comparison result for a single field"""
+    field_name: str
+    entered_value: str
+    extracted_value: Optional[str]
+    matches: bool
+    confidence: Optional[float] = None
+
+class AadhaarFormVerifyResponse(BaseModel):
+    """Response model for Aadhaar form verification"""
+    is_verified: bool
+    message: str
+    field_comparisons: List[FieldComparison]
+    extracted_data: Dict[str, Any]
+    validation_errors: List[str]
+    aadhaar_number_last4: Optional[str] = None
+    aadhaar_number_masked: Optional[str] = None
 
 # Facial Recognition Models
 class FacialVerificationResponse(BaseModel):
@@ -2829,6 +2855,348 @@ async def verify_aadhaar_rules(request: AadhaarRulesVerifyRequest):
         vid_last4=vid_last4,
         vid_masked=vid_masked,
     )
+
+def _normalize_name(name: str) -> str:
+    """Normalize name for comparison (remove extra spaces, convert to uppercase)"""
+    if not name:
+        return ""
+    # Remove extra spaces, convert to uppercase, remove special characters except spaces
+    normalized = re.sub(r'[^\w\s]', '', str(name).upper())
+    normalized = re.sub(r'\s+', ' ', normalized).strip()
+    return normalized
+
+def _normalize_date(date_str: str) -> Optional[str]:
+    """Normalize date string to YYYY-MM-DD format for comparison"""
+    if not date_str:
+        return None
+    try:
+        # Try parsing various date formats
+        date_obj = date_parser.parse(str(date_str), dayfirst=True)
+        return date_obj.date().isoformat()
+    except Exception:
+        # If parsing fails, try to extract date pattern
+        date_match = re.search(r'(\d{1,2})[/-](\d{1,2})[/-](\d{4})', str(date_str))
+        if date_match:
+            day, month, year = date_match.groups()
+            try:
+                return f"{year}-{month.zfill(2)}-{day.zfill(2)}"
+            except Exception:
+                pass
+        return None
+
+def _normalize_gender(gender: str) -> str:
+    """Normalize gender for comparison"""
+    if not gender:
+        return ""
+    gender_lower = str(gender).lower().strip()
+    if gender_lower in ['male', 'm', 'पुरुष', 'पुरूष']:
+        return "Male"
+    elif gender_lower in ['female', 'f', 'महिला', 'स्त्री']:
+        return "Female"
+    elif gender_lower in ['other', 'o', 'transgender', 'trans']:
+        return "Other"
+    return str(gender).strip()
+
+def _normalize_aadhaar_number(aadhaar: str) -> str:
+    """Normalize Aadhaar number (remove spaces)"""
+    if not aadhaar:
+        return ""
+    return re.sub(r'\s+', '', str(aadhaar).strip())
+
+def _compare_fields(entered: str, extracted: Optional[str], field_type: str = "text") -> bool:
+    """Compare entered value with extracted value"""
+    if not entered:
+        return False
+    if not extracted:
+        return False
+    
+    if field_type == "name":
+        return _normalize_name(entered) == _normalize_name(extracted)
+    elif field_type == "dob":
+        entered_norm = _normalize_date(entered)
+        extracted_norm = _normalize_date(extracted)
+        return entered_norm is not None and extracted_norm is not None and entered_norm == extracted_norm
+    elif field_type == "gender":
+        return _normalize_gender(entered) == _normalize_gender(extracted)
+    elif field_type == "aadhaar_number":
+        return _normalize_aadhaar_number(entered) == _normalize_aadhaar_number(extracted)
+    else:
+        # Default text comparison
+        return str(entered).strip().lower() == str(extracted).strip().lower()
+
+@aadhaar_router.post("/verify-with-form", response_model=AadhaarFormVerifyResponse)
+async def verify_aadhaar_with_form(
+    name: str = Form(...),
+    dob: str = Form(...),
+    aadhaar_number: str = Form(...),
+    gender: str = Form(...),
+    image_file: UploadFile = File(...)
+):
+    """
+    Aadhaar verification with form inputs and document upload.
+    - Accepts form inputs: Name, DoB, Aadhaar Number, Gender
+    - Uploads Aadhaar image/PDF
+    - Extracts details from uploaded document using OCR
+    - Compares entered details with extracted details
+    - Returns verification result with field-by-field comparison
+    """
+    try:
+        # Read and process the uploaded file
+        file_content = await image_file.read()
+        file_extension = image_file.filename.split('.')[-1].lower() if image_file.filename else ''
+        
+        # Convert PDF to image if needed (basic support)
+        image_bytes = file_content
+        if file_extension == 'pdf':
+            try:
+                from pdf2image import convert_from_bytes
+                images = convert_from_bytes(file_content)
+                if images:
+                    img_io = io.BytesIO()
+                    images[0].save(img_io, format='PNG')
+                    image_bytes = img_io.getvalue()
+            except Exception as pdf_error:
+                logger.warning(f"PDF conversion failed: {pdf_error}")
+                raise HTTPException(
+                    status_code=400,
+                    detail="PDF processing not available. Please upload an image file (JPG, PNG)."
+                )
+        
+        image_base64 = base64.b64encode(image_bytes).decode("utf-8")
+        
+        # Extract details from image using open-source OCR
+        extracted: Dict[str, Any] = {}
+        confidence = 0.0
+        validation_errors: List[str] = []
+        ocr_text = ""
+        
+        # Preprocess image for faster OCR (do this once, use for both OCR engines)
+        if Image is None:
+            raise HTTPException(
+                status_code=503,
+                detail="OCR processing requires PIL/Pillow. Please install: pip install pillow pytesseract"
+            )
+        
+        img = Image.open(io.BytesIO(image_bytes))
+        
+        # Aggressive image optimization for faster OCR
+        max_size = 1500  # Reduced from 2000 for faster processing
+        width, height = img.size
+        
+        # Resize if image is too large
+        if width > max_size or height > max_size:
+            scale = min(max_size / width, max_size / height)
+            new_width = int(width * scale)
+            new_height = int(height * scale)
+            img = img.resize((new_width, new_height), Image.Resampling.LANCZOS)
+            logger.info(f"Resized image from {width}x{height} to {new_width}x{new_height} for faster OCR")
+        
+        # Convert to grayscale for faster OCR (color not needed for text extraction)
+        if img.mode != 'L':
+            img = img.convert('L')
+        
+        # Enhance contrast for better OCR accuracy
+        try:
+            if ImageEnhance is not None:
+                enhancer = ImageEnhance.Contrast(img)
+                img = enhancer.enhance(1.5)  # Increase contrast by 50%
+        except Exception:
+            pass  # Continue without enhancement if it fails
+        
+        # Use Tesseract directly (much faster than EasyOCR)
+        # Skip EasyOCR entirely for speed - Tesseract is sufficient for Aadhaar cards
+        try:
+            global pytesseract
+            if pytesseract is None:
+                import pytesseract as pt
+                pytesseract = pt
+                # Set Tesseract path for macOS Homebrew installation
+                import os
+                tesseract_paths = [
+                    '/opt/homebrew/bin/tesseract',  # Homebrew on Apple Silicon
+                    '/usr/local/bin/tesseract',     # Homebrew on Intel Mac
+                    '/usr/bin/tesseract',           # System installation
+                ]
+                for path in tesseract_paths:
+                    if os.path.exists(path):
+                        pytesseract.pytesseract.tesseract_cmd = path
+                        logger.info(f"Tesseract found at: {path}")
+                        break
+            
+            # Use optimized Tesseract config for faster processing
+            # PSM 6: Assume uniform block of text (faster)
+            # OEM 3: Default OCR engine mode
+            custom_config = r'--oem 3 --psm 6'
+            
+            # Perform OCR with English (faster than English+Hindi)
+            # Aadhaar cards have English text, so English-only is sufficient
+            try:
+                ocr_text = pytesseract.image_to_string(img, lang='eng', config=custom_config)
+            except Exception as lang_error:
+                logger.warning(f"Tesseract with config failed: {lang_error}, trying default")
+                # Fallback to default config
+                ocr_text = pytesseract.image_to_string(img, lang='eng')
+            
+            extracted = {"raw_text": ocr_text}
+            confidence = 0.70
+            logger.info(f"Tesseract extracted text: {ocr_text[:200]}...")
+        except Exception as tesseract_error:
+            logger.error(f"Tesseract OCR failed: {tesseract_error}")
+            raise HTTPException(
+                status_code=503,
+                detail="OCR processing is not available. Please install: pip install pillow pytesseract. Make sure Tesseract is installed on your system."
+            )
+        
+        # Extract structured data from OCR result
+        # Since we're using open-source OCR, we extract from raw_text using regex patterns
+        raw_text = extracted.get("raw_text", "")
+        extracted_name = _extract_name_from_front_text(raw_text) or ""
+        extracted_dob = _extract_dob_from_text(raw_text) or ""
+        extracted_aadhaar = _extract_aadhaar_number(raw_text) or ""
+        extracted_gender = _extract_gender_from_text(raw_text) or ""
+        
+        # Also try to extract from QR code if present in the image
+        try:
+            if cv2 is not None and np is not None:
+                # Decode QR code from image
+                qr_text = _decode_qr_text_from_image_bytes(image_bytes)
+                if qr_text:
+                    qr_data = _parse_aadhaar_qr_payload(qr_text)
+                    if qr_data:
+                        # QR code data is more reliable, use it if available
+                        extracted_name = extracted_name or qr_data.get("name", "")
+                        extracted_dob = extracted_dob or qr_data.get("dob", "") or qr_data.get("yob", "")
+                        extracted_aadhaar = extracted_aadhaar or qr_data.get("uid", "")
+                        extracted_gender = extracted_gender or qr_data.get("gender", "")
+                        confidence = max(confidence, 0.90)  # QR code is more reliable
+                        logger.info("QR code data extracted successfully")
+        except Exception as qr_error:
+            logger.warning(f"QR code extraction failed: {qr_error}")
+        
+        # Normalize extracted Aadhaar number
+        extracted_aadhaar = _normalize_aadhaar_number(extracted_aadhaar)
+        
+        # Compare fields
+        name_matches = _compare_fields(name, extracted_name, "name")
+        dob_matches = _compare_fields(dob, extracted_dob, "dob")
+        aadhaar_matches = _compare_fields(aadhaar_number, extracted_aadhaar, "aadhaar_number")
+        gender_matches = _compare_fields(gender, extracted_gender, "gender")
+        
+        # Build field comparisons
+        field_comparisons = [
+            FieldComparison(
+                field_name="Name",
+                entered_value=name,
+                extracted_value=extracted_name or "Not found",
+                matches=name_matches,
+                confidence=confidence if name_matches else None
+            ),
+            FieldComparison(
+                field_name="Date of Birth",
+                entered_value=dob,
+                extracted_value=extracted_dob or "Not found",
+                matches=dob_matches,
+                confidence=confidence if dob_matches else None
+            ),
+            FieldComparison(
+                field_name="Aadhaar Number",
+                entered_value=_mask_aadhaar(aadhaar_number),
+                extracted_value=_mask_aadhaar(extracted_aadhaar) if extracted_aadhaar else "Not found",
+                matches=aadhaar_matches,
+                confidence=confidence if aadhaar_matches else None
+            ),
+            FieldComparison(
+                field_name="Gender",
+                entered_value=gender,
+                extracted_value=extracted_gender or "Not found",
+                matches=gender_matches,
+                confidence=confidence if gender_matches else None
+            ),
+        ]
+        
+        # Validate Aadhaar number format
+        normalized_aadhaar = _normalize_aadhaar_number(aadhaar_number)
+        if not normalized_aadhaar.isdigit() or len(normalized_aadhaar) != 12:
+            validation_errors.append("Entered Aadhaar number must be 12 digits.")
+        elif not _verhoeff_check(normalized_aadhaar):
+            validation_errors.append("Entered Aadhaar number failed Verhoeff checksum validation.")
+        
+        if extracted_aadhaar:
+            if not extracted_aadhaar.isdigit() or len(extracted_aadhaar) != 12:
+                validation_errors.append("Extracted Aadhaar number is not 12 digits.")
+            elif not _verhoeff_check(extracted_aadhaar):
+                validation_errors.append("Extracted Aadhaar number failed Verhoeff checksum validation.")
+        
+        # Determine overall verification status
+        all_fields_match = name_matches and dob_matches and aadhaar_matches and gender_matches
+        is_verified = all_fields_match and len(validation_errors) == 0
+        
+        # Build message
+        if is_verified:
+            message = "✅ All details are matching and verified!"
+        else:
+            mismatches = []
+            if not name_matches:
+                mismatches.append("Name")
+            if not dob_matches:
+                mismatches.append("Date of Birth")
+            if not aadhaar_matches:
+                mismatches.append("Aadhaar Number")
+            if not gender_matches:
+                mismatches.append("Gender")
+            
+            if mismatches:
+                message = f"❌ Aadhaar details entered are not matching with the details in Aadhaar. Mismatched fields: {', '.join(mismatches)}. Please enter the details as per uploaded Aadhaar or check the uploaded Aadhaar."
+            else:
+                message = "⚠️ Some validation errors found. Please check the details."
+        
+        # Mask Aadhaar numbers in extracted data
+        extracted_data_safe = dict(extracted)
+        if extracted_aadhaar:
+            extracted_data_safe["aadhaar_number"] = _mask_aadhaar(extracted_aadhaar)
+        if "aadhar_number" in extracted_data_safe:
+            extracted_data_safe["aadhar_number"] = _mask_aadhaar(extracted_aadhaar) if extracted_aadhaar else extracted_data_safe.get("aadhar_number")
+        
+        # Remove raw_text if present (too verbose)
+        extracted_data_safe.pop("raw_text", None)
+        
+        last4 = normalized_aadhaar[-4:] if normalized_aadhaar and len(normalized_aadhaar) >= 4 else None
+        
+        return AadhaarFormVerifyResponse(
+            is_verified=is_verified,
+            message=message,
+            field_comparisons=field_comparisons,
+            extracted_data=extracted_data_safe,
+            validation_errors=validation_errors,
+            aadhaar_number_last4=last4,
+            aadhaar_number_masked=_mask_aadhaar(normalized_aadhaar) if normalized_aadhaar else None,
+        )
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Aadhaar form verification error: {e}", exc_info=True)
+        raise HTTPException(status_code=500, detail=f"Verification failed: {str(e)}")
+
+# ===================== OCR READER CACHE =====================
+_easyocr_reader = None
+
+def _get_easyocr_reader():
+    """Get or initialize EasyOCR reader (cached for performance)"""
+    global _easyocr_reader
+    if _easyocr_reader is None:
+        try:
+            import easyocr
+            # Initialize reader with English and Hindi support
+            # This may take a few seconds on first run (downloads models)
+            _easyocr_reader = easyocr.Reader(['en', 'hi'], gpu=False)
+            logger.info("EasyOCR reader initialized successfully")
+        except ImportError:
+            logger.warning("EasyOCR not available")
+            _easyocr_reader = False  # Mark as unavailable
+        except Exception as e:
+            logger.error(f"Failed to initialize EasyOCR: {e}")
+            _easyocr_reader = False
+    return _easyocr_reader if _easyocr_reader is not False else None
 
 # ===================== FACIAL RECOGNITION ENDPOINTS =====================
 _face_detector = None

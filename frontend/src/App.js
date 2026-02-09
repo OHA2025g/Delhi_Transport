@@ -14,6 +14,7 @@ import TicketManagement from "@/pages/TicketManagement";
 import SentimentAnalysis from "@/pages/SentimentAnalysis";
 import ChatbotPage from "@/pages/ChatbotPage";
 import DocumentVerification from "@/pages/DocumentVerification";
+import AadhaarVerification from "@/pages/AadhaarVerification";
 import FacialRecognition from "@/pages/FacialRecognition";
 import VehicleDetection from "@/pages/VehicleDetection";
 import ManufacturerMarket from "@/pages/ManufacturerMarket";
@@ -99,6 +100,11 @@ function App() {
           <Route path="/document-verification" element={
             <DashboardLayout>
               <DocumentVerification />
+            </DashboardLayout>
+          } />
+          <Route path="/aadhaar-verification" element={
+            <DashboardLayout>
+              <AadhaarVerification />
             </DashboardLayout>
           } />
           <Route path="/facial-recognition" element={
