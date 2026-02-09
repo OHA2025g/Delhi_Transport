@@ -1,0 +1,49 @@
+/* App-specific styles */
+
+.App {
+    min-height: 100vh;
+}
+
+/* Override for recharts responsive container */
+.recharts-responsive-container {
+    width: 100% !important;
+}
+
+/* Custom chart tooltip */
+.custom-tooltip {
+    background: white;
+    padding: 12px;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.15);
+    border: 1px solid #E2E8F0;
+}
+
+.custom-tooltip .label {
+    font-weight: 600;
+    color: #1E293B;
+    margin-bottom: 4px;
+}
+
+.custom-tooltip .value {
+    color: #7C3AED;
+    font-size: 1.1rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .stat-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 480px) {
+    .stat-grid {
+        grid-template-columns: 1fr;
+    }
+}

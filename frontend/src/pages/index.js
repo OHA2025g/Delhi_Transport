@@ -1,0 +1,9 @@
+export { default as LandingPage } from './LandingPage';
+export { default as ExecutiveDashboard } from './ExecutiveDashboard';
+export { default as VehicleAnalytics } from './VehicleAnalytics';
+export { default as TicketManagement } from './TicketManagement';
+export { default as SentimentAnalysis } from './SentimentAnalysis';
+export { default as ChatbotPage } from './ChatbotPage';
+export { default as DocumentVerification } from './DocumentVerification';
+export { default as FacialRecognition } from './FacialRecognition';
+export { default as VehicleDetection } from './VehicleDetection';
