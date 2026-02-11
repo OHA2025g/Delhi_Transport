@@ -84,7 +84,7 @@ COPY backend/core/ ./backend/core/
 COPY backend/utils/ ./backend/utils/
 
 # Models directory
-COPY backend/models/ ./backend/models/
+# COPY backend/models/ ./backend/models/
 
 # API and Services directories
 # These directories are created above as empty directories
