@@ -150,6 +150,19 @@ def _get_field_value(record: Dict[str, Any], *field_names: str) -> Optional[floa
                 return result
     return None
 
+def _safe_aggregate_field(record: Dict[str, Any], *field_names: str) -> float:
+    """Safely extract a numeric field from a record for aggregation, trying multiple field name variations"""
+    result = _get_field_value(record, *field_names)
+    return result if result is not None else 0.0
+
+def _aggregate_kpi_field(records: List[Dict[str, Any]], *field_names: str) -> float:
+    """Aggregate a KPI field across multiple records, handling field name variations"""
+    total = 0.0
+    for record in records:
+        value = _safe_aggregate_field(record, *field_names)
+        total += value
+    return total
+
 def _excel_to_records(excel_path: Path) -> List[Dict[str, Any]]:
     """
     Read first sheet of an .xlsx into list of dicts, using the first row as headers.
@@ -839,16 +852,35 @@ async def get_vahan_kpis(state_cd: Optional[str] = None, c_district: Optional[st
         # Average and median vehicle value
         pipeline_value = [
             *([{"$match": match}] if match else []),
-            {"$match": {"sale_amt": {"$gt": 0}}},
+            {"$match": {"sale_amt": {"$gt": 0, "$exists": True}}},
             {"$group": {"_id": None, "avg": {"$avg": "$sale_amt"}, "values": {"$push": "$sale_amt"}}}
         ]
         value_result = await db.vahan_data.aggregate(pipeline_value).to_list(1)
         avg_value = value_result[0]["avg"] if value_result else 0
         
-        # Calculate median
+        # Calculate median - filter out invalid values and use proper median function
         values = value_result[0]["values"] if value_result else []
-        values.sort()
-        median_value = values[len(values)//2] if values else 0
+        # Filter out None, NaN, Inf, and values <= 0
+        valid_values = []
+        for v in values:
+            if v is None:
+                continue
+            try:
+                fv = float(v)
+                if math.isnan(fv) or math.isinf(fv) or fv <= 0:
+                    continue
+                valid_values.append(fv)
+            except (ValueError, TypeError):
+                continue
+        
+        # Use the proper _median function which handles even/odd length correctly
+        median_value = _median(valid_values) if valid_values else 0.0
+        
+        # Debug logging to help diagnose issues
+        if len(valid_values) > 0:
+            logger.info(f"VAHAN KPIs median calculation: {len(valid_values)} valid values, median={median_value}, min={min(valid_values)}, max={max(valid_values)}")
+        else:
+            logger.warning(f"No valid sale_amt values found for VAHAN KPIs median calculation. Total values in result: {len(values)}")
         
         # Registration by state
         pipeline_state = ([{"$match": match}] if match else []) + [{"$group": {"_id": "$state_cd", "count": {"$sum": 1}}}]
@@ -3599,18 +3631,32 @@ async def get_executive_summary(state_cd: Optional[str] = None, c_district: Opti
         value_result = await db.vahan_data.aggregate(
             [
                 {"$match": match},
-                {"$match": {"sale_amt": {"$gt": 0}}},
+                {"$match": {"sale_amt": {"$gt": 0, "$exists": True}}},
                 {"$group": {"_id": None, "values": {"$push": "$sale_amt"}}},
             ]
         ).to_list(1)
         values = value_result[0]["values"] if value_result else []
-        values = [
-            v
-            for v in values
-            if isinstance(v, (int, float)) and not (isinstance(v, float) and (math.isnan(v) or math.isinf(v)))
-        ]
-        values.sort()
-        median_vehicle_value = float(_median([float(v) for v in values])) if values else 0.0
+        # Filter out invalid values (None, NaN, Inf, <= 0)
+        valid_values = []
+        for v in values:
+            if v is None:
+                continue
+            try:
+                fv = float(v)
+                if math.isnan(fv) or math.isinf(fv) or fv <= 0:
+                    continue
+                valid_values.append(fv)
+            except (ValueError, TypeError):
+                continue
+        
+        # Use the proper _median function
+        median_vehicle_value = _median(valid_values) if valid_values else 0.0
+        
+        # Debug logging to help diagnose issues
+        if len(valid_values) > 0:
+            logger.info(f"Median vehicle value calculation: {len(valid_values)} valid values, median={median_vehicle_value}, min={min(valid_values)}, max={max(valid_values)}, sample_values={valid_values[:10] if len(valid_values) >= 10 else valid_values}")
+        else:
+            logger.warning(f"No valid sale_amt values found for median calculation. Total values in result: {len(values)}")
 
         # Registration delay: avg days between purchase_dt and regn_dt where both parse
         # Limit to 10000 documents for performance
@@ -3891,10 +3937,14 @@ async def get_executive_summary(state_cd: Optional[str] = None, c_district: Opti
         priority = {"warning": 0, "recommendation": 1, "info": 2}
         insights = sorted(insights, key=lambda x: priority.get(x.get("type", "info"), 9))[:3]
         
+        # Ensure median_vehicle_value is properly calculated and not rounded incorrectly
+        # Round to 2 decimal places for precision, not 0
+        final_median_value = round(median_vehicle_value, 2) if median_vehicle_value > 0 else 0.0
+        
         return {
             "total_registrations": vahan_count,
             "monthly_growth_percent": monthly_growth_percent,
-            "median_vehicle_value": round(median_vehicle_value, 0),
+            "median_vehicle_value": final_median_value,
             "avg_registration_delay": avg_registration_delay,
             "active_registrations_percent": active_registrations_percent,
             "compliance_risk_count": compliance_risk_count,
@@ -4322,75 +4372,100 @@ async def get_national_kpis(month: Optional[str] = None):
 
         query = {"Month": month} if month else {}
         
-        # Aggregate all states for national totals
-        pipeline = [
-            {"$match": query},
-            {"$group": {
-                "_id": None,
-                "total_vehicle_registration": {"$sum": "$Vehicle Registration"},
-                "total_ll_issued": {"$sum": "$LL Issued"},
-                "total_dl_issued": {"$sum": "$DL Issued"},
-                "total_e_challan": {"$sum": "$e-Challan Issued"},
-                "total_revenue": {"$sum": "$Revenue - Total"},
-                "total_accidents": {"$sum": "$Road Accidents"},
-                "total_fatalities": {"$sum": "$Road Fatalities"},
-                "total_transactions": {"$sum": "$Total Transactions (All)"},
-                "state_count": {"$sum": 1}
-            }}
-        ]
+        # Fetch all state general records and aggregate in Python to handle field name variations
+        state_gen_records = await db["kpi_state_general"].find(query).to_list(length=1000)
         
-        result = await db["kpi_state_general"].aggregate(pipeline).to_list(1)
-        national_data = result[0] if result else {}
+        # Aggregate using helper functions that handle field name variations
+        total_vehicle_registration = _aggregate_kpi_field(
+            state_gen_records, "Vehicle Registration", "Vehicle Registration ", "VehicleRegistration", "Vehicle_Registration"
+        )
+        total_ll_issued = _aggregate_kpi_field(
+            state_gen_records, "LL Issued", "LL Issued ", "LLIssued", "LL_Issued"
+        )
+        total_dl_issued = _aggregate_kpi_field(
+            state_gen_records, "DL Issued", "DL Issued ", "DLIssued", "DL_Issued"
+        )
+        total_e_challan = _aggregate_kpi_field(
+            state_gen_records, "e-Challan Issued", "e-Challan Issued ", "eChallanIssued", "e_Challan_Issued"
+        )
+        total_revenue = _aggregate_kpi_field(
+            state_gen_records, "Revenue - Total", "Revenue - Total ", "RevenueTotal", "Revenue_Total"
+        )
+        total_accidents = _aggregate_kpi_field(
+            state_gen_records, "Road Accidents", "Road Accidents ", "RoadAccidents", "Road_Accidents"
+        )
+        total_fatalities = _aggregate_kpi_field(
+            state_gen_records, "Road Fatalities", "Road Fatalities ", "RoadFatalities", "Road_Fatalities"
+        )
+        total_transactions = _aggregate_kpi_field(
+            state_gen_records, "Total Transactions (All)", "Total Transactions (All) ", "TotalTransactionsAll", "Total_Transactions_All"
+        )
+        state_count = len(state_gen_records)
         
         # Get service delivery metrics
-        service_pipeline = [
-            {"$match": query},
-            {"$group": {
-                "_id": None,
-                "total_online_services": {"$sum": "$Online Service Count"},
-                "total_faceless_services": {"$sum": "$Faceless Service Count"},
-                "avg_citizen_sla": {"$avg": "$Citizen Service SLA % (within SLA)"},
-                "avg_grievance_sla": {"$avg": "$Grievance SLA % (within SLA)"}
-            }}
-        ]
-        service_result = await db["kpi_state_service"].aggregate(service_pipeline).to_list(1)
-        service_data = service_result[0] if service_result else {}
+        state_svc_records = await db["kpi_state_service"].find(query).to_list(length=1000)
+        
+        total_online_services = _aggregate_kpi_field(
+            state_svc_records, "Online Service Count", "Online Service Count ", "OnlineServiceCount", "Online_Service_Count"
+        )
+        total_faceless_services = _aggregate_kpi_field(
+            state_svc_records, "Faceless Service Count", "Faceless Service Count ", "FacelessServiceCount", "Faceless_Service_Count"
+        )
+        
+        # Calculate averages for SLA metrics
+        citizen_sla_values = []
+        grievance_sla_values = []
+        for record in state_svc_records:
+            citizen_sla = _get_field_value(
+                record, "Citizen Service SLA % (within SLA)", "Citizen Service SLA % (within SLA) ", 
+                "CitizenServiceSLA", "Citizen_Service_SLA"
+            )
+            grievance_sla = _get_field_value(
+                record, "Grievance SLA % (within SLA)", "Grievance SLA % (within SLA) ", 
+                "GrievanceSLA", "Grievance_SLA"
+            )
+            if citizen_sla is not None:
+                citizen_sla_values.append(citizen_sla)
+            if grievance_sla is not None:
+                grievance_sla_values.append(grievance_sla)
+        
+        avg_citizen_sla = sum(citizen_sla_values) / len(citizen_sla_values) if citizen_sla_values else 0.0
+        avg_grievance_sla = sum(grievance_sla_values) / len(grievance_sla_values) if grievance_sla_values else 0.0
         
         # Calculate derived KPIs
-        total_licenses = (national_data.get("total_ll_issued", 0) + 
-                        national_data.get("total_dl_issued", 0))
-        digital_adoption = 0
-        if national_data.get("total_transactions", 0) > 0:
-            online_transactions = service_data.get("total_online_services", 0) * 1000  # Estimate
-            digital_adoption = (online_transactions / national_data.get("total_transactions", 1)) * 100
+        total_licenses = total_ll_issued + total_dl_issued
+        digital_adoption = 0.0
+        if total_transactions > 0:
+            online_transactions = total_online_services * 1000  # Estimate
+            digital_adoption = (online_transactions / total_transactions) * 100
         
         return {
             "month": month,
             "core_metrics": {
-                "vehicle_registration": national_data.get("total_vehicle_registration", 0),
-                "ll_issued": national_data.get("total_ll_issued", 0),
-                "dl_issued": national_data.get("total_dl_issued", 0),
-                "e_challan_issued": national_data.get("total_e_challan", 0),
-                "revenue_collected": national_data.get("total_revenue", 0),
-                "road_accidents": national_data.get("total_accidents", 0),
-                "road_fatalities": national_data.get("total_fatalities", 0),
-                "total_transactions": national_data.get("total_transactions", 0)
+                "vehicle_registration": total_vehicle_registration,
+                "ll_issued": total_ll_issued,
+                "dl_issued": total_dl_issued,
+                "e_challan_issued": total_e_challan,
+                "revenue_collected": total_revenue,
+                "road_accidents": total_accidents,
+                "road_fatalities": total_fatalities,
+                "total_transactions": total_transactions
             },
             "derived_kpis": {
-                "national_vehicle_registration_volume": national_data.get("total_vehicle_registration", 0),
+                "national_vehicle_registration_volume": total_vehicle_registration,
                 "national_license_issuance_index": total_licenses,
-                "national_transport_revenue": national_data.get("total_revenue", 0),
-                "compliance_enforcement_index": national_data.get("total_e_challan", 0),
+                "national_transport_revenue": total_revenue,
+                "compliance_enforcement_index": total_e_challan,
                 "digital_adoption_ratio": round(digital_adoption, 2),
-                "online_service_count": service_data.get("total_online_services", 0),
-                "faceless_service_count": service_data.get("total_faceless_services", 0),
-                "avg_citizen_sla": round(service_data.get("avg_citizen_sla", 0), 2),
-                "avg_grievance_sla": round(service_data.get("avg_grievance_sla", 0), 2)
+                "online_service_count": total_online_services,
+                "faceless_service_count": total_faceless_services,
+                "avg_citizen_sla": round(avg_citizen_sla, 2),
+                "avg_grievance_sla": round(avg_grievance_sla, 2)
             },
-            "state_count": national_data.get("state_count", 0)
+            "state_count": state_count
         }
     except Exception as e:
-        logger.error(f"Error fetching national KPIs: {e}")
+        logger.error(f"Error fetching national KPIs: {e}", exc_info=True)
         raise HTTPException(status_code=500, detail=str(e))
 
 @kpi_router.get("/state/derived")
@@ -4416,48 +4491,77 @@ async def get_state_derived_kpis(state: Optional[str] = None, month: Optional[st
         if not state_gen:
             return {"error": "No data found"}
         
+        # Extract values using helper functions to handle field name variations
+        vehicle_reg = _safe_aggregate_field(
+            state_gen, "Vehicle Registration", "Vehicle Registration ", "VehicleRegistration", "Vehicle_Registration"
+        )
+        ll_issued = _safe_aggregate_field(
+            state_gen, "LL Issued", "LL Issued ", "LLIssued", "LL_Issued"
+        )
+        dl_issued = _safe_aggregate_field(
+            state_gen, "DL Issued", "DL Issued ", "DLIssued", "DL_Issued"
+        )
+        revenue_total = _safe_aggregate_field(
+            state_gen, "Revenue - Total", "Revenue - Total ", "RevenueTotal", "Revenue_Total"
+        )
+        
+        # Service delivery metrics
+        online_service_count = 0
+        faceless_service_count = 0
+        citizen_sla = 0
+        grievance_sla = 0
+        
+        if state_svc:
+            online_service_count = _safe_aggregate_field(
+                state_svc, "Online Service Count", "Online Service Count ", "OnlineServiceCount", "Online_Service_Count"
+            )
+            faceless_service_count = _safe_aggregate_field(
+                state_svc, "Faceless Service Count", "Faceless Service Count ", "FacelessServiceCount", "Faceless_Service_Count"
+            )
+            citizen_sla = _safe_aggregate_field(
+                state_svc, "Citizen Service SLA % (within SLA)", "Citizen Service SLA % (within SLA) ", 
+                "CitizenServiceSLA", "Citizen_Service_SLA"
+            )
+            grievance_sla = _safe_aggregate_field(
+                state_svc, "Grievance SLA % (within SLA)", "Grievance SLA % (within SLA) ", 
+                "GrievanceSLA", "Grievance_SLA"
+            )
+        
         # Calculate derived KPIs
-        total_services = (state_svc.get("Online Service Count", 0) + 
-                         state_svc.get("Faceless Service Count", 0)) if state_svc else 0
-        faceless_adoption = 0
-        if state_svc and total_services > 0:
-            faceless_adoption = (state_svc.get("Faceless Service Count", 0) / total_services) * 100
+        total_services = online_service_count + faceless_service_count
+        faceless_adoption = (faceless_service_count / total_services * 100) if total_services > 0 else 0.0
         
         # Enforcement infrastructure index
-        enforcement_index = 0
+        enforcement_index = 0.0
         if state_pol:
-            ats = state_pol.get("No. of ATS", 0) or 0
-            adtt = state_pol.get("No. of ADTT", 0) or 0
-            rvsf = state_pol.get("No. of RVSF", 0) or 0
+            ats = _safe_aggregate_field(state_pol, "No. of ATS", "No. of ATS ", "NoOfATS", "No_of_ATS")
+            adtt = _safe_aggregate_field(state_pol, "No. of ADTT", "No. of ADTT ", "NoOfADTT", "No_of_ADTT")
+            rvsf = _safe_aggregate_field(state_pol, "No. of RVSF", "No. of RVSF ", "NoOfRVSF", "No_of_RVSF")
             enforcement_index = ats + adtt + rvsf
         
-        # Vehicle growth rate (would need previous month data - simplified)
-        vehicle_reg = state_gen.get("Vehicle Registration", 0) or 0
-        
         # License issuance efficiency (licenses per day - assuming 30 days)
-        ll_issued = state_gen.get("LL Issued", 0) or 0
-        dl_issued = state_gen.get("DL Issued", 0) or 0
-        licenses_per_day = (ll_issued + dl_issued) / 30 if (ll_issued + dl_issued) > 0 else 0
+        total_licenses = ll_issued + dl_issued
+        licenses_per_day = (total_licenses / 30.0) if total_licenses > 0 else 0.0
+        
+        # Service delivery ranking
+        service_delivery_ranking = (citizen_sla * 0.6 + grievance_sla * 0.4) if (citizen_sla > 0 or grievance_sla > 0) else 0.0
         
         return {
             "month": month,
             "state": state_gen.get("State"),
             "derived_kpis": {
-                "state_service_delivery_ranking": round(
-                    (state_svc.get("Citizen Service SLA % (within SLA)", 0) or 0) * 0.6 +
-                    (state_svc.get("Grievance SLA % (within SLA)", 0) or 0) * 0.4, 2
-                ) if state_svc else 0,
+                "state_service_delivery_ranking": round(service_delivery_ranking, 2),
                 "faceless_services_adoption_pct": round(faceless_adoption, 2),
-                "state_revenue_contribution": state_gen.get("Revenue - Total", 0) or 0,
+                "state_revenue_contribution": revenue_total,
                 "enforcement_infrastructure_index": enforcement_index,
                 "vehicle_growth_rate": 0,  # Would need YoY comparison
                 "license_issuance_efficiency": round(licenses_per_day, 2),
-                "online_service_count": state_svc.get("Online Service Count", 0) or 0 if state_svc else 0,
-                "faceless_service_count": state_svc.get("Faceless Service Count", 0) or 0 if state_svc else 0
+                "online_service_count": online_service_count,
+                "faceless_service_count": faceless_service_count
             }
         }
     except Exception as e:
-        logger.error(f"Error fetching state derived KPIs: {e}")
+        logger.error(f"Error fetching state derived KPIs: {e}", exc_info=True)
         raise HTTPException(status_code=500, detail=str(e))
 
 @kpi_router.get("/rto/derived")
@@ -4478,23 +4582,50 @@ async def get_rto_derived_kpis(state: Optional[str] = None, rto: Optional[str] =
         if not rto_gen:
             return {"error": "No data found"}
         
-        # Calculate derived KPIs
-        revenue = rto_gen.get("Revenue - Total", 0) or 0
-        vehicle_reg = rto_gen.get("Vehicle Registration", 0) or 0
-        e_challan = rto_gen.get("e-Challan Issued", 0) or 0
+        # Extract values using helper functions to handle field name variations
+        revenue = _safe_aggregate_field(
+            rto_gen, "Revenue - Total", "Revenue - Total ", "RevenueTotal", "Revenue_Total"
+        )
+        vehicle_reg = _safe_aggregate_field(
+            rto_gen, "Vehicle Registration", "Vehicle Registration ", "VehicleRegistration", "Vehicle_Registration"
+        )
+        e_challan = _safe_aggregate_field(
+            rto_gen, "e-Challan Issued", "e-Challan Issued ", "eChallanIssued", "e_Challan_Issued"
+        )
         
         revenue_per_rto = revenue
-        enforcement_effectiveness = (e_challan / vehicle_reg * 100) if vehicle_reg > 0 else 0
+        enforcement_effectiveness = (e_challan / vehicle_reg * 100) if vehicle_reg > 0 else 0.0
         
         # RTO Performance Index (composite score)
-        performance_index = 0
+        performance_index = 0.0
+        faceless_pct = 0.0
+        citizen_sla = 0.0
+        grievance_sla = 0.0
+        revenue_actual = 0.0
+        revenue_target = 0.0
+        
         if rto_perf:
-            faceless_pct = rto_perf.get("Faceless Application %", 0) or 0
-            citizen_sla = rto_perf.get("Citizen Service SLA % (within SLA)", 0) or 0
-            grievance_sla = rto_perf.get("Grievance SLA % (within SLA)", 0) or 0
-            revenue_target_ratio = 0
-            if rto_perf.get("Revenue - Target", 0) and rto_perf.get("Revenue - Target", 0) > 0:
-                revenue_target_ratio = (rto_perf.get("Revenue - Actual", 0) or 0) / rto_perf.get("Revenue - Target", 0) * 100
+            faceless_pct = _safe_aggregate_field(
+                rto_perf, "Faceless Application %", "Faceless Application % ", "FacelessApplicationPct", "Faceless_Application_Pct"
+            )
+            citizen_sla = _safe_aggregate_field(
+                rto_perf, "Citizen Service SLA % (within SLA)", "Citizen Service SLA % (within SLA) ", 
+                "CitizenServiceSLA", "Citizen_Service_SLA"
+            )
+            grievance_sla = _safe_aggregate_field(
+                rto_perf, "Grievance SLA % (within SLA)", "Grievance SLA % (within SLA) ", 
+                "GrievanceSLA", "Grievance_SLA"
+            )
+            revenue_actual = _safe_aggregate_field(
+                rto_perf, "Revenue - Actual", "Revenue - Actual ", "RevenueActual", "Revenue_Actual"
+            )
+            revenue_target = _safe_aggregate_field(
+                rto_perf, "Revenue - Target", "Revenue - Target ", "RevenueTarget", "Revenue_Target"
+            )
+            
+            revenue_target_ratio = 0.0
+            if revenue_target > 0:
+                revenue_target_ratio = (revenue_actual / revenue_target) * 100
             
             performance_index = (
                 faceless_pct * 0.25 +
@@ -4512,15 +4643,15 @@ async def get_rto_derived_kpis(state: Optional[str] = None, rto: Optional[str] =
                 "revenue_per_rto": revenue_per_rto,
                 "enforcement_effectiveness": round(enforcement_effectiveness, 2),
                 "fitness_compliance_ratio": 0,  # Would need fitness test data
-                "faceless_application_pct": rto_perf.get("Faceless Application %", 0) or 0 if rto_perf else 0,
-                "citizen_service_sla": rto_perf.get("Citizen Service SLA % (within SLA)", 0) or 0 if rto_perf else 0,
-                "grievance_sla": rto_perf.get("Grievance SLA % (within SLA)", 0) or 0 if rto_perf else 0,
-                "revenue_actual": rto_perf.get("Revenue - Actual", 0) or 0 if rto_perf else 0,
-                "revenue_target": rto_perf.get("Revenue - Target", 0) or 0 if rto_perf else 0
+                "faceless_application_pct": round(faceless_pct, 2),
+                "citizen_service_sla": round(citizen_sla, 2),
+                "grievance_sla": round(grievance_sla, 2),
+                "revenue_actual": revenue_actual,
+                "revenue_target": revenue_target
             }
         }
     except Exception as e:
-        logger.error(f"Error fetching RTO derived KPIs: {e}")
+        logger.error(f"Error fetching RTO derived KPIs: {e}", exc_info=True)
         raise HTTPException(status_code=500, detail=str(e))
 
 @kpi_router.get("/executive/summary")
@@ -4533,84 +4664,102 @@ async def get_executive_summary_kpis(month: Optional[str] = None):
 
         query = {"Month": month} if month else {}
         
-        # Aggregate national data
-        nat_pipeline = [
-            {"$match": query},
-            {"$group": {
-                "_id": None,
-                "total_vehicles": {"$sum": "$Vehicle Registration"},
-                "total_revenue": {"$sum": "$Revenue - Total"},
-                "total_accidents": {"$sum": "$Road Accidents"},
-                "total_fatalities": {"$sum": "$Road Fatalities"},
-                "total_challans": {"$sum": "$e-Challan Issued"}
-            }}
-        ]
-        nat_result = await db["kpi_state_general"].aggregate(nat_pipeline).to_list(1)
-        nat_data = nat_result[0] if nat_result else {}
+        # Fetch all records and aggregate in Python to handle field name variations
+        state_gen_records = await db["kpi_state_general"].find(query).to_list(length=1000)
+        state_svc_records = await db["kpi_state_service"].find(query).to_list(length=1000)
+        state_pol_records = await db["kpi_state_policy"].find(query).to_list(length=1000)
+        
+        # Aggregate national data using helper functions
+        total_vehicles = _aggregate_kpi_field(
+            state_gen_records, "Vehicle Registration", "Vehicle Registration ", "VehicleRegistration", "Vehicle_Registration"
+        )
+        total_revenue = _aggregate_kpi_field(
+            state_gen_records, "Revenue - Total", "Revenue - Total ", "RevenueTotal", "Revenue_Total"
+        )
+        total_accidents = _aggregate_kpi_field(
+            state_gen_records, "Road Accidents", "Road Accidents ", "RoadAccidents", "Road_Accidents"
+        )
+        total_fatalities = _aggregate_kpi_field(
+            state_gen_records, "Road Fatalities", "Road Fatalities ", "RoadFatalities", "Road_Fatalities"
+        )
+        total_challans = _aggregate_kpi_field(
+            state_gen_records, "e-Challan Issued", "e-Challan Issued ", "eChallanIssued", "e_Challan_Issued"
+        )
         
         # Service delivery metrics
-        svc_pipeline = [
-            {"$match": query},
-            {"$group": {
-                "_id": None,
-                "total_online": {"$sum": "$Online Service Count"},
-                "total_faceless": {"$sum": "$Faceless Service Count"},
-                "avg_citizen_sla": {"$avg": "$Citizen Service SLA % (within SLA)"},
-                "avg_grievance_sla": {"$avg": "$Grievance SLA % (within SLA)"}
-            }}
-        ]
-        svc_result = await db["kpi_state_service"].aggregate(svc_pipeline).to_list(1)
-        svc_data = svc_result[0] if svc_result else {}
+        total_online = _aggregate_kpi_field(
+            state_svc_records, "Online Service Count", "Online Service Count ", "OnlineServiceCount", "Online_Service_Count"
+        )
+        total_faceless = _aggregate_kpi_field(
+            state_svc_records, "Faceless Service Count", "Faceless Service Count ", "FacelessServiceCount", "Faceless_Service_Count"
+        )
         
-        # Policy implementation
-        pol_pipeline = [
-            {"$match": query},
-            {"$group": {
-                "_id": None,
-                "total_ats": {"$sum": "$No. of ATS"},
-                "total_adtt": {"$sum": "$No. of ADTT"},
-                "total_rvsf": {"$sum": "$No. of RVSF"},
-                "total_vltd": {"$sum": "$Count of Vehicles fitted with VLTD"},
-                "total_hsrp": {"$sum": "$Count of Vehicles fitted with HSRP"}
-            }}
-        ]
-        pol_result = await db["kpi_state_policy"].aggregate(pol_pipeline).to_list(1)
-        pol_data = pol_result[0] if pol_result else {}
+        # Calculate averages for SLA metrics
+        citizen_sla_values = []
+        grievance_sla_values = []
+        for record in state_svc_records:
+            citizen_sla = _get_field_value(
+                record, "Citizen Service SLA % (within SLA)", "Citizen Service SLA % (within SLA) ", 
+                "CitizenServiceSLA", "Citizen_Service_SLA"
+            )
+            grievance_sla = _get_field_value(
+                record, "Grievance SLA % (within SLA)", "Grievance SLA % (within SLA) ", 
+                "GrievanceSLA", "Grievance_SLA"
+            )
+            if citizen_sla is not None:
+                citizen_sla_values.append(citizen_sla)
+            if grievance_sla is not None:
+                grievance_sla_values.append(grievance_sla)
+        
+        avg_citizen_sla = sum(citizen_sla_values) / len(citizen_sla_values) if citizen_sla_values else 0.0
+        avg_grievance_sla = sum(grievance_sla_values) / len(grievance_sla_values) if grievance_sla_values else 0.0
+        
+        # Policy implementation metrics
+        total_ats = _aggregate_kpi_field(
+            state_pol_records, "No. of ATS", "No. of ATS ", "NoOfATS", "No_of_ATS"
+        )
+        total_adtt = _aggregate_kpi_field(
+            state_pol_records, "No. of ADTT", "No. of ADTT ", "NoOfADTT", "No_of_ADTT"
+        )
+        total_rvsf = _aggregate_kpi_field(
+            state_pol_records, "No. of RVSF", "No. of RVSF ", "NoOfRVSF", "No_of_RVSF"
+        )
+        total_vltd = _aggregate_kpi_field(
+            state_pol_records, "Count of Vehicles fitted with VLTD", "Count of Vehicles fitted with VLTD ", 
+            "CountOfVehiclesFittedWithVLTD", "Count_of_Vehicles_fitted_with_VLTD"
+        )
+        total_hsrp = _aggregate_kpi_field(
+            state_pol_records, "Count of Vehicles fitted with HSRP", "Count of Vehicles fitted with HSRP ", 
+            "CountOfVehiclesFittedWithHSRP", "Count_of_Vehicles_fitted_with_HSRP"
+        )
         
         # Calculate executive KPIs
-        total_vehicles = nat_data.get("total_vehicles", 0)
-        total_revenue = nat_data.get("total_revenue", 0)
-        total_accidents = nat_data.get("total_accidents", 0)
-        total_challans = nat_data.get("total_challans", 0)
-        
         # National Mobility Growth Index (simplified - would need YoY)
         mobility_growth_index = 100  # Placeholder
         
         # Digital Governance Index
-        total_services = (svc_data.get("total_online", 0) + svc_data.get("total_faceless", 0))
+        total_services = total_online + total_faceless
         digital_governance_index = round(
-            (svc_data.get("avg_citizen_sla", 0) or 0) * 0.5 +
-            (svc_data.get("avg_grievance_sla", 0) or 0) * 0.3 +
+            avg_citizen_sla * 0.5 +
+            avg_grievance_sla * 0.3 +
             min((total_services / 1000) * 10, 20), 2
         )
         
         # Road Safety Risk Index
-        safety_risk_index = 0
+        safety_risk_index = 0.0
         if total_vehicles > 0:
             accident_rate = (total_accidents / total_vehicles) * 1000
             violation_rate = (total_challans / total_vehicles) * 1000
             safety_risk_index = round((accident_rate * 0.6 + violation_rate * 0.4), 2)
         
         # Enforcement ROI (Revenue vs Devices)
-        total_devices = (pol_data.get("total_ats", 0) + 
-                        pol_data.get("total_adtt", 0) + 
-                        pol_data.get("total_rvsf", 0))
-        enforcement_roi = round(total_revenue / total_devices, 2) if total_devices > 0 else 0
+        total_devices = total_ats + total_adtt + total_rvsf
+        enforcement_roi = round(total_revenue / total_devices, 2) if total_devices > 0 else 0.0
         
         # Citizen Service Efficiency Score
         citizen_efficiency = round(
-            (svc_data.get("avg_citizen_sla", 0) or 0) * 0.7 +
-            (svc_data.get("avg_grievance_sla", 0) or 0) * 0.3, 2
+            avg_citizen_sla * 0.7 +
+            avg_grievance_sla * 0.3, 2
         )
         
         return {
@@ -4626,17 +4775,17 @@ async def get_executive_summary_kpis(month: Optional[str] = None):
                 "total_vehicles": total_vehicles,
                 "total_revenue": total_revenue,
                 "total_accidents": total_accidents,
-                "total_fatalities": nat_data.get("total_fatalities", 0),
+                "total_fatalities": total_fatalities,
                 "total_challans": total_challans,
-                "total_online_services": svc_data.get("total_online", 0),
-                "total_faceless_services": svc_data.get("total_faceless", 0),
+                "total_online_services": total_online,
+                "total_faceless_services": total_faceless,
                 "total_enforcement_devices": total_devices,
-                "vehicles_with_vltd": pol_data.get("total_vltd", 0),
-                "vehicles_with_hsrp": pol_data.get("total_hsrp", 0)
+                "vehicles_with_vltd": total_vltd,
+                "vehicles_with_hsrp": total_hsrp
             }
         }
     except Exception as e:
-        logger.error(f"Error fetching executive summary KPIs: {e}")
+        logger.error(f"Error fetching executive summary KPIs: {e}", exc_info=True)
         raise HTTPException(status_code=500, detail=str(e))
 
 # ===================== DRILL-DOWN ENDPOINTS =====================

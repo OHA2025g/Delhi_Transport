@@ -46,6 +46,12 @@ const ExecutiveDashboard = () => {
       // Debug: helps diagnose proxy/env/CORS issues in the browser console.
       console.log("[ExecutiveDashboard] API base:", API, "origin:", window?.location?.origin);
       const response = await axios.get(`${API}/dashboard/executive-summary`, { params: geoParams() });
+      console.log("[ExecutiveDashboard] Raw API response:", response.data);
+      console.log("[ExecutiveDashboard] median_vehicle_value:", response.data?.median_vehicle_value, "type:", typeof response.data?.median_vehicle_value);
+      if (response.data?.median_vehicle_value) {
+        const calculated = response.data.median_vehicle_value / 100000;
+        console.log("[ExecutiveDashboard] Calculated display value:", calculated, "toFixed(1):", calculated.toFixed(1));
+      }
       setSummary(response.data);
       setLastUpdated(new Date());
       toast.success("Dashboard data refreshed");
@@ -94,7 +100,16 @@ const ExecutiveDashboard = () => {
     },
     {
       title: "Median Vehicle Value",
-      value: `₹${(summary.median_vehicle_value / 100000).toFixed(1)}L`,
+      value: (() => {
+        const medianValue = summary.median_vehicle_value;
+        if (!medianValue || medianValue <= 0) return "N/A";
+        // Ensure it's a number
+        const numValue = typeof medianValue === 'string' ? parseFloat(medianValue) : Number(medianValue);
+        if (isNaN(numValue) || numValue <= 0) return "N/A";
+        const displayValue = (numValue / 100000).toFixed(1);
+        console.log("[ExecutiveDashboard] Display calculation - raw:", medianValue, "numValue:", numValue, "displayValue:", displayValue);
+        return `₹${displayValue}L`;
+      })(),
       change: 5.2,
       trend: "up",
       icon: TrendingUp,
@@ -318,9 +333,7 @@ const ExecutiveDashboard = () => {
                 <div>
                   <p className="text-gray-500 text-sm font-medium mb-1">{kpi.title}</p>
                     <p className="text-2xl font-bold text-gray-900">
-                      {typeof kpi.value === 'string' && kpi.value.includes('%') ? (
-                        kpi.value
-                      ) : typeof kpi.value === 'string' && kpi.value.includes('days') ? (
+                      {typeof kpi.value === 'string' && (kpi.value.includes('%') || kpi.value.includes('₹') || kpi.value.includes('L') || kpi.value.includes('days') || kpi.value === 'N/A') ? (
                         kpi.value
                       ) : (
                         <AnimatedCounter 

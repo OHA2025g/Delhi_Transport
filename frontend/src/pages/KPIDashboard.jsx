@@ -1645,47 +1645,6 @@ const KPIDashboard = () => {
               {drillDownData.trend_data && drillDownData.trend_data.length > 0 && (
                 <Card className="bg-gray-800 border-gray-700">
                   <CardHeader>
-                    <CardTitle className="text-white">State-wise Breakdown</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="overflow-x-auto">
-                      <Table>
-                        <TableHeader>
-                          <TableRow className="border-gray-700">
-                            <TableHead className="text-white">State</TableHead>
-                            <TableHead className="text-right text-white">Vehicle Registration</TableHead>
-                            <TableHead className="text-right text-white">LL Issued</TableHead>
-                            <TableHead className="text-right text-white">DL Issued</TableHead>
-                            <TableHead className="text-right text-white">Revenue</TableHead>
-                            <TableHead className="text-right text-white">Accidents</TableHead>
-                          </TableRow>
-                        </TableHeader>
-                        <TableBody>
-                          {drillDownData.state_breakdown && Array.isArray(drillDownData.state_breakdown) && drillDownData.state_breakdown.map((item, idx) => (
-                            <TableRow 
-                              key={idx} 
-                              className="cursor-pointer hover:bg-gray-700 border-gray-700"
-                              onClick={() => handleDrillDown('state_breakdown', { state: item.State })}
-                            >
-                              <TableCell className="font-medium text-white">{item.State}</TableCell>
-                              <TableCell className="text-right text-white">{formatNumber(item["Vehicle Registration"] || 0)}</TableCell>
-                              <TableCell className="text-right text-white">{formatNumber(item["LL Issued"] || 0)}</TableCell>
-                              <TableCell className="text-right text-white">{formatNumber(item["DL Issued"] || 0)}</TableCell>
-                              <TableCell className="text-right text-white">{formatCurrency(item["Revenue - Total"] || 0)}</TableCell>
-                              <TableCell className="text-right text-white">{formatNumber(item["Road Accidents"] || 0)}</TableCell>
-                            </TableRow>
-                          ))}
-                        </TableBody>
-                      </Table>
-                    </div>
-                  </CardContent>
-                </Card>
-              )}
-
-              {/* Trend Chart */}
-              {drillDownData.trend_data && drillDownData.trend_data.length > 0 && (
-                <Card className="bg-gray-800 border-gray-700">
-                  <CardHeader>
                     <CardTitle className="text-white">Trend Analysis</CardTitle>
                   </CardHeader>
                   <CardContent>
@@ -1884,7 +1843,49 @@ const KPIDashboard = () => {
                 </Card>
               )}
 
-              {/* 3. INSIGHTS, RECOMMENDATIONS & ACTION ITEMS SECTION */}
+              {/* 3. TABLES SECTION - State Breakdown */}
+              {/* State Breakdown Table */}
+              {drillDownData.state_breakdown && Array.isArray(drillDownData.state_breakdown) && (
+                <Card className="bg-gray-800 border-gray-700">
+                  <CardHeader>
+                    <CardTitle className="text-white">State-wise Breakdown</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="overflow-x-auto">
+                      <Table>
+                        <TableHeader>
+                          <TableRow className="border-gray-700">
+                            <TableHead className="text-white">State</TableHead>
+                            <TableHead className="text-right text-white">Vehicle Registration</TableHead>
+                            <TableHead className="text-right text-white">LL Issued</TableHead>
+                            <TableHead className="text-right text-white">DL Issued</TableHead>
+                            <TableHead className="text-right text-white">Revenue</TableHead>
+                            <TableHead className="text-right text-white">Accidents</TableHead>
+                          </TableRow>
+                        </TableHeader>
+                        <TableBody>
+                          {drillDownData.state_breakdown && Array.isArray(drillDownData.state_breakdown) && drillDownData.state_breakdown.map((item, idx) => (
+                            <TableRow 
+                              key={idx} 
+                              className="cursor-pointer hover:bg-gray-700 border-gray-700"
+                              onClick={() => handleDrillDown('state_breakdown', { state: item.State })}
+                            >
+                              <TableCell className="font-medium text-white">{item.State}</TableCell>
+                              <TableCell className="text-right text-white">{formatNumber(item["Vehicle Registration"] || 0)}</TableCell>
+                              <TableCell className="text-right text-white">{formatNumber(item["LL Issued"] || 0)}</TableCell>
+                              <TableCell className="text-right text-white">{formatNumber(item["DL Issued"] || 0)}</TableCell>
+                              <TableCell className="text-right text-white">{formatCurrency(item["Revenue - Total"] || 0)}</TableCell>
+                              <TableCell className="text-right text-white">{formatNumber(item["Road Accidents"] || 0)}</TableCell>
+                            </TableRow>
+                          ))}
+                        </TableBody>
+                      </Table>
+                    </div>
+                  </CardContent>
+                </Card>
+              )}
+
+              {/* 4. INSIGHTS, RECOMMENDATIONS & ACTION ITEMS SECTION */}
               {drillDownInsights && (
                 <div className="space-y-6">
                   {/* Insights Section */}
@@ -2058,48 +2059,6 @@ const KPIDashboard = () => {
                 </div>
               )}
 
-              {/* 4. TABLES SECTION */}
-              {/* State Breakdown Table */}
-              {drillDownData.state_breakdown && Array.isArray(drillDownData.state_breakdown) && (
-                <Card className="bg-gray-800 border-gray-700">
-                  <CardHeader>
-                    <CardTitle className="text-white">State-wise Breakdown</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="overflow-x-auto">
-                      <Table>
-                        <TableHeader>
-                          <TableRow className="border-gray-700">
-                            <TableHead className="text-white">State</TableHead>
-                            <TableHead className="text-right text-white">Vehicle Registration</TableHead>
-                            <TableHead className="text-right text-white">LL Issued</TableHead>
-                            <TableHead className="text-right text-white">DL Issued</TableHead>
-                            <TableHead className="text-right text-white">Revenue</TableHead>
-                            <TableHead className="text-right text-white">Accidents</TableHead>
-                          </TableRow>
-                        </TableHeader>
-                        <TableBody>
-                          {drillDownData.state_breakdown && Array.isArray(drillDownData.state_breakdown) && drillDownData.state_breakdown.map((item, idx) => (
-                            <TableRow 
-                              key={idx} 
-                              className="cursor-pointer hover:bg-gray-700 border-gray-700"
-                              onClick={() => handleDrillDown('state_breakdown', { state: item.State })}
-                            >
-                              <TableCell className="font-medium text-white">{item.State}</TableCell>
-                              <TableCell className="text-right text-white">{formatNumber(item["Vehicle Registration"] || 0)}</TableCell>
-                              <TableCell className="text-right text-white">{formatNumber(item["LL Issued"] || 0)}</TableCell>
-                              <TableCell className="text-right text-white">{formatNumber(item["DL Issued"] || 0)}</TableCell>
-                              <TableCell className="text-right text-white">{formatCurrency(item["Revenue - Total"] || 0)}</TableCell>
-                              <TableCell className="text-right text-white">{formatNumber(item["Road Accidents"] || 0)}</TableCell>
-                            </TableRow>
-                          ))}
-                        </TableBody>
-                      </Table>
-                    </div>
-                  </CardContent>
-                </Card>
-              )}
-
               {/* RTO Breakdown */}
               {drillDownData.rto_breakdown && (
                 <Card className="bg-gray-800 border-gray-700">
@@ -2139,22 +2098,6 @@ const KPIDashboard = () => {
                     </div>
                   </CardContent>
                 </Card>
-              )}
-
-              {/* Summary Stats */}
-              {drillDownData.summary && (
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-                  {Object.entries(drillDownData.summary).map(([key, value]) => (
-                    <Card key={key} className="bg-gray-800 border-gray-700">
-                      <CardContent className="p-4">
-                        <p className="text-xs text-gray-300 mb-1">{key.replace(/_/g, ' ').toUpperCase()}</p>
-                        <p className="text-xl font-bold text-white">
-                          {typeof value === 'number' ? (value >= 1000000 ? formatCurrency(value) : formatNumber(value)) : value}
-                        </p>
-                      </CardContent>
-                    </Card>
-                  ))}
-                </div>
               )}
 
               {/* Fleet Vehicles Data */}
