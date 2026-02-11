@@ -92,10 +92,10 @@ COPY backend/utils/ ./backend/utils/
 # No need to copy them as they're currently empty
 
 # Copy data files (Excel files for initial data loading)
-COPY excel/Vahan1.xlsx ./data/excel/Vahan1.xlsx
-COPY excel/Tickets.xlsx ./data/excel/Tickets.xlsx
-COPY excel/transport_extra_kpi_mock_data_FY2025_26.xlsx ./data/excel/transport_extra_kpi_mock_data_FY2025_26.xlsx
-COPY excel/Parivahan_Dashboard_extra_KPI.xlsx ./data/excel/Parivahan_Dashboard_extra_KPI.xlsx
+COPY data/excel/Vahan1.xlsx ./data/excel/Vahan1.xlsx
+COPY data/excel/Tickets.xlsx ./data/excel/Tickets.xlsx
+COPY data/excel/transport_extra_kpi_mock_data_FY2025_26.xlsx ./data/excel/transport_extra_kpi_mock_data_FY2025_26.xlsx
+COPY data/excel/Parivahan_Dashboard_extra_KPI.xlsx ./data/excel/Parivahan_Dashboard_extra_KPI.xlsx
 
 # Set environment variables
 ENV PYTHONUNBUFFERED=1 \
