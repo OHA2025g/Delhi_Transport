@@ -29,8 +29,8 @@ FROM nginx:alpine
 # Copy built files from builder
 COPY --from=builder /app/build /usr/share/nginx/html
 
-# Copy nginx configuration
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+# Copy nginx configuration template
+COPY nginx.conf.template /etc/nginx/templates/default.conf.template
 
 # Copy GeoJSON files to public directory
 COPY public/states.geojson /usr/share/nginx/html/states.geojson
@@ -43,5 +43,7 @@ HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
     CMD wget --quiet --tries=1 --spider http://localhost/ || exit 1
 
 # Start nginx
+# Nginx image automatically runs envsubst on templates in /etc/nginx/templates
+# and outputs to /etc/nginx/conf.d
 CMD ["nginx", "-g", "daemon off;"]
 

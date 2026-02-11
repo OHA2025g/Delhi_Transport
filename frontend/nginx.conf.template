@@ -32,9 +32,9 @@ server {
         expires 1d;
     }
 
-    # API proxy (if needed)
+    # API proxy
     location /api {
-        proxy_pass http://backend:8000;
+        proxy_pass ${BACKEND_URL};
         proxy_http_version 1.1;
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection 'upgrade';
@@ -52,4 +52,3 @@ server {
         add_header Content-Type text/plain;
     }
 }
-
