@@ -59,10 +59,12 @@ htmlcov/
 *.log
 logs/
 
-# Database
+# Database (allow JSON files for data storage)
 *.db
 *.sqlite
 *.sqlite3
+# Allow JSON database files
+!database/*.json
 
 # OS
 Thumbs.db
@@ -74,6 +76,9 @@ Thumbs.db
 .cache/
 
 # Large files (exceed GitHub 100MB limit)
+# Allow Excel files for data
+!*.xlsx
+!*.xls
+# Exclude only very large zip files
 data/geojson/maps-master.zip
-*.zip
 
