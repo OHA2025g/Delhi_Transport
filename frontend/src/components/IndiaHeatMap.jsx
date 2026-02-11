@@ -364,8 +364,8 @@ const IndiaHeatMap = () => {
         </div>
       </CardHeader>
       
-      {/* Statistics Section */}
-      <CardContent className="pb-4">
+      {/* Statistics Section - Prominent Display */}
+      <div className="px-6 pb-6 pt-4 relative z-10 min-h-[200px]">
         {statistics.isStateSpecific && statistics.selectedStateName && (
           <div className="mb-4 flex items-center justify-between flex-wrap gap-2">
             <div className="flex items-center gap-2">
@@ -384,26 +384,32 @@ const IndiaHeatMap = () => {
             </Button>
           </div>
         )}
+        
+        {/* Stats Title */}
+        <div className="mb-4">
+          <h3 className="text-white text-xl font-bold drop-shadow-lg">Key Statistics</h3>
+        </div>
+        
         <div className={`grid gap-4 mb-6 ${
           statistics.isStateSpecific 
             ? "grid-cols-2 md:grid-cols-3 lg:grid-cols-4" 
             : "grid-cols-2 md:grid-cols-4 lg:grid-cols-5"
         }`}>
           {/* Total / Current Value */}
-          <div className="bg-white/10 backdrop-blur-md rounded-lg p-4 border border-white/20">
-            <div className="text-white/60 text-xs mb-1">
+          <div className="bg-gradient-to-br from-blue-500/80 to-blue-600/80 backdrop-blur-lg rounded-xl p-5 border-2 border-blue-300/50 shadow-2xl hover:shadow-blue-500/50 transition-all">
+            <div className="text-white/90 text-sm mb-2 font-semibold uppercase tracking-wide">
               {statistics.isStateSpecific ? "Current Value" : "Total"}
             </div>
-            <div className="text-white text-xl font-bold">
+            <div className="text-white text-3xl font-bold drop-shadow-2xl">
               {formatValue(statistics.total)}
             </div>
           </div>
           
           {/* Average - Only show if not state-specific */}
           {!statistics.isStateSpecific && (
-            <div className="bg-white/10 backdrop-blur-md rounded-lg p-4 border border-white/20">
-              <div className="text-white/60 text-xs mb-1">Average</div>
-              <div className="text-white text-xl font-bold">
+            <div className="bg-gradient-to-br from-green-500/80 to-green-600/80 backdrop-blur-lg rounded-xl p-5 border-2 border-green-300/50 shadow-2xl hover:shadow-green-500/50 transition-all">
+              <div className="text-white/90 text-sm mb-2 font-semibold uppercase tracking-wide">Average</div>
+              <div className="text-white text-3xl font-bold drop-shadow-2xl">
                 {formatValue(statistics.average)}
               </div>
             </div>
@@ -411,9 +417,9 @@ const IndiaHeatMap = () => {
           
           {/* Maximum - Only show if not state-specific */}
           {!statistics.isStateSpecific && (
-            <div className="bg-white/10 backdrop-blur-md rounded-lg p-4 border border-white/20">
-              <div className="text-white/60 text-xs mb-1">Maximum</div>
-              <div className="text-white text-xl font-bold">
+            <div className="bg-gradient-to-br from-purple-500/80 to-purple-600/80 backdrop-blur-lg rounded-xl p-5 border-2 border-purple-300/50 shadow-2xl hover:shadow-purple-500/50 transition-all">
+              <div className="text-white/90 text-sm mb-2 font-semibold uppercase tracking-wide">Maximum</div>
+              <div className="text-white text-3xl font-bold drop-shadow-2xl">
                 {formatValue(statistics.max)}
               </div>
             </div>
@@ -421,24 +427,24 @@ const IndiaHeatMap = () => {
           
           {/* Minimum - Only show if not state-specific */}
           {!statistics.isStateSpecific && (
-            <div className="bg-white/10 backdrop-blur-md rounded-lg p-4 border border-white/20">
-              <div className="text-white/60 text-xs mb-1">Minimum</div>
-              <div className="text-white text-xl font-bold">
+            <div className="bg-gradient-to-br from-orange-500/80 to-orange-600/80 backdrop-blur-lg rounded-xl p-5 border-2 border-orange-300/50 shadow-2xl hover:shadow-orange-500/50 transition-all">
+              <div className="text-white/90 text-sm mb-2 font-semibold uppercase tracking-wide">Minimum</div>
+              <div className="text-white text-3xl font-bold drop-shadow-2xl">
                 {formatValue(statistics.min)}
               </div>
             </div>
           )}
           
           {/* Top State / Selected State */}
-          <div className="bg-white/10 backdrop-blur-md rounded-lg p-4 border border-white/20">
-            <div className="text-white/60 text-xs mb-1">
+          <div className="bg-gradient-to-br from-indigo-500/80 to-indigo-600/80 backdrop-blur-lg rounded-xl p-5 border-2 border-indigo-300/50 shadow-2xl hover:shadow-indigo-500/50 transition-all">
+            <div className="text-white/90 text-sm mb-2 font-semibold uppercase tracking-wide">
               {statistics.isStateSpecific ? "Selected State" : "Top State"}
             </div>
-            <div className="text-white text-sm font-semibold truncate" title={statistics.topState || "N/A"}>
+            <div className="text-white text-base font-bold truncate drop-shadow-lg" title={statistics.topState || "N/A"}>
               {statistics.topState || "N/A"}
             </div>
             {statistics.topStateValue > 0 && (
-              <div className="text-white/80 text-xs mt-1">
+              <div className="text-white/90 text-sm mt-2 font-semibold drop-shadow-md">
                 {formatValue(statistics.topStateValue)}
               </div>
             )}
@@ -449,24 +455,24 @@ const IndiaHeatMap = () => {
             const stateData = heatmapData.find(s => s.state === statistics.selectedStateName);
             return (
               <>
-                <div className="bg-white/10 backdrop-blur-md rounded-lg p-4 border border-white/20">
-                  <div className="text-white/60 text-xs mb-2">All Metrics</div>
-                  <div className="text-white text-xs space-y-1">
-                    <div className="flex justify-between">
-                      <span className="text-white/70">Vehicle Reg:</span>
-                      <span className="font-semibold">{formatValue(stateData?.["vehicle_registration"] || 0)}</span>
+                <div className="bg-gradient-to-br from-teal-500/80 to-teal-600/80 backdrop-blur-lg rounded-xl p-5 border-2 border-teal-300/50 shadow-2xl hover:shadow-teal-500/50 transition-all">
+                  <div className="text-white/90 text-sm mb-3 font-semibold uppercase tracking-wide">All Metrics</div>
+                  <div className="text-white text-sm space-y-2">
+                    <div className="flex justify-between items-center">
+                      <span className="text-white/90 font-medium">Vehicle Reg:</span>
+                      <span className="font-bold text-white">{formatValue(stateData?.["vehicle_registration"] || 0)}</span>
                     </div>
-                    <div className="flex justify-between">
-                      <span className="text-white/70">Accidents:</span>
-                      <span className="font-semibold">{formatValue(stateData?.["accidents"] || 0)}</span>
+                    <div className="flex justify-between items-center">
+                      <span className="text-white/90 font-medium">Accidents:</span>
+                      <span className="font-bold text-white">{formatValue(stateData?.["accidents"] || 0)}</span>
                     </div>
-                    <div className="flex justify-between">
-                      <span className="text-white/70">Revenue:</span>
-                      <span className="font-semibold">{formatValue(stateData?.["revenue"] || 0)}</span>
+                    <div className="flex justify-between items-center">
+                      <span className="text-white/90 font-medium">Revenue:</span>
+                      <span className="font-bold text-white">{formatValue(stateData?.["revenue"] || 0)}</span>
                     </div>
-                    <div className="flex justify-between">
-                      <span className="text-white/70">Challans:</span>
-                      <span className="font-semibold">{formatValue(stateData?.["challans"] || 0)}</span>
+                    <div className="flex justify-between items-center">
+                      <span className="text-white/90 font-medium">Challans:</span>
+                      <span className="font-bold text-white">{formatValue(stateData?.["challans"] || 0)}</span>
                     </div>
                   </div>
                 </div>
@@ -474,7 +480,7 @@ const IndiaHeatMap = () => {
             );
           })()}
         </div>
-      </CardContent>
+      </div>
       
       {/* Insights Section */}
       <CardContent className="pt-0 pb-4">
