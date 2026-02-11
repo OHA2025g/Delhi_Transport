@@ -36,11 +36,11 @@ COPY nginx.conf.template /etc/nginx/templates/default.conf.template
 COPY public/states.geojson /usr/share/nginx/html/states.geojson
 
 # Expose port
-EXPOSE 80
+EXPOSE 3000
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
-    CMD wget --quiet --tries=1 --spider http://localhost/ || exit 1
+    CMD wget --quiet --tries=1 --spider http://localhost:3000/ || exit 1
 
 # Start nginx
 # Nginx image automatically runs envsubst on templates in /etc/nginx/templates
