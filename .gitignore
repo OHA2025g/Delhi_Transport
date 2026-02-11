@@ -64,13 +64,6 @@ logs/
 *.sqlite
 *.sqlite3
 
-# Data files (large files)
-*.xlsx
-*.xls
-*.zip
-data/excel/*.xlsx
-data/geojson/*.zip
-
 # OS
 Thumbs.db
 .DS_Store
@@ -79,4 +72,8 @@ Thumbs.db
 *.tmp
 *.temp
 .cache/
+
+# Large files (exceed GitHub 100MB limit)
+data/geojson/maps-master.zip
+*.zip
 
