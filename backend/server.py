@@ -7586,11 +7586,16 @@ app.include_router(api_router)
 
 _cors_origins_raw = os.environ.get("CORS_ORIGINS", "").strip()
 # Browser-safe defaults:
-# - if CORS_ORIGINS not set: allow localhost + common private LAN ranges on port 3000 and allow credentials
+# - if CORS_ORIGINS not set: allow localhost + common private LAN + deployed demo frontend, allow credentials
 # - if CORS_ORIGINS contains "*": allow any origin but DISABLE credentials (required by CORS spec)
+# For production: set CORS_ORIGINS to a comma-separated list of allowed frontend URLs (e.g. https://yoursite.com).
 _cors_allow_origin_regex = None
 if not _cors_origins_raw:
-    _cors_allow_origins = ["http://localhost:3000", "http://127.0.0.1:3000"]
+    _cors_allow_origins = [
+        "http://localhost:3000",
+        "http://127.0.0.1:3000",
+        "https://delhitransport.demo.agrayianailabs.com",
+    ]
     # Allow common private LAN ranges for dev (e.g., http://192.168.1.10:3000)
     _cors_allow_origin_regex = r"^http://((localhost)|(127\.0\.0\.1)|((10|192\.168|172\.(1[6-9]|2\d|3[0-1]))\.\d+\.\d+\.\d+))(:3000)?$"
     _cors_allow_credentials = True
