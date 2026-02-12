@@ -1,49 +1,44 @@
-# Frontend Dockerfile
-# Multi-stage build for optimized production image
-
-# Stage 1: Build stage
-FROM node:18-alpine as builder
+# Frontend Dockerfile - Simple multi-stage build (CRA/CRACO) + Nginx
+# Stage 1: Build
+FROM node:20-alpine AS builder
 
 WORKDIR /app
 
-# Copy package files
-COPY package*.json ./
-COPY craco.config.js ./
-COPY postcss.config.js ./
-COPY tailwind.config.js ./
-COPY jsconfig.json ./
+# If you ever face native module build issues, uncomment these:
+# RUN apk add --no-cache python3 make g++
 
-# Install dependencies
+# Install deps
+COPY package*.json ./
+# If you use npm:
 RUN npm ci --legacy-peer-deps
 
-# Copy source code
-COPY public/ ./public/
-COPY src/ ./src/
+# Copy source and build
+COPY . .
 
-# Build the application
+# Build-time env (NOTE: CRA reads REACT_APP_* at build time only)
+ARG REACT_APP_BACKEND_URL=https://delhitransport.demoapi.agrayianailabs.com/
+ENV REACT_APP_BACKEND_URL=$REACT_APP_BACKEND_URL
+
 RUN npm run build
 
-# Stage 2: Production stage
+# Stage 2: Serve with Nginx
 FROM nginx:alpine
 
-# Copy built files from builder
+# curl for healthcheck
+RUN apk add --no-cache curl
+
+# Copy build output
 COPY --from=builder /app/build /usr/share/nginx/html
 
-# Copy nginx configuration template
-COPY nginx.conf.template /etc/nginx/templates/default.conf.template
+# Nginx config (make sure it listens on 80)
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-# Copy GeoJSON files to public directory
-COPY public/states.geojson /usr/share/nginx/html/states.geojson
+# Health endpoint (simple file)
+RUN echo '{"status":"healthy"}' > /usr/share/nginx/html/health && chmod 644 /usr/share/nginx/html/health
 
-# Expose port
-EXPOSE 3000
+EXPOSE 80
 
-# Health check
-HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
-    CMD wget --quiet --tries=1 --spider http://localhost:3000/ || exit 1
+HEALTHCHECK --interval=30s --timeout=10s --start-period=10s --retries=3 \
+  CMD curl -fsS http://localhost/health || exit 1
 
-# Start nginx
-# Nginx image automatically runs envsubst on templates in /etc/nginx/templates
-# and outputs to /etc/nginx/conf.d
 CMD ["nginx", "-g", "daemon off;"]
-
