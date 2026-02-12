@@ -18,6 +18,7 @@ import AadhaarVerification from "@/pages/AadhaarVerification";
 import FacialRecognition from "@/pages/FacialRecognition";
 import VehicleDetection from "@/pages/VehicleDetection";
 import ManufacturerMarket from "@/pages/ManufacturerMarket";
+import RTOAnalysis from "@/pages/RTOAnalysis";
 
 // Import components
 import Sidebar from "@/components/Sidebar";
@@ -75,6 +76,11 @@ function App() {
           <Route path="/advanced-kpi-dashboard" element={
             <DashboardLayout>
               <AdvancedKPIDashboard />
+            </DashboardLayout>
+          } />
+          <Route path="/rto-analysis" element={
+            <DashboardLayout>
+              <RTOAnalysis />
             </DashboardLayout>
           } />
           <Route path="/vehicle-analytics" element={

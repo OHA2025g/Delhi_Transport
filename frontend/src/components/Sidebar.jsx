@@ -4,7 +4,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { 
   LayoutDashboard, Car, Ticket, SmilePlus, MessageSquare, 
   FileSearch, UserCheck, Truck, ChevronLeft, ChevronRight,
-  Home, Settings, HelpCircle, LogOut, Factory, BarChart3, Brain, CreditCard
+  Home, Settings, HelpCircle, LogOut, Factory, BarChart3, Brain, CreditCard, TrendingUp
 } from "lucide-react";
 
 const navItems = [
@@ -12,6 +12,7 @@ const navItems = [
   { icon: LayoutDashboard, label: "Executive Dashboard", path: "/dashboard" },
   { icon: BarChart3, label: "KPI Dashboard", path: "/kpi-dashboard" },
   { icon: Brain, label: "Advanced KPIs", path: "/advanced-kpi-dashboard" },
+  { icon: TrendingUp, label: "RTO Analysis", path: "/rto-analysis" },
   { icon: Car, label: "Vehicle Analytics", path: "/vehicle-analytics" },
   { icon: Factory, label: "Maker Dashboard", path: "/maker" },
   { icon: Ticket, label: "Ticket Management", path: "/tickets" },
