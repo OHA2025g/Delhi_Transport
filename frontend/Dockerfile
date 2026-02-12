@@ -16,7 +16,7 @@ RUN npm ci --legacy-peer-deps
 COPY . .
 
 # Build-time env (NOTE: CRA reads REACT_APP_* at build time only)
-ARG REACT_APP_BACKEND_URL=https://delhitransport.demoapi.agrayianailabs.com/
+ARG REACT_APP_BACKEND_URL=https://delhitransport.demoapi.agrayianailabs.com
 ENV REACT_APP_BACKEND_URL=$REACT_APP_BACKEND_URL
 
 RUN npm run build
