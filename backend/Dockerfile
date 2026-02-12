@@ -37,7 +37,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     tesseract-ocr-eng \
     tesseract-ocr-hin \
     # Image processing libraries for OpenCV and PIL
-    libgl1-mesa-glx \
+    libgl1 \
     libglib2.0-0 \
     libsm6 \
     libxext6 \
@@ -84,7 +84,7 @@ COPY backend/core/ ./backend/core/
 COPY backend/utils/ ./backend/utils/
 
 # Models directory
-COPY backend/models/ ./backend/models/
+# COPY backend/models/ ./backend/models/
 
 # API and Services directories
 # These directories are created above as empty directories
