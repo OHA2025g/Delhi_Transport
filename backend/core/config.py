@@ -19,12 +19,13 @@ MONGO_TIMEOUT_MS = int(os.environ.get("MONGO_TIMEOUT_MS", "2000"))
 RATE_LIMIT_ENABLED = os.environ.get('RATE_LIMIT_ENABLED', 'false').lower() == 'true'
 RATE_LIMIT_RPM = int(os.environ.get('RATE_LIMIT_RPM', '100'))
 
-# CORS Configuration
+# CORS Configuration (server.py reads CORS_ORIGINS from env; these are fallbacks for other code)
 CORS_ORIGINS = [
     "http://localhost:3000",
     "http://localhost:8000",
     "http://127.0.0.1:3000",
     "http://127.0.0.1:8000",
+    "https://delhitransport.demo.agrayianailabs.com",
 ]
 
 # Data Paths
