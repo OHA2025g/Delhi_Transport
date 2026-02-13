@@ -70,6 +70,7 @@ COPY --from=builder /usr/local/bin /usr/local/bin
 RUN mkdir -p ./backend/models \
     ./backend/api \
     ./backend/services \
+    ./backend/excel \
     ./data/excel \
     ./logs
 
@@ -96,6 +97,9 @@ COPY data/excel/Vahan1.xlsx ./data/excel/Vahan1.xlsx
 COPY data/excel/Tickets.xlsx ./data/excel/Tickets.xlsx
 COPY data/excel/transport_extra_kpi_mock_data_FY2025_26.xlsx ./data/excel/transport_extra_kpi_mock_data_FY2025_26.xlsx
 COPY data/excel/Parivahan_Dashboard_extra_KPI.xlsx ./data/excel/Parivahan_Dashboard_extra_KPI.xlsx
+
+# Copy RTO Analysis Excel file (handle spaces in filename)
+COPY backend/excel/ ./backend/excel/
 
 # Set environment variables
 ENV PYTHONUNBUFFERED=1 \

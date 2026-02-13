@@ -5,25 +5,27 @@ import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { 
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
-  LineChart, Line, PieChart, Pie, Cell, ScatterChart, Scatter, 
-  AreaChart, Area, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar,
-  Treemap, ReferenceLine
+  ScatterChart, Scatter, ReferenceLine, Cell, AreaChart, Area, Legend
 } from "recharts";
 import axios from "axios";
 import { API } from "@/App";
 import { toast } from "sonner";
 import { 
-  TrendingUp, TrendingDown, Award, AlertTriangle, RefreshCw,
-  BarChart3, Target, Activity, DollarSign, FileCheck, Shield
+  TrendingUp, TrendingDown, Award, RefreshCw, Target,
+  Building2, Zap, DollarSign, AlertTriangle, Shield,
+  CheckCircle, Car, FileText, Clock
 } from "lucide-react";
 import ScrollReveal from "@/components/ScrollReveal";
 import AnimatedCounter from "@/components/AnimatedCounter";
-import InsightsSection from "@/components/InsightsSection";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Progress } from "@/components/ui/progress";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+import { useSearchParams } from "react-router-dom";
 
 const COLORS = ['#F97316', '#3B82F6', '#10B981', '#EF4444', '#8B5CF6', '#F59E0B'];
 
 const RTOAnalysis = () => {
+  const [searchParams] = useSearchParams();
   const [overview, setOverview] = useState(null);
   const [topBottom, setTopBottom] = useState(null);
   const [rankMovement, setRankMovement] = useState(null);
@@ -33,12 +35,26 @@ const RTOAnalysis = () => {
   const [vahanPendency, setVahanPendency] = useState(null);
   const [challanPendency, setChallanPendency] = useState(null);
   const [allData, setAllData] = useState(null);
+  const [rtoPerformanceKPIs, setRtoPerformanceKPIs] = useState(null);
+  const [rtoPerformanceData, setRtoPerformanceData] = useState([]);
+  const [rtoDerivedKPIs, setRtoDerivedKPIs] = useState(null);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState("overview");
+  
+  // Drill-down state
+  const [drillDownOpen, setDrillDownOpen] = useState(false);
+  const [drillDownData, setDrillDownData] = useState(null);
+  const [drillDownLoading, setDrillDownLoading] = useState(false);
+  const [drillDownTitle, setDrillDownTitle] = useState("");
+  const [drillDownDescription, setDrillDownDescription] = useState("");
+  const [drillDownError, setDrillDownError] = useState(null);
 
   const fetchAllData = useCallback(async () => {
     setLoading(true);
     try {
+      const state = searchParams.get("state_cd") || null;
+      const month = null; // Can be made dynamic if needed
+      
       const [
         overviewRes,
         topBottomRes,
@@ -48,7 +64,10 @@ const RTOAnalysis = () => {
         sarathiRes,
         vahanRes,
         challanRes,
-        allDataRes
+        allDataRes,
+        rtoPerformanceRes,
+        rtoPerfRes,
+        rtoDerivedRes
       ] = await Promise.all([
         axios.get(`${API}/rto-analysis/overview`),
         axios.get(`${API}/rto-analysis/top-bottom?limit=10`),
@@ -58,7 +77,10 @@ const RTOAnalysis = () => {
         axios.get(`${API}/rto-analysis/sarathi-pendency`),
         axios.get(`${API}/rto-analysis/vahan-pendency`),
         axios.get(`${API}/rto-analysis/challan-pendency`),
-        axios.get(`${API}/rto-analysis/all-data`)
+        axios.get(`${API}/rto-analysis/all-data`),
+        axios.get(`${API}/kpi/advanced/rto-performance`).catch(() => ({ data: null })),
+        axios.get(`${API}/kpi/rto/performance`, { params: { state, month } }),
+        axios.get(`${API}/kpi/rto/derived`, { params: { state, rto: null, month } })
       ]);
 
       setOverview(overviewRes.data);
@@ -70,6 +92,9 @@ const RTOAnalysis = () => {
       setVahanPendency(vahanRes.data);
       setChallanPendency(challanRes.data);
       setAllData(allDataRes.data);
+      setRtoPerformanceKPIs(rtoPerformanceRes.data);
+      setRtoPerformanceData(rtoPerfRes.data?.data || []);
+      setRtoDerivedKPIs(rtoDerivedRes.data);
 
       toast.success("RTO Analysis data loaded");
     } catch (error) {
@@ -78,7 +103,7 @@ const RTOAnalysis = () => {
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [searchParams]);
 
   useEffect(() => {
     fetchAllData();
@@ -95,6 +120,138 @@ const RTOAnalysis = () => {
     if (num >= 100000) return `₹${(num / 100000).toFixed(2)}L`;
     if (num >= 1000) return `₹${(num / 1000).toFixed(2)}K`;
     return `₹${num.toFixed(2)}`;
+  };
+
+  const getKPIStatus = (value, threshold = 50) => {
+    if (value >= threshold) return { color: "bg-green-500", text: "Good" };
+    if (value >= threshold * 0.7) return { color: "bg-yellow-500", text: "Fair" };
+    return { color: "bg-red-500", text: "Poor" };
+  };
+
+  // Drill-down handler
+  const handleDrillDown = useCallback(async (type, title, description, params = {}) => {
+    setDrillDownOpen(true);
+    setDrillDownTitle(title);
+    setDrillDownDescription(description);
+    setDrillDownLoading(true);
+    setDrillDownData(null);
+    setDrillDownError(null);
+
+    try {
+      const state = searchParams.get("state_cd") || null;
+      const rto = searchParams.get("rto") || null;
+
+      let response;
+      switch (type) {
+        case 'rto_performance':
+          // Fetch RTO performance ranking data (Top 5 and Bottom 5)
+          try {
+            const rankingResponse = await axios.get(`${API}/kpi/drilldown/rto-performance-ranking`);
+            response = {
+              data: {
+                type,
+                supporting_metrics: rtoPerformanceKPIs?.supporting_metrics || {},
+                summary: rtoPerformanceKPIs?.kpis || {},
+                rto_ranking: rankingResponse.data?.rto_ranking || [],
+                data: [rtoPerformanceKPIs] || []
+              }
+            };
+          } catch (rankingError) {
+            // Fallback to existing data if ranking endpoint fails
+            response = { 
+              data: { 
+                type,
+                supporting_metrics: rtoPerformanceKPIs?.supporting_metrics || {},
+                summary: rtoPerformanceKPIs?.kpis || {},
+                data: [rtoPerformanceKPIs] || []
+              }
+            };
+          }
+          break;
+        default:
+          // Use existing RTO performance data
+          response = { 
+            data: { 
+              type,
+              supporting_metrics: rtoPerformanceKPIs?.supporting_metrics || {},
+              summary: rtoPerformanceKPIs?.kpis || {},
+              data: [rtoPerformanceKPIs] || []
+            }
+          };
+      }
+
+      if (response && response.data) {
+        if (response.data.error) {
+          throw new Error(response.data.error);
+        }
+        setDrillDownData(response.data);
+      } else if (response) {
+        if (response.error) {
+          throw new Error(response.error);
+        }
+        setDrillDownData(response);
+      } else {
+        throw new Error("No data received from server");
+      }
+    } catch (error) {
+      console.error("Error fetching drill-down data:", error);
+      const errorMessage = error.response?.data?.detail || error.message || "Unknown error occurred";
+      setDrillDownError(errorMessage);
+      toast.error(`Failed to load drill-down data: ${errorMessage}`);
+      setDrillDownData(null);
+    } finally {
+      setDrillDownLoading(false);
+    }
+  }, [searchParams, rtoPerformanceKPIs]);
+
+  const KPICard = ({ title, value, unit = "", icon: Icon, status, description, drillDownType, drillDownParams = {}, showProgress = false }) => {
+    const statusInfo = status ? getKPIStatus(value) : null;
+    const numValue = typeof value === "number" ? value : (typeof value === "string" ? parseFloat(value.replace(/[^0-9.-]/g, '')) : 0);
+    const isPercentage = unit === "%" || title.toLowerCase().includes("score") || title.toLowerCase().includes("index") || title.toLowerCase().includes("ratio");
+    const progressValue = isPercentage ? Math.min(Math.max(numValue, 0), 100) : 0;
+    
+    return (
+      <Card 
+        className="bg-gray-800/50 border-gray-700 hover:shadow-lg transition-shadow cursor-pointer"
+        onClick={() => drillDownType && handleDrillDown(drillDownType, title, description, drillDownParams)}
+      >
+        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+          <CardTitle className="text-sm font-medium text-white">{title}</CardTitle>
+          {Icon && <Icon className="h-4 w-4 text-gray-400" />}
+        </CardHeader>
+        <CardContent>
+          <div className="text-2xl font-bold text-white">
+            {typeof value === "number" ? (
+              <AnimatedCounter value={value} suffix={unit} />
+            ) : (
+              <>
+                {value}
+                {unit && <span className="text-sm text-gray-400 ml-1">{unit}</span>}
+              </>
+            )}
+          </div>
+          
+          {(showProgress || isPercentage) && !isNaN(progressValue) && (
+            <div className="mt-3">
+              <Progress value={progressValue} className="h-2" />
+            </div>
+          )}
+          
+          {statusInfo && (
+            <div className="flex items-center mt-2">
+              <div className={`w-2 h-2 rounded-full ${statusInfo.color} mr-2`} />
+              <span className="text-xs text-gray-300 font-medium">{statusInfo.text}</span>
+            </div>
+          )}
+          {description && (
+            <p className="text-xs text-gray-400 mt-1">
+              {description}
+              {drillDownType && <span className="text-orange-400 ml-1 font-medium">(Click for details)</span>}
+            </p>
+          )}
+        </CardContent>
+      </Card>
+    );
   };
 
   // Prepare chart data
@@ -116,12 +273,21 @@ const RTOAnalysis = () => {
   }, [overview]);
 
   const scatterData = useMemo(() => {
-    if (!rankMovement?.scatter_data) return [];
-    return rankMovement.scatter_data.map(d => ({
-      x: d.oct_rank,
-      y: d.nov_rank,
-      rto: d.rto
-    }));
+    if (!rankMovement?.scatter_data || rankMovement.scatter_data.length === 0) return [];
+    const data = rankMovement.scatter_data.map(d => ({
+      x: Number(d.oct_rank) || 0,
+      y: Number(d.nov_rank) || 0,
+      rto: d.rto || "Unknown"
+    })).filter(d => d.x > 0 && d.y > 0); // Filter out invalid data
+    
+    // Log for debugging
+    if (data.length > 0) {
+      console.log("Scatter data sample:", data.slice(0, 5));
+      console.log("Data range - X:", Math.min(...data.map(d => d.x)), "to", Math.max(...data.map(d => d.x)));
+      console.log("Data range - Y:", Math.min(...data.map(d => d.y)), "to", Math.max(...data.map(d => d.y)));
+    }
+    
+    return data;
   }, [rankMovement]);
 
   const correlationData = useMemo(() => {
@@ -250,6 +416,8 @@ const RTOAnalysis = () => {
             <TabsTrigger value="pendency" className="data-[state=active]:bg-orange-500">Pendency Analysis</TabsTrigger>
             <TabsTrigger value="enforcement" className="data-[state=active]:bg-orange-500">Enforcement</TabsTrigger>
             <TabsTrigger value="drivers" className="data-[state=active]:bg-orange-500">KPI Drivers</TabsTrigger>
+            <TabsTrigger value="rto-level" className="data-[state=active]:bg-orange-500">RTO Level KPIs</TabsTrigger>
+            <TabsTrigger value="intelligence" className="data-[state=active]:bg-orange-500">RTO Performance Intelligence KPIs</TabsTrigger>
           </TabsList>
 
           {/* Overview Tab */}
@@ -372,10 +540,38 @@ const RTOAnalysis = () => {
                     <ResponsiveContainer width="100%" height={400}>
                       <ScatterChart>
                         <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
-                        <XAxis type="number" dataKey="x" name="Oct Rank" stroke="#9CA3AF" />
-                        <YAxis type="number" dataKey="y" name="Nov Rank" stroke="#9CA3AF" />
-                        <Tooltip cursor={{ strokeDasharray: '3 3' }} contentStyle={{ backgroundColor: '#1F2937', border: '1px solid #374151', color: '#F3F4F6' }} />
-                        <ReferenceLine y={x => x} stroke="#6B7280" strokeDasharray="3 3" />
+                        <XAxis 
+                          type="number" 
+                          dataKey="x" 
+                          name="Oct Rank" 
+                          label={{ value: "Oct Rank", position: "insideBottom", offset: -5, style: { fill: '#9CA3AF' } }}
+                          stroke="#9CA3AF"
+                          domain={scatterData.length > 0 ? ['dataMin - 1', 'dataMax + 1'] : [0, 50]}
+                        />
+                        <YAxis 
+                          type="number" 
+                          dataKey="y" 
+                          name="Nov Rank" 
+                          label={{ value: "Nov Rank", angle: -90, position: "insideLeft", style: { fill: '#9CA3AF' } }}
+                          stroke="#9CA3AF"
+                          domain={scatterData.length > 0 ? ['dataMin - 1', 'dataMax + 1'] : [0, 50]}
+                        />
+                        <Tooltip 
+                          cursor={{ strokeDasharray: '3 3' }} 
+                          contentStyle={{ backgroundColor: '#1F2937', border: '1px solid #374151', color: '#F3F4F6', borderRadius: '8px' }}
+                          formatter={(value, name, props) => {
+                            if (name === 'x') return [`Oct Rank: ${value}`, 'Oct Rank'];
+                            if (name === 'y') return [`Nov Rank: ${value}`, 'Nov Rank'];
+                            return [value, name];
+                          }}
+                          labelFormatter={(label, payload) => {
+                            if (payload && payload[0] && payload[0].payload) {
+                              return `RTO: ${payload[0].payload.rto || 'Unknown'}`;
+                            }
+                            return '';
+                          }}
+                        />
+                        <ReferenceLine y={x => x} stroke="#6B7280" strokeDasharray="3 3" label={{ value: "No Change", position: "topRight", style: { fill: '#6B7280' } }} />
                         <Scatter name="RTOs" data={scatterData} fill="#3B82F6" />
                       </ScatterChart>
                     </ResponsiveContainer>
@@ -407,7 +603,12 @@ const RTOAnalysis = () => {
 
           {/* Revenue & Digital Tab */}
           <TabsContent value="revenue" className="space-y-6">
-            {onlineRevenue && (
+            {loading ? (
+              <div className="flex items-center justify-center py-20">
+                <RefreshCw className="w-8 h-8 animate-spin text-white mr-3" />
+                <span className="text-white">Loading revenue data...</span>
+              </div>
+            ) : onlineRevenue ? (
               <>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   <Card className="bg-gray-800/50 border-gray-700">
@@ -502,97 +703,127 @@ const RTOAnalysis = () => {
                   </CardContent>
                 </Card>
               </>
+            ) : (
+              <Card className="bg-gray-800/50 border-gray-700">
+                <CardContent className="p-10 text-center">
+                  <p className="text-gray-400">No revenue data available. Please refresh or check the API connection.</p>
+                </CardContent>
+              </Card>
             )}
           </TabsContent>
 
           {/* Pendency Analysis Tab */}
           <TabsContent value="pendency" className="space-y-6">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              {/* Sarathi Pendency */}
-              {sarathiPendency && (
-                <Card className="bg-gray-800/50 border-gray-700">
-                  <CardHeader>
-                    <CardTitle className="text-white">Sarathi Pendency Analysis</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="mb-4">
-                      <p className="text-gray-400 text-sm">Weighted Pendency Ratio</p>
-                      <p className="text-2xl font-bold text-white">
-                        {sarathiPendency.weighted_pendency_ratio?.toFixed(2) || "0"}%
-                      </p>
-                    </div>
-                    <ResponsiveContainer width="100%" height={300}>
-                      <BarChart 
-                        data={sarathiPendency.worst_pendency_rtos?.slice(0, 10).map(r => ({
-                          rto: r.rto_code,
-                          pendency: r.pendency_percentage
-                        })) || []}
-                        layout="vertical"
-                      >
-                        <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
-                        <XAxis type="number" stroke="#9CA3AF" />
-                        <YAxis dataKey="rto" type="category" stroke="#9CA3AF" width={80} />
-                        <Tooltip contentStyle={{ backgroundColor: '#1F2937', border: '1px solid #374151', color: '#F3F4F6' }} />
-                        <Bar dataKey="pendency" fill="#EF4444" radius={[0, 4, 4, 0]} />
-                      </BarChart>
-                    </ResponsiveContainer>
-                    <div className="mt-4 space-y-2">
-                      {sarathiPendency.worst_pendency_rtos?.slice(0, 5).map((rto, idx) => (
-                        <div key={idx} className="flex justify-between text-sm text-gray-300">
-                          <span>{rto.rto_code}</span>
-                          <span className="font-semibold">{rto.pendency_percentage?.toFixed(2)}%</span>
-                        </div>
-                      ))}
-                    </div>
-                  </CardContent>
-                </Card>
-              )}
+            {loading ? (
+              <div className="flex items-center justify-center py-20">
+                <RefreshCw className="w-8 h-8 animate-spin text-white mr-3" />
+                <span className="text-white">Loading pendency data...</span>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                {/* Sarathi Pendency */}
+                {sarathiPendency ? (
+                  <Card className="bg-gray-800/50 border-gray-700">
+                    <CardHeader>
+                      <CardTitle className="text-white">Sarathi Pendency Analysis</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="mb-4">
+                        <p className="text-gray-400 text-sm">Weighted Pendency Ratio</p>
+                        <p className="text-2xl font-bold text-white">
+                          {sarathiPendency.weighted_pendency_ratio?.toFixed(2) || "0"}%
+                        </p>
+                      </div>
+                      <ResponsiveContainer width="100%" height={300}>
+                        <BarChart 
+                          data={sarathiPendency.worst_pendency_rtos?.slice(0, 10).map(r => ({
+                            rto: r.rto_code,
+                            pendency: r.pendency_percentage
+                          })) || []}
+                          layout="vertical"
+                        >
+                          <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
+                          <XAxis type="number" stroke="#9CA3AF" />
+                          <YAxis dataKey="rto" type="category" stroke="#9CA3AF" width={80} />
+                          <Tooltip contentStyle={{ backgroundColor: '#1F2937', border: '1px solid #374151', color: '#F3F4F6' }} />
+                          <Bar dataKey="pendency" fill="#EF4444" radius={[0, 4, 4, 0]} />
+                        </BarChart>
+                      </ResponsiveContainer>
+                      <div className="mt-4 space-y-2">
+                        {sarathiPendency.worst_pendency_rtos?.slice(0, 5).map((rto, idx) => (
+                          <div key={idx} className="flex justify-between text-sm text-gray-300">
+                            <span>{rto.rto_code}</span>
+                            <span className="font-semibold">{rto.pendency_percentage?.toFixed(2)}%</span>
+                          </div>
+                        ))}
+                      </div>
+                    </CardContent>
+                  </Card>
+                ) : (
+                  <Card className="bg-gray-800/50 border-gray-700">
+                    <CardContent className="p-10 text-center">
+                      <p className="text-gray-400">No Sarathi pendency data available.</p>
+                    </CardContent>
+                  </Card>
+                )}
 
-              {/* Vahan Pendency */}
-              {vahanPendency && (
-                <Card className="bg-gray-800/50 border-gray-700">
-                  <CardHeader>
-                    <CardTitle className="text-white">Vahan Pendency Analysis</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="mb-4">
-                      <p className="text-gray-400 text-sm">Weighted Pendency Ratio</p>
-                      <p className="text-2xl font-bold text-white">
-                        {vahanPendency.weighted_pendency_ratio?.toFixed(2) || "0"}%
-                      </p>
-                    </div>
-                    <ResponsiveContainer width="100%" height={300}>
-                      <BarChart 
-                        data={vahanPendency.worst_pendency_rtos?.slice(0, 10).map(r => ({
-                          rto: r.rto_code,
-                          pendency: r.pendency_percentage
-                        })) || []}
-                        layout="vertical"
-                      >
-                        <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
-                        <XAxis type="number" stroke="#9CA3AF" />
-                        <YAxis dataKey="rto" type="category" stroke="#9CA3AF" width={80} />
-                        <Tooltip contentStyle={{ backgroundColor: '#1F2937', border: '1px solid #374151', color: '#F3F4F6' }} />
-                        <Bar dataKey="pendency" fill="#F59E0B" radius={[0, 4, 4, 0]} />
-                      </BarChart>
-                    </ResponsiveContainer>
-                    <div className="mt-4 space-y-2">
-                      {vahanPendency.worst_pendency_rtos?.slice(0, 5).map((rto, idx) => (
-                        <div key={idx} className="flex justify-between text-sm text-gray-300">
-                          <span>{rto.rto_code}</span>
-                          <span className="font-semibold">{rto.pendency_percentage?.toFixed(2)}%</span>
-                        </div>
-                      ))}
-                    </div>
-                  </CardContent>
-                </Card>
-              )}
-            </div>
+                {/* Vahan Pendency */}
+                {vahanPendency ? (
+                  <Card className="bg-gray-800/50 border-gray-700">
+                    <CardHeader>
+                      <CardTitle className="text-white">Vahan Pendency Analysis</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="mb-4">
+                        <p className="text-gray-400 text-sm">Weighted Pendency Ratio</p>
+                        <p className="text-2xl font-bold text-white">
+                          {vahanPendency.weighted_pendency_ratio?.toFixed(2) || "0"}%
+                        </p>
+                      </div>
+                      <ResponsiveContainer width="100%" height={300}>
+                        <BarChart 
+                          data={vahanPendency.worst_pendency_rtos?.slice(0, 10).map(r => ({
+                            rto: r.rto_code,
+                            pendency: r.pendency_percentage
+                          })) || []}
+                          layout="vertical"
+                        >
+                          <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
+                          <XAxis type="number" stroke="#9CA3AF" />
+                          <YAxis dataKey="rto" type="category" stroke="#9CA3AF" width={80} />
+                          <Tooltip contentStyle={{ backgroundColor: '#1F2937', border: '1px solid #374151', color: '#F3F4F6' }} />
+                          <Bar dataKey="pendency" fill="#F59E0B" radius={[0, 4, 4, 0]} />
+                        </BarChart>
+                      </ResponsiveContainer>
+                      <div className="mt-4 space-y-2">
+                        {vahanPendency.worst_pendency_rtos?.slice(0, 5).map((rto, idx) => (
+                          <div key={idx} className="flex justify-between text-sm text-gray-300">
+                            <span>{rto.rto_code}</span>
+                            <span className="font-semibold">{rto.pendency_percentage?.toFixed(2)}%</span>
+                          </div>
+                        ))}
+                      </div>
+                    </CardContent>
+                  </Card>
+                ) : (
+                  <Card className="bg-gray-800/50 border-gray-700">
+                    <CardContent className="p-10 text-center">
+                      <p className="text-gray-400">No Vahan pendency data available.</p>
+                    </CardContent>
+                  </Card>
+                )}
+              </div>
+            )}
           </TabsContent>
 
           {/* Enforcement Tab */}
           <TabsContent value="enforcement" className="space-y-6">
-            {challanPendency && (
+            {loading ? (
+              <div className="flex items-center justify-center py-20">
+                <RefreshCw className="w-8 h-8 animate-spin text-white mr-3" />
+                <span className="text-white">Loading enforcement data...</span>
+              </div>
+            ) : challanPendency ? (
               <>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   <Card className="bg-gray-800/50 border-gray-700">
@@ -679,12 +910,23 @@ const RTOAnalysis = () => {
                   </CardContent>
                 </Card>
               </>
+            ) : (
+              <Card className="bg-gray-800/50 border-gray-700">
+                <CardContent className="p-10 text-center">
+                  <p className="text-gray-400">No enforcement data available. Please refresh or check the API connection.</p>
+                </CardContent>
+              </Card>
             )}
           </TabsContent>
 
           {/* KPI Drivers Tab */}
           <TabsContent value="drivers" className="space-y-6">
-            {kpiDrivers && (
+            {loading ? (
+              <div className="flex items-center justify-center py-20">
+                <RefreshCw className="w-8 h-8 animate-spin text-white mr-3" />
+                <span className="text-white">Loading KPI drivers data...</span>
+              </div>
+            ) : kpiDrivers ? (
               <>
                 <Card className="bg-gray-800/50 border-gray-700">
                   <CardHeader>
@@ -730,10 +972,555 @@ const RTOAnalysis = () => {
                   </CardContent>
                 </Card>
               </>
+            ) : (
+              <Card className="bg-gray-800/50 border-gray-700">
+                <CardContent className="p-10 text-center">
+                  <p className="text-gray-400">No KPI drivers data available. Please refresh or check the API connection.</p>
+                </CardContent>
+              </Card>
+            )}
+          </TabsContent>
+
+          {/* RTO Level KPIs Tab */}
+          <TabsContent value="rto-level" className="space-y-6">
+            {loading ? (
+              <div className="flex items-center justify-center py-20">
+                <RefreshCw className="w-8 h-8 animate-spin text-white mr-3" />
+                <span className="text-white">Loading RTO Level KPIs...</span>
+              </div>
+            ) : (
+              <Tabs defaultValue="performance" className="w-full">
+                <TabsList className="bg-gray-800/50 border-gray-700 mb-6">
+                  <TabsTrigger value="performance" className="data-[state=active]:bg-orange-500">Performance</TabsTrigger>
+                  <TabsTrigger value="derived" className="data-[state=active]:bg-orange-500">Derived KPIs</TabsTrigger>
+                </TabsList>
+                
+                {/* Performance Tab */}
+                <TabsContent value="performance" className="space-y-6">
+                  {rtoPerformanceData && rtoPerformanceData.length > 0 ? (
+                    <>
+                      {/* Calculate Top 5 and Bottom 5 RTOs by average SLA */}
+                      {(() => {
+                        const rtoDataWithAvg = rtoPerformanceData
+                          .filter(rto => rto && (rto.RTO || rto["RTO"]))
+                          .map(rto => {
+                            const citizenSLA = Number(
+                              rto["Citizen Service SLA % (within SLA)"] || 
+                              rto["Citizen Service SLA"] || 
+                              rto["CitizenServiceSLA"] || 
+                              0
+                            );
+                            const grievanceSLA = Number(
+                              rto["Grievance SLA % (within SLA)"] || 
+                              rto["Grievance SLA"] || 
+                              rto["GrievanceSLA"] || 
+                              0
+                            );
+                            const avgSLA = (citizenSLA + grievanceSLA) / 2;
+                            const rtoCode = rto.RTO || rto["RTO"] || "Unknown";
+                            return {
+                              ...rto,
+                              RTO: rtoCode,
+                              "Citizen Service SLA % (within SLA)": citizenSLA,
+                              "Grievance SLA % (within SLA)": grievanceSLA,
+                              avgSLA: avgSLA
+                            };
+                          })
+                          .filter(rto => {
+                            const hasCitizenSLA = (rto["Citizen Service SLA % (within SLA)"] || 0) > 0;
+                            const hasGrievanceSLA = (rto["Grievance SLA % (within SLA)"] || 0) > 0;
+                            return hasCitizenSLA || hasGrievanceSLA;
+                          });
+                        
+                        rtoDataWithAvg.sort((a, b) => b.avgSLA - a.avgSLA);
+                        const top5 = rtoDataWithAvg.slice(0, Math.min(5, rtoDataWithAvg.length));
+                        const bottom5Count = Math.min(5, rtoDataWithAvg.length);
+                        const bottom5 = rtoDataWithAvg.slice(-bottom5Count).reverse();
+                        
+                        return (
+                          <>
+                            {/* KPI Cards */}
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                              <Card 
+                                className="bg-gray-800/50 border-gray-700 cursor-pointer hover:shadow-lg transition-shadow"
+                                onClick={() => handleDrillDown('service_delivery', 'Service Delivery', 'View service delivery details')}
+                              >
+                                <CardContent className="p-5">
+                                  <div className="flex items-start justify-between">
+                                    <div>
+                                      <p className="text-gray-400 text-sm font-medium mb-1">Avg Faceless %</p>
+                                      <p className="text-2xl font-bold text-white">
+                                        {rtoPerformanceData.length > 0 
+                                          ? (rtoPerformanceData.reduce((sum, r) => sum + (r["Faceless Application %"] || 0), 0) / rtoPerformanceData.length).toFixed(1)
+                                          : 0}%
+                                      </p>
+                                    </div>
+                                    <Shield className="w-8 h-8 text-purple-500" />
+                                  </div>
+                                </CardContent>
+                              </Card>
+                              <Card 
+                                className="bg-gray-800/50 border-gray-700 cursor-pointer hover:shadow-lg transition-shadow"
+                                onClick={() => handleDrillDown('service_delivery', 'Service SLA', 'View service SLA details')}
+                              >
+                                <CardContent className="p-5">
+                                  <div className="flex items-start justify-between">
+                                    <div>
+                                      <p className="text-gray-400 text-sm font-medium mb-1">Avg Service SLA</p>
+                                      <p className="text-2xl font-bold text-white">
+                                        {rtoPerformanceData.length > 0 
+                                          ? (rtoPerformanceData.reduce((sum, r) => sum + (r["Citizen Service SLA % (within SLA)"] || 0), 0) / rtoPerformanceData.length).toFixed(1)
+                                          : 0}%
+                                      </p>
+                                    </div>
+                                    <CheckCircle className="w-8 h-8 text-green-500" />
+                                  </div>
+                                </CardContent>
+                              </Card>
+                              <Card 
+                                className="bg-gray-800/50 border-gray-700 cursor-pointer hover:shadow-lg transition-shadow"
+                                onClick={() => handleDrillDown('revenue_trend', 'Revenue', 'View revenue details')}
+                              >
+                                <CardContent className="p-5">
+                                  <div className="flex items-start justify-between">
+                                    <div>
+                                      <p className="text-gray-400 text-sm font-medium mb-1">Total Revenue</p>
+                                      <p className="text-2xl font-bold text-white">
+                                        {formatCurrency(
+                                          rtoPerformanceData.reduce((sum, r) => sum + (r["Revenue - Actual"] || 0), 0)
+                                        )}
+                                      </p>
+                                    </div>
+                                    <TrendingUp className="w-8 h-8 text-green-500" />
+                                  </div>
+                                </CardContent>
+                              </Card>
+                              <Card 
+                                className="bg-gray-800/50 border-gray-700 cursor-pointer hover:shadow-lg transition-shadow"
+                                onClick={() => handleDrillDown('rto_breakdown', 'Tax Defaulters', 'View tax defaulters', { dataKey: 'rto_performance' })}
+                              >
+                                <CardContent className="p-5">
+                                  <div className="flex items-start justify-between">
+                                    <div>
+                                      <p className="text-gray-400 text-sm font-medium mb-1">Tax Defaulters</p>
+                                      <p className="text-2xl font-bold text-white">
+                                        {formatNumber(
+                                          rtoPerformanceData.reduce((sum, r) => sum + (r["Tax Defaulter - Count"] || 0), 0)
+                                        )}
+                                      </p>
+                                    </div>
+                                    <AlertTriangle className="w-8 h-8 text-red-500" />
+                                  </div>
+                                </CardContent>
+                              </Card>
+                            </div>
+
+                            {/* Top 5 RTO Performance Ranking */}
+                            <Card className="bg-gray-800/50 border-gray-700">
+                              <CardHeader>
+                                <CardTitle className="flex items-center gap-2 text-white">
+                                  <TrendingUp className="w-5 h-5 text-green-500" />
+                                  Top 5 RTO Performance Ranking
+                                </CardTitle>
+                              </CardHeader>
+                              <CardContent>
+                                <div className="h-80">
+                                  <ResponsiveContainer width="100%" height="100%">
+                                    <BarChart data={top5} layout="vertical">
+                                      <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
+                                      <XAxis type="number" domain={[0, 100]} stroke="#9CA3AF" />
+                                      <YAxis dataKey="RTO" type="category" width={120} stroke="#9CA3AF" />
+                                      <Tooltip 
+                                        contentStyle={{ backgroundColor: '#1F2937', border: '1px solid #374151', borderRadius: '8px', color: '#F3F4F6' }}
+                                        labelStyle={{ color: '#F3F4F6' }}
+                                        itemStyle={{ color: '#F3F4F6' }}
+                                        formatter={(value) => `${value}%`}
+                                      />
+                                      <Legend />
+                                      <Bar dataKey="Citizen Service SLA % (within SLA)" fill="#10B981" name="Citizen Service SLA % (within SLA)" radius={[0, 4, 4, 0]} />
+                                      <Bar dataKey="Grievance SLA % (within SLA)" fill="#3B82F6" name="Grievance SLA % (within SLA)" radius={[0, 4, 4, 0]} />
+                                    </BarChart>
+                                  </ResponsiveContainer>
+                                </div>
+                              </CardContent>
+                            </Card>
+
+                            {/* Bottom 5 RTO Performance Ranking */}
+                            <Card className="bg-gray-800/50 border-gray-700">
+                              <CardHeader>
+                                <CardTitle className="flex items-center gap-2 text-white">
+                                  <TrendingDown className="w-5 h-5 text-red-500" />
+                                  Bottom 5 RTO Performance Ranking
+                                </CardTitle>
+                              </CardHeader>
+                              <CardContent>
+                                <div className="h-80">
+                                  <ResponsiveContainer width="100%" height="100%">
+                                    <BarChart data={bottom5} layout="vertical">
+                                      <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
+                                      <XAxis type="number" domain={[0, 100]} stroke="#9CA3AF" />
+                                      <YAxis dataKey="RTO" type="category" width={120} stroke="#9CA3AF" />
+                                      <Tooltip 
+                                        contentStyle={{ backgroundColor: '#1F2937', border: '1px solid #374151', borderRadius: '8px', color: '#F3F4F6' }}
+                                        labelStyle={{ color: '#F3F4F6' }}
+                                        itemStyle={{ color: '#F3F4F6' }}
+                                        formatter={(value) => `${value}%`}
+                                      />
+                                      <Legend />
+                                      <Bar dataKey="Citizen Service SLA % (within SLA)" fill="#10B981" name="Citizen Service SLA % (within SLA)" radius={[0, 4, 4, 0]} />
+                                      <Bar dataKey="Grievance SLA % (within SLA)" fill="#3B82F6" name="Grievance SLA % (within SLA)" radius={[0, 4, 4, 0]} />
+                                    </BarChart>
+                                  </ResponsiveContainer>
+                                </div>
+                              </CardContent>
+                            </Card>
+                          </>
+                        );
+                      })()}
+                    </>
+                  ) : (
+                    <Card className="bg-gray-800/50 border-gray-700">
+                      <CardContent className="p-10 text-center">
+                        <p className="text-gray-400">No RTO performance data available</p>
+                      </CardContent>
+                    </Card>
+                  )}
+                </TabsContent>
+
+                {/* Derived KPIs Tab */}
+                <TabsContent value="derived" className="space-y-6">
+                  {rtoDerivedKPIs && !rtoDerivedKPIs.error ? (
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                      <Card 
+                        className="bg-gray-800/50 border-gray-700 cursor-pointer hover:shadow-lg transition-shadow"
+                        onClick={() => handleDrillDown('rto_breakdown', 'Performance Index', 'View RTO breakdown', { state: rtoDerivedKPIs.state, rto: rtoDerivedKPIs.rto })}
+                      >
+                        <CardContent className="p-5">
+                          <p className="text-gray-400 text-sm font-medium mb-1">Performance Index</p>
+                          <p className="text-2xl font-bold text-white">
+                            {rtoDerivedKPIs.derived_kpis?.rto_performance_index || 0}
+                          </p>
+                          <p className="text-xs text-gray-500 mt-1">Click to view details</p>
+                        </CardContent>
+                      </Card>
+                      <Card 
+                        className="bg-gray-800/50 border-gray-700 cursor-pointer hover:shadow-lg transition-shadow"
+                        onClick={() => handleDrillDown('rto_breakdown', 'Revenue per RTO', 'View revenue breakdown', { state: rtoDerivedKPIs.state, rto: rtoDerivedKPIs.rto })}
+                      >
+                        <CardContent className="p-5">
+                          <p className="text-gray-400 text-sm font-medium mb-1">Revenue per RTO</p>
+                          <p className="text-2xl font-bold text-white">
+                            {formatCurrency(rtoDerivedKPIs.derived_kpis?.revenue_per_rto || 0)}
+                          </p>
+                          <p className="text-xs text-gray-500 mt-1">Click to view breakdown</p>
+                        </CardContent>
+                      </Card>
+                      <Card 
+                        className="bg-gray-800/50 border-gray-700 cursor-pointer hover:shadow-lg transition-shadow"
+                        onClick={() => handleDrillDown('enforcement', 'Enforcement Effectiveness', 'View enforcement analysis', { state: rtoDerivedKPIs.state })}
+                      >
+                        <CardContent className="p-5">
+                          <p className="text-gray-400 text-sm font-medium mb-1">Enforcement Effectiveness</p>
+                          <p className="text-2xl font-bold text-white">
+                            {rtoDerivedKPIs.derived_kpis?.enforcement_effectiveness || 0}%
+                          </p>
+                          <p className="text-xs text-gray-500 mt-1">Click to view analysis</p>
+                        </CardContent>
+                      </Card>
+                      <Card className="bg-gray-800/50 border-gray-700">
+                        <CardContent className="p-5">
+                          <p className="text-gray-400 text-sm font-medium mb-1">Faceless Application %</p>
+                          <p className="text-2xl font-bold text-white">
+                            {rtoDerivedKPIs.derived_kpis?.faceless_application_pct || 0}%
+                          </p>
+                        </CardContent>
+                      </Card>
+                    </div>
+                  ) : (
+                    <Card className="bg-gray-800/50 border-gray-700">
+                      <CardContent className="p-10 text-center">
+                        <p className="text-gray-400">No derived KPIs data available</p>
+                      </CardContent>
+                    </Card>
+                  )}
+                </TabsContent>
+              </Tabs>
+            )}
+          </TabsContent>
+
+          {/* RTO Performance Intelligence KPIs Tab */}
+          <TabsContent value="intelligence" className="space-y-6">
+            {loading ? (
+              <div className="flex items-center justify-center py-20">
+                <RefreshCw className="w-8 h-8 animate-spin text-white mr-3" />
+                <span className="text-white">Loading RTO Performance Intelligence KPIs...</span>
+              </div>
+            ) : rtoPerformanceKPIs ? (
+              <>
+                <Card className="bg-gray-800/50 border-gray-700">
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2 text-white">
+                      <Building2 className="h-5 w-5 text-orange-500" />
+                      RTO Performance Intelligence KPIs
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+                      <KPICard
+                        title="RTO Digital Maturity Score"
+                        value={rtoPerformanceKPIs.kpis?.rto_digital_maturity_score}
+                        unit=""
+                        icon={Zap}
+                        status={true}
+                        description="Automation readiness"
+                        drillDownType="rto_performance"
+                        showProgress={true}
+                      />
+                      <KPICard
+                        title="RTO Financial Health Index"
+                        value={rtoPerformanceKPIs.kpis?.rto_financial_health_index}
+                        icon={DollarSign}
+                        description="Fiscal discipline"
+                        drillDownType="rto_performance"
+                      />
+                      <KPICard
+                        title="RTO Risk Flag"
+                        value={rtoPerformanceKPIs.kpis?.rto_risk_flag}
+                        icon={AlertTriangle}
+                        description="Governance risk"
+                        drillDownType="rto_performance"
+                      />
+                      <KPICard
+                        title="Composite RTO Performance Index"
+                        value={rtoPerformanceKPIs.kpis?.composite_rto_performance_index}
+                        unit=""
+                        icon={Award}
+                        status={true}
+                        description="Overall score"
+                        drillDownType="rto_performance"
+                        showProgress={true}
+                      />
+                    </div>
+                    
+                    {/* RTO Performance Metrics */}
+                    <Card className="mt-4 bg-gray-800/50 border-gray-700">
+                      <CardHeader>
+                        <CardTitle className="text-white">RTO Performance Metrics</CardTitle>
+                      </CardHeader>
+                      <CardContent>
+                        <ResponsiveContainer width="100%" height={300}>
+                          <BarChart data={[
+                            { 
+                              name: 'Faceless %', 
+                              value: rtoPerformanceKPIs.supporting_metrics?.faceless_percentage || 0,
+                              fill: '#3B82F6'
+                            },
+                            { 
+                              name: 'SLA %', 
+                              value: rtoPerformanceKPIs.supporting_metrics?.sla_percentage || 0,
+                              fill: '#10B981'
+                            }
+                          ]}>
+                            <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
+                            <XAxis dataKey="name" stroke="#9CA3AF" />
+                            <YAxis domain={[0, 100]} stroke="#9CA3AF" />
+                            <Tooltip 
+                              contentStyle={{ backgroundColor: '#1F2937', border: '1px solid #374151', borderRadius: '8px', color: '#F3F4F6' }}
+                              labelStyle={{ color: '#F3F4F6' }}
+                              itemStyle={{ color: '#F3F4F6' }}
+                              formatter={(value) => `${value}%`}
+                            />
+                            <Bar dataKey="value" radius={[8, 8, 0, 0]} />
+                          </BarChart>
+                        </ResponsiveContainer>
+                      </CardContent>
+                    </Card>
+                  </CardContent>
+                </Card>
+              </>
+            ) : (
+              <Card className="bg-gray-800/50 border-gray-700">
+                <CardContent className="p-10 text-center">
+                  <p className="text-gray-400">No RTO Performance Intelligence KPIs data available. Please refresh or check the API connection.</p>
+                </CardContent>
+              </Card>
             )}
           </TabsContent>
         </Tabs>
       </div>
+
+      {/* Drill-Down Dialog */}
+      <Dialog open={drillDownOpen} onOpenChange={setDrillDownOpen}>
+        <DialogContent className="max-w-6xl max-h-[90vh] overflow-y-auto bg-gray-900 border-gray-700">
+          <DialogHeader>
+            <DialogTitle className="text-white">{drillDownTitle}</DialogTitle>
+            <DialogDescription className="text-gray-300">{drillDownDescription}</DialogDescription>
+          </DialogHeader>
+          {drillDownLoading && (
+            <div className="py-10 text-center text-gray-300">
+              <RefreshCw className="h-8 w-8 animate-spin mx-auto mb-4 text-white" />
+              <span className="text-white">Loading drill-down data...</span>
+            </div>
+          )}
+
+          {!drillDownLoading && drillDownError && (
+            <div className="py-10 text-center">
+              <AlertTriangle className="h-12 w-12 mx-auto mb-4 text-red-400" />
+              <p className="text-red-400 font-semibold mb-2">Error loading data</p>
+              <p className="text-gray-400 text-sm">{drillDownError}</p>
+            </div>
+          )}
+
+          {!drillDownLoading && !drillDownError && drillDownData && (
+            <div className="space-y-6">
+              {/* Summary Stats */}
+              {drillDownData.summary && typeof drillDownData.summary === 'object' && (
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                  {Object.entries(drillDownData.summary || {}).map(([key, value]) => (
+                    <Card key={key} className="bg-gray-800 border-gray-700">
+                      <CardContent className="p-4">
+                        <p className="text-xs text-gray-300 mb-1">{key.replace(/_/g, ' ').toUpperCase()}</p>
+                        <p className="text-xl font-bold text-white">
+                          {typeof value === 'number' ? (value >= 1000000 ? formatCurrency(value) : formatNumber(value)) : value}
+                        </p>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+              )}
+
+              {/* Supporting Metrics Cards */}
+              {drillDownData.supporting_metrics && typeof drillDownData.supporting_metrics === 'object' && (
+                <Card className="bg-gray-800 border-gray-700">
+                  <CardHeader>
+                    <CardTitle className="text-white">Supporting Metrics</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                      {Object.entries(drillDownData.supporting_metrics || {}).map(([key, value]) => (
+                        <Card key={key} className="bg-gray-700 border-gray-600">
+                          <CardContent className="p-4">
+                            <p className="text-xs text-gray-300 mb-1">{key.replace(/_/g, ' ').toUpperCase()}</p>
+                            <p className="text-xl font-bold text-white">
+                              {typeof value === 'number' ? (value >= 1000000 ? formatCurrency(value) : formatNumber(value)) : value}
+                            </p>
+                          </CardContent>
+                        </Card>
+                      ))}
+                    </div>
+                  </CardContent>
+                </Card>
+              )}
+
+              {/* State Breakdown Table */}
+              {drillDownData.state_breakdown && Array.isArray(drillDownData.state_breakdown) && drillDownData.state_breakdown.length > 0 && (
+                <Card className="bg-gray-800 border-gray-700">
+                  <CardHeader>
+                    <CardTitle className="text-white">State-wise Breakdown</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="overflow-x-auto">
+                      <Table>
+                        <TableHeader>
+                          <TableRow className="border-gray-700">
+                            <TableHead className="text-white">State</TableHead>
+                            <TableHead className="text-right text-white">Vehicle Registration</TableHead>
+                            <TableHead className="text-right text-white">Revenue</TableHead>
+                            <TableHead className="text-right text-white">Accidents</TableHead>
+                            <TableHead className="text-right text-white">Challans</TableHead>
+                          </TableRow>
+                        </TableHeader>
+                        <TableBody>
+                          {drillDownData.state_breakdown.map((item, idx) => (
+                            <TableRow key={idx} className="border-gray-700">
+                              <TableCell className="font-medium text-white">{item.State || item.state || '-'}</TableCell>
+                              <TableCell className="text-right text-white">{formatNumber(item["Vehicle Registration"] || 0)}</TableCell>
+                              <TableCell className="text-right text-white">{formatCurrency(item["Revenue - Total"] || 0)}</TableCell>
+                              <TableCell className="text-right text-white">{formatNumber(item["Road Accidents"] || 0)}</TableCell>
+                              <TableCell className="text-right text-white">{formatNumber(item["e-Challan Issued"] || 0)}</TableCell>
+                            </TableRow>
+                          ))}
+                        </TableBody>
+                      </Table>
+                    </div>
+                  </CardContent>
+                </Card>
+              )}
+
+              {/* RTO Performance Ranking Chart - Top 5 and Bottom 5 */}
+              {drillDownData.rto_ranking && Array.isArray(drillDownData.rto_ranking) && drillDownData.rto_ranking.length > 0 && (
+                <Card className="bg-gray-800 border-gray-700">
+                  <CardHeader>
+                    <CardTitle className="text-white">RTO Performance Ranking (Top 5 & Bottom 5)</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="h-96">
+                      <ResponsiveContainer width="100%" height="100%">
+                        <BarChart data={drillDownData.rto_ranking} layout="vertical">
+                          <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
+                          <XAxis type="number" domain={[0, 100]} stroke="#9CA3AF" />
+                          <YAxis dataKey="rto" type="category" stroke="#9CA3AF" width={120} />
+                          <Tooltip 
+                            contentStyle={{ backgroundColor: '#1F2937', border: '1px solid #374151', borderRadius: '8px', color: '#F3F4F6' }}
+                            labelStyle={{ color: '#F3F4F6' }}
+                            itemStyle={{ color: '#F3F4F6' }}
+                            formatter={(value) => `${value}%`}
+                          />
+                          <Legend wrapperStyle={{ color: '#F3F4F6' }} />
+                          <Bar dataKey="citizen_sla" fill="#10B981" name="Citizen Service SLA % (within SLA)" radius={[0, 4, 4, 0]} />
+                          <Bar dataKey="grievance_sla" fill="#3B82F6" name="Grievance SLA % (within SLA)" radius={[0, 4, 4, 0]} />
+                        </BarChart>
+                      </ResponsiveContainer>
+                    </div>
+                  </CardContent>
+                </Card>
+              )}
+
+              {/* Trend Chart */}
+              {drillDownData.trend_data && drillDownData.trend_data.length > 0 && (
+                <Card className="bg-gray-800 border-gray-700">
+                  <CardHeader>
+                    <CardTitle className="text-white">Trend Analysis</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="h-80">
+                      <ResponsiveContainer width="100%" height="100%">
+                        <AreaChart data={drillDownData.trend_data}>
+                          <defs>
+                            <linearGradient id="colorValue" x1="0" y1="0" x2="0" y2="1">
+                              <stop offset="5%" stopColor="#3B82F6" stopOpacity={0.3}/>
+                              <stop offset="95%" stopColor="#3B82F6" stopOpacity={0}/>
+                            </linearGradient>
+                            <linearGradient id="colorRevenue" x1="0" y1="0" x2="0" y2="1">
+                              <stop offset="5%" stopColor="#10B981" stopOpacity={0.3}/>
+                              <stop offset="95%" stopColor="#10B981" stopOpacity={0}/>
+                            </linearGradient>
+                          </defs>
+                          <CartesianGrid strokeDasharray="3 3" stroke="#4B5563" />
+                          <XAxis dataKey="month" stroke="#9CA3AF" />
+                          <YAxis stroke="#9CA3AF" />
+                          <Tooltip 
+                            contentStyle={{ backgroundColor: '#1F2937', border: '1px solid #374151', borderRadius: '8px', color: '#F3F4F6' }}
+                            labelStyle={{ color: '#F3F4F6' }}
+                            itemStyle={{ color: '#F3F4F6' }}
+                          />
+                          <Legend wrapperStyle={{ color: '#F3F4F6' }} />
+                          {drillDownData.trend_data[0]?.value !== undefined && (
+                            <Area type="monotone" dataKey="value" stroke="#3B82F6" fill="url(#colorValue)" name="Value" />
+                          )}
+                          {drillDownData.trend_data[0]?.revenue !== undefined && (
+                            <Area type="monotone" dataKey="revenue" stroke="#10B981" fill="url(#colorRevenue)" name="Revenue" />
+                          )}
+                        </AreaChart>
+                      </ResponsiveContainer>
+                    </div>
+                  </CardContent>
+                </Card>
+              )}
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };

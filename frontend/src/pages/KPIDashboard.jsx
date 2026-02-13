@@ -469,7 +469,92 @@ const KPIDashboard = () => {
   };
 
   const RTOPerformanceKPIs = () => {
-    const data = kpiData.rto_performance.slice(0, 20); // Top 20 RTOs
+    // Check if we have data
+    if (!kpiData.rto_performance || kpiData.rto_performance.length === 0) {
+      return (
+        <div className="space-y-6">
+          <Card>
+            <CardContent className="p-10 text-center">
+              <p className="text-gray-500">No RTO performance data available</p>
+            </CardContent>
+          </Card>
+        </div>
+      );
+    }
+    
+    // Calculate Top 5 and Bottom 5 RTOs by average SLA
+    const rtoDataWithAvg = kpiData.rto_performance
+      .filter(rto => rto && (rto.RTO || rto["RTO"])) // Filter out invalid entries
+      .map(rto => {
+        // Try multiple field name variations
+        const citizenSLA = Number(
+          rto["Citizen Service SLA % (within SLA)"] || 
+          rto["Citizen Service SLA"] || 
+          rto["CitizenServiceSLA"] || 
+          0
+        );
+        const grievanceSLA = Number(
+          rto["Grievance SLA % (within SLA)"] || 
+          rto["Grievance SLA"] || 
+          rto["GrievanceSLA"] || 
+          0
+        );
+        const avgSLA = (citizenSLA + grievanceSLA) / 2;
+        const rtoCode = rto.RTO || rto["RTO"] || "Unknown";
+        return {
+          ...rto,
+          RTO: rtoCode,
+          "Citizen Service SLA % (within SLA)": citizenSLA,
+          "Grievance SLA % (within SLA)": grievanceSLA,
+          avgSLA: avgSLA
+        };
+      })
+      .filter(rto => {
+        // Include RTOs that have at least one SLA value > 0
+        const hasCitizenSLA = (rto["Citizen Service SLA % (within SLA)"] || 0) > 0;
+        const hasGrievanceSLA = (rto["Grievance SLA % (within SLA)"] || 0) > 0;
+        return hasCitizenSLA || hasGrievanceSLA;
+      });
+    
+    if (rtoDataWithAvg.length === 0) {
+      console.warn("No RTO data with SLA metrics. Total RTOs:", kpiData.rto_performance.length);
+      return (
+        <div className="space-y-6">
+          <Card>
+            <CardContent className="p-10 text-center">
+              <p className="text-gray-500">No valid RTO performance data with SLA metrics</p>
+              <p className="text-gray-400 text-sm mt-2">Total RTOs loaded: {kpiData.rto_performance.length}</p>
+            </CardContent>
+          </Card>
+        </div>
+      );
+    }
+    
+    // Sort by average SLA (descending)
+    rtoDataWithAvg.sort((a, b) => b.avgSLA - a.avgSLA);
+    
+    // Get Top 5 and Bottom 5
+    const top5 = rtoDataWithAvg.slice(0, Math.min(5, rtoDataWithAvg.length));
+    const bottom5Count = Math.min(5, rtoDataWithAvg.length);
+    const bottom5 = rtoDataWithAvg.slice(-bottom5Count).reverse(); // Reverse so worst is first
+    
+    // Combine Top 5 and Bottom 5 for display
+    const chartData = [...top5, ...bottom5];
+    
+    console.log("RTO Performance Chart Data:", {
+      total: kpiData.rto_performance.length,
+      withSLA: rtoDataWithAvg.length,
+      top5: top5.length,
+      bottom5: bottom5.length,
+      chartData: chartData.length,
+      sample: chartData[0],
+      allData: chartData.map(d => ({
+        rto: d.RTO,
+        citizen: d["Citizen Service SLA % (within SLA)"],
+        grievance: d["Grievance SLA % (within SLA)"],
+        avg: d.avgSLA
+      }))
+    });
     
     return (
       <div className="space-y-6">
@@ -548,25 +633,60 @@ const KPIDashboard = () => {
           </Card>
         </div>
 
+        {/* Top 5 RTO Performance Ranking */}
         <Card>
           <CardHeader>
-            <CardTitle>RTO Performance Ranking (Top 20)</CardTitle>
+            <CardTitle className="flex items-center gap-2">
+              <TrendingUp className="w-5 h-5 text-green-500" />
+              Top 5 RTO Performance Ranking
+            </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="h-96 overflow-auto">
+            <div className="h-80">
               <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={data.slice(0, 20)} layout="vertical">
+                <BarChart data={top5} layout="vertical">
                   <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis type="number" />
+                  <XAxis type="number" domain={[0, 100]} />
                   <YAxis dataKey="RTO" type="category" width={120} />
                   <Tooltip 
                     contentStyle={{ backgroundColor: '#1F2937', border: '1px solid #374151', borderRadius: '8px', color: '#F3F4F6' }}
                     labelStyle={{ color: '#F3F4F6' }}
                     itemStyle={{ color: '#F3F4F6' }}
+                    formatter={(value) => `${value}%`}
                   />
                   <Legend />
-                  <Bar dataKey="Citizen Service SLA % (within SLA)" fill="#10B981" />
-                  <Bar dataKey="Grievance SLA % (within SLA)" fill="#3B82F6" />
+                  <Bar dataKey="Citizen Service SLA % (within SLA)" fill="#10B981" name="Citizen Service SLA % (within SLA)" radius={[0, 4, 4, 0]} />
+                  <Bar dataKey="Grievance SLA % (within SLA)" fill="#3B82F6" name="Grievance SLA % (within SLA)" radius={[0, 4, 4, 0]} />
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Bottom 5 RTO Performance Ranking */}
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <TrendingDown className="w-5 h-5 text-red-500" />
+              Bottom 5 RTO Performance Ranking
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="h-80">
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart data={bottom5} layout="vertical">
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis type="number" domain={[0, 100]} />
+                  <YAxis dataKey="RTO" type="category" width={120} />
+                  <Tooltip 
+                    contentStyle={{ backgroundColor: '#1F2937', border: '1px solid #374151', borderRadius: '8px', color: '#F3F4F6' }}
+                    labelStyle={{ color: '#F3F4F6' }}
+                    itemStyle={{ color: '#F3F4F6' }}
+                    formatter={(value) => `${value}%`}
+                  />
+                  <Legend />
+                  <Bar dataKey="Citizen Service SLA % (within SLA)" fill="#10B981" name="Citizen Service SLA % (within SLA)" radius={[0, 4, 4, 0]} />
+                  <Bar dataKey="Grievance SLA % (within SLA)" fill="#3B82F6" name="Grievance SLA % (within SLA)" radius={[0, 4, 4, 0]} />
                 </BarChart>
               </ResponsiveContainer>
             </div>
@@ -727,7 +847,7 @@ const KPIDashboard = () => {
 
       {/* Tabs for different KPI levels */}
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-        <TabsList className="grid w-full grid-cols-7 bg-white/10">
+        <TabsList className="grid w-full grid-cols-5 bg-white/10">
           <TabsTrigger value="national" className="data-[state=active]:bg-white data-[state=active]:text-gray-900">
             <Globe className="w-4 h-4 mr-2" />
             National
@@ -735,14 +855,6 @@ const KPIDashboard = () => {
           <TabsTrigger value="state" className="data-[state=active]:bg-white data-[state=active]:text-gray-900">
             <Building2 className="w-4 h-4 mr-2" />
             State Level
-          </TabsTrigger>
-          <TabsTrigger value="rto" className="data-[state=active]:bg-white data-[state=active]:text-gray-900">
-            <MapPin className="w-4 h-4 mr-2" />
-            RTO Level
-          </TabsTrigger>
-          <TabsTrigger value="fleet" className="data-[state=active]:bg-white data-[state=active]:text-gray-900">
-            <Car className="w-4 h-4 mr-2" />
-            Fleet Level
           </TabsTrigger>
           <TabsTrigger value="policy" className="data-[state=active]:bg-white data-[state=active]:text-gray-900">
             <Target className="w-4 h-4 mr-2" />
@@ -959,73 +1071,6 @@ const KPIDashboard = () => {
           </Tabs>
         </TabsContent>
 
-        <TabsContent value="rto" className="space-y-4 mt-6">
-          <Tabs defaultValue="performance" className="w-full">
-            <TabsList>
-              <TabsTrigger value="performance">Performance</TabsTrigger>
-              <TabsTrigger value="derived">Derived KPIs</TabsTrigger>
-            </TabsList>
-            <TabsContent value="performance">
-              <RTOPerformanceKPIs />
-            </TabsContent>
-            <TabsContent value="derived">
-              {rtoDerivedKPIs && !rtoDerivedKPIs.error && (
-                <div className="space-y-6">
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                    <Card 
-                      className="cursor-pointer hover:shadow-lg transition-shadow"
-                      onClick={() => handleDrillDown('rto_breakdown', { state: rtoDerivedKPIs.state, rto: rtoDerivedKPIs.rto })}
-                    >
-                      <CardContent className="p-5">
-                        <p className="text-gray-500 text-sm font-medium mb-1">Performance Index</p>
-                        <p className="text-2xl font-bold text-gray-900">
-                          {rtoDerivedKPIs.derived_kpis?.rto_performance_index || 0}
-                        </p>
-                        <p className="text-xs text-gray-400 mt-1">Click to view details</p>
-                      </CardContent>
-                    </Card>
-                    <Card 
-                      className="cursor-pointer hover:shadow-lg transition-shadow"
-                      onClick={() => handleDrillDown('rto_breakdown', { state: rtoDerivedKPIs.state, rto: rtoDerivedKPIs.rto })}
-                    >
-                      <CardContent className="p-5">
-                        <p className="text-gray-500 text-sm font-medium mb-1">Revenue per RTO</p>
-                        <p className="text-2xl font-bold text-gray-900">
-                          {formatCurrency(rtoDerivedKPIs.derived_kpis?.revenue_per_rto || 0)}
-                        </p>
-                        <p className="text-xs text-gray-400 mt-1">Click to view breakdown</p>
-                      </CardContent>
-                    </Card>
-                    <Card 
-                      className="cursor-pointer hover:shadow-lg transition-shadow"
-                      onClick={() => handleDrillDown('enforcement', { state: rtoDerivedKPIs.state })}
-                    >
-                      <CardContent className="p-5">
-                        <p className="text-gray-500 text-sm font-medium mb-1">Enforcement Effectiveness</p>
-                        <p className="text-2xl font-bold text-gray-900">
-                          {rtoDerivedKPIs.derived_kpis?.enforcement_effectiveness || 0}%
-                        </p>
-                        <p className="text-xs text-gray-400 mt-1">Click to view analysis</p>
-                      </CardContent>
-                    </Card>
-                    <Card>
-                      <CardContent className="p-5">
-                        <p className="text-gray-500 text-sm font-medium mb-1">Faceless Application %</p>
-                        <p className="text-2xl font-bold text-gray-900">
-                          {rtoDerivedKPIs.derived_kpis?.faceless_application_pct || 0}%
-                        </p>
-                      </CardContent>
-                    </Card>
-                  </div>
-                </div>
-              )}
-            </TabsContent>
-          </Tabs>
-        </TabsContent>
-
-        <TabsContent value="fleet" className="space-y-4 mt-6">
-          <FleetKPIs />
-        </TabsContent>
 
         <TabsContent value="policy" className="space-y-4 mt-6">
           <Card>

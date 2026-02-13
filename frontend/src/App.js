@@ -10,11 +10,11 @@ import ExecutiveDashboard from "@/pages/ExecutiveDashboard";
 import KPIDashboard from "@/pages/KPIDashboard";
 import AdvancedKPIDashboard from "@/pages/AdvancedKPIDashboard";
 import VehicleAnalytics from "@/pages/VehicleAnalytics";
+import FleetAnalytics from "@/pages/FleetAnalytics";
 import TicketManagement from "@/pages/TicketManagement";
 import SentimentAnalysis from "@/pages/SentimentAnalysis";
 import ChatbotPage from "@/pages/ChatbotPage";
 import DocumentVerification from "@/pages/DocumentVerification";
-import AadhaarVerification from "@/pages/AadhaarVerification";
 import FacialRecognition from "@/pages/FacialRecognition";
 import VehicleDetection from "@/pages/VehicleDetection";
 import ManufacturerMarket from "@/pages/ManufacturerMarket";
@@ -25,14 +25,35 @@ import Sidebar from "@/components/Sidebar";
 import FloatingChatbot from "@/components/FloatingChatbot";
 import GeoFilterBar from "@/components/GeoFilterBar";
 
-// In development we ALWAYS use CRA dev-server proxy (avoids CORS + LAN hostname issues).
-// In production you can set REACT_APP_BACKEND_URL to a full backend origin.
+// Backend URL configuration - using direct connection to avoid proxy issues
 const _isDev = process.env.NODE_ENV !== "production";
-const _rawBackendUrl = (process.env.REACT_APP_BACKEND_URL || "").trim();
+// In production, use relative API path (proxied through nginx)
+// In development, use explicit backend URL
+const _rawBackendUrl = (process.env.REACT_APP_BACKEND_URL || process.env.REACT_APP_API_URL || "").trim();
 const _hasExplicitBackend =
   !!_rawBackendUrl && !["undefined", "null"].includes(_rawBackendUrl.toLowerCase());
-const BACKEND_URL = _hasExplicitBackend ? _rawBackendUrl.replace(/\/+$/, "") : "";
-export const API = _isDev ? "/api" : _hasExplicitBackend ? `${BACKEND_URL}/api` : "/api";
+
+// Determine API URL based on environment
+let API_URL;
+if (process.env.REACT_APP_API_URL) {
+  // If REACT_APP_API_URL is set, use it directly (for production)
+  API_URL = process.env.REACT_APP_API_URL.trim().replace(/\/+$/, "");
+} else if (_hasExplicitBackend) {
+  // Construct from REACT_APP_BACKEND_URL
+  const backendUrl = _rawBackendUrl.replace(/\/+$/, "");
+  API_URL = `${backendUrl}/api`;
+} else {
+  // Default to relative path in production, localhost in development
+  // Note: window is not available at module load time, so we'll check at runtime
+  API_URL = null; // Will be determined dynamically
+}
+
+// Export API constant - will be set dynamically if needed
+export const API = API_URL || (typeof window !== "undefined" 
+  ? (window.location.hostname !== "localhost" && window.location.hostname !== "127.0.0.1"
+      ? "/api" 
+      : "http://localhost:8003/api")
+  : "http://localhost:8003/api");
 
 // Layout wrapper for dashboard pages
 const DashboardLayout = ({ children }) => {
@@ -88,6 +109,11 @@ function App() {
               <VehicleAnalytics />
             </DashboardLayout>
           } />
+          <Route path="/fleet-analytics" element={
+            <DashboardLayout>
+              <FleetAnalytics />
+            </DashboardLayout>
+          } />
           <Route path="/tickets" element={
             <DashboardLayout>
               <TicketManagement />
@@ -106,11 +132,6 @@ function App() {
           <Route path="/document-verification" element={
             <DashboardLayout>
               <DocumentVerification />
-            </DashboardLayout>
-          } />
-          <Route path="/aadhaar-verification" element={
-            <DashboardLayout>
-              <AadhaarVerification />
             </DashboardLayout>
           } />
           <Route path="/facial-recognition" element={

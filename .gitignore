@@ -81,4 +81,3 @@ Thumbs.db
 !*.xls
 # Exclude only very large zip files
 data/geojson/maps-master.zip
-

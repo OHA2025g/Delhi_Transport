@@ -14,12 +14,12 @@ const navItems = [
   { icon: Brain, label: "Advanced KPIs", path: "/advanced-kpi-dashboard" },
   { icon: TrendingUp, label: "RTO Analysis", path: "/rto-analysis" },
   { icon: Car, label: "Vehicle Analytics", path: "/vehicle-analytics" },
+  { icon: Truck, label: "Fleet Analytics", path: "/fleet-analytics" },
   { icon: Factory, label: "Maker Dashboard", path: "/maker" },
   { icon: Ticket, label: "Ticket Management", path: "/tickets" },
   { icon: SmilePlus, label: "Sentiment Analysis", path: "/sentiment" },
   { icon: MessageSquare, label: "AI Chatbot", path: "/chatbot" },
   { icon: FileSearch, label: "Document Verification", path: "/document-verification" },
-  { icon: CreditCard, label: "Aadhaar Verification", path: "/aadhaar-verification" },
   { icon: UserCheck, label: "Facial Recognition", path: "/facial-recognition" },
   { icon: Truck, label: "Vehicle Detection", path: "/vehicle-detection" },
 ];

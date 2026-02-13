@@ -67,7 +67,7 @@ const AdvancedKPIDashboard = () => {
       
       const [
         mobilityRes, digitalRes, revenueRes, enforcementRes, policyRes,
-        rtoRes, internalRes, fleetRes, driverRes, insightsRes
+        rtoRes, internalRes, driverRes, insightsRes
       ] = await Promise.all([
         axios.get(`${API}/kpi/advanced/mobility-growth`, { params: { state, month } }),
         axios.get(`${API}/kpi/advanced/digital-governance`, { params: { state, month } }),
@@ -76,7 +76,6 @@ const AdvancedKPIDashboard = () => {
         axios.get(`${API}/kpi/advanced/policy-effectiveness`, { params: { state, month } }),
         axios.get(`${API}/kpi/advanced/rto-performance`, { params: { state, rto, month } }),
         axios.get(`${API}/kpi/advanced/internal-efficiency`, { params: { state, rto, month } }),
-        axios.get(`${API}/kpi/advanced/fleet-compliance`, { params: { state, month } }),
         axios.get(`${API}/kpi/advanced/driver-risk`, { params: { state, month } }),
         axios.get(`${API}/kpi/advanced/insights`, { params: { state, month } }),
       ]);
@@ -89,7 +88,7 @@ const AdvancedKPIDashboard = () => {
         policy: policyRes.data,
         rto: rtoRes.data,
         internal: internalRes.data,
-        fleet: fleetRes.data,
+        fleet: null,
         driver: driverRes.data,
       });
       // Ensure insightsData has proper structure
@@ -418,15 +417,13 @@ const AdvancedKPIDashboard = () => {
 
       <div className="relative z-20">
       <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-4">
-        <TabsList className="grid w-full grid-cols-5 lg:grid-cols-10 relative z-20 pointer-events-auto">
+        <TabsList className="grid w-full grid-cols-5 lg:grid-cols-8 relative z-20 pointer-events-auto">
           <TabsTrigger value="mobility">Mobility</TabsTrigger>
           <TabsTrigger value="digital">Digital</TabsTrigger>
           <TabsTrigger value="revenue">Revenue</TabsTrigger>
           <TabsTrigger value="enforcement">Enforcement</TabsTrigger>
           <TabsTrigger value="policy">Policy</TabsTrigger>
-          <TabsTrigger value="rto">RTO</TabsTrigger>
           <TabsTrigger value="internal">Internal</TabsTrigger>
-          <TabsTrigger value="fleet">Fleet</TabsTrigger>
           <TabsTrigger value="driver">Driver</TabsTrigger>
           <TabsTrigger value="insights">Insights</TabsTrigger>
         </TabsList>
@@ -1006,95 +1003,6 @@ const AdvancedKPIDashboard = () => {
           </Card>
         </TabsContent>
 
-        {/* RTO Performance */}
-        <TabsContent value="rto" className="space-y-4">
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-gray-900 dark:text-white">
-                <Building2 className="h-5 w-5 text-primary" />
-                RTO Performance Intelligence KPIs
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              {kpiData.rto ? (
-                <>
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-                    <KPICard
-                      title="RTO Digital Maturity Score"
-                      value={kpiData.rto.kpis?.rto_digital_maturity_score}
-                      unit=""
-                      icon={Zap}
-                      status={true}
-                      description="Automation readiness"
-                      drillDownType="rto_performance"
-                    />
-                    <KPICard
-                      title="RTO Financial Health Index"
-                      value={formatCurrency(kpiData.rto.kpis?.rto_financial_health_index)}
-                      icon={DollarSign}
-                      description="Fiscal discipline"
-                      drillDownType="rto_performance"
-                    />
-                    <KPICard
-                      title="RTO Risk Flag"
-                      value={kpiData.rto.kpis?.rto_risk_flag}
-                      icon={AlertTriangle}
-                      description="Governance risk"
-                      drillDownType="rto_performance"
-                    />
-                    <KPICard
-                      title="Composite RTO Performance Index"
-                      value={kpiData.rto.kpis?.composite_rto_performance_index}
-                      unit=""
-                      icon={Award}
-                      status={true}
-                      description="Overall score"
-                      drillDownType="rto_performance"
-                    />
-                  </div>
-                  
-                  {/* RTO Performance Metrics */}
-                  <Card className="mt-4">
-                    <CardHeader>
-                      <CardTitle className="text-gray-900 dark:text-white">RTO Performance Metrics</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="h-80">
-                        <ResponsiveContainer width="100%" height="100%">
-                          <BarChart data={[
-                            { 
-                              name: 'Faceless %', 
-                              value: kpiData.rto.supporting_metrics?.faceless_percentage || 0,
-                              fill: '#3B82F6'
-                            },
-                            { 
-                              name: 'SLA %', 
-                              value: kpiData.rto.supporting_metrics?.sla_percentage || 0,
-                              fill: '#10B981'
-                            }
-                          ]}>
-                            <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
-                            <XAxis dataKey="name" stroke="#9CA3AF" />
-                            <YAxis domain={[0, 100]} stroke="#9CA3AF" />
-                            <Tooltip 
-                              contentStyle={{ backgroundColor: '#1F2937', border: '1px solid #374151', borderRadius: '8px', color: '#F3F4F6' }}
-                              labelStyle={{ color: '#F3F4F6' }}
-                              itemStyle={{ color: '#F3F4F6' }}
-                              formatter={(value) => `${value}%`}
-                            />
-                            <Bar dataKey="value" radius={[8, 8, 0, 0]} />
-                          </BarChart>
-                        </ResponsiveContainer>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </>
-              ) : (
-                <p className="text-gray-600 dark:text-gray-300">No data available</p>
-              )}
-            </CardContent>
-          </Card>
-        </TabsContent>
 
         {/* Internal Efficiency */}
         <TabsContent value="internal" className="space-y-4">
@@ -1194,113 +1102,6 @@ const AdvancedKPIDashboard = () => {
           </Card>
         </TabsContent>
 
-        {/* Fleet Compliance */}
-        <TabsContent value="fleet" className="space-y-4">
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-gray-900 dark:text-white">
-                <Car className="h-5 w-5 text-primary" />
-                Fleet Compliance & Risk KPIs
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              {kpiData.fleet ? (
-                <>
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-                    <KPICard
-                      title="Fleet Compliance Score"
-                      value={kpiData.fleet.kpis?.fleet_compliance_score}
-                      unit="%"
-                      icon={CheckCircle}
-                      status={true}
-                      description="Legal compliance"
-                      drillDownType="fleet_compliance"
-                      showProgress={true}
-                    />
-                    <KPICard
-                      title="Revenue at Risk (Fleet)"
-                      value={formatCurrency(kpiData.fleet.kpis?.revenue_at_risk_fleet)}
-                      icon={DollarSign}
-                      description="Uncollected revenue"
-                      drillDownType="fleet_compliance"
-                    />
-                    <KPICard
-                      title="Fitness Risk Index"
-                      value={kpiData.fleet.kpis?.fitness_risk_index}
-                      unit="%"
-                      icon={AlertTriangle}
-                      description="Road safety risk"
-                      drillDownType="fleet_compliance"
-                      showProgress={true}
-                    />
-                    <KPICard
-                      title="Insurance Exposure Score"
-                      value={kpiData.fleet.kpis?.insurance_exposure_score}
-                      unit="%"
-                      icon={Shield}
-                      description="Accident liability"
-                      drillDownType="fleet_compliance"
-                      showProgress={true}
-                    />
-                  </div>
-                  
-                  {/* Fleet Dues Breakdown */}
-                  <Card className="mt-4">
-                    <CardHeader>
-                      <CardTitle className="text-gray-900 dark:text-white">Fleet Dues Breakdown</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="h-80">
-                        <ResponsiveContainer width="100%" height="100%">
-                          <BarChart data={[
-                            { 
-                              name: 'Tax Due', 
-                              value: kpiData.fleet.supporting_metrics?.tax_due_amount || 0,
-                              fill: '#3B82F6'
-                            },
-                            { 
-                              name: 'Insurance Due', 
-                              value: kpiData.fleet.supporting_metrics?.insurance_due_amount || 0,
-                              fill: '#10B981'
-                            },
-                            { 
-                              name: 'Fitness Due', 
-                              value: kpiData.fleet.supporting_metrics?.fitness_due_amount || 0,
-                              fill: '#F59E0B'
-                            },
-                            { 
-                              name: 'PUCC Due', 
-                              value: kpiData.fleet.supporting_metrics?.pucc_due_amount || 0,
-                              fill: '#8B5CF6'
-                            },
-                            { 
-                              name: 'Challan Due', 
-                              value: kpiData.fleet.supporting_metrics?.challan_due_amount || 0,
-                              fill: '#EF4444'
-                            }
-                          ]}>
-                            <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
-                            <XAxis dataKey="name" stroke="#9CA3AF" />
-                            <YAxis stroke="#9CA3AF" />
-                            <Tooltip 
-                              contentStyle={{ backgroundColor: '#1F2937', border: '1px solid #374151', borderRadius: '8px', color: '#F3F4F6' }}
-                              labelStyle={{ color: '#F3F4F6' }}
-                              itemStyle={{ color: '#F3F4F6' }}
-                              formatter={(value) => formatCurrency(value)}
-                            />
-                            <Bar dataKey="value" radius={[8, 8, 0, 0]} />
-                          </BarChart>
-                        </ResponsiveContainer>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </>
-              ) : (
-                <p className="text-gray-600 dark:text-gray-300">No data available</p>
-              )}
-            </CardContent>
-          </Card>
-        </TabsContent>
 
         {/* Driver Risk */}
         <TabsContent value="driver" className="space-y-4">

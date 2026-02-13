@@ -5902,33 +5902,109 @@ async def get_rto_performance_kpis(
             gen_agg_cursor = db["kpi_rto_general"].find({"Month": current_month})
             gen_agg_data = await gen_agg_cursor.to_list(100)
             
-            # Average faceless and SLA percentages
-            faceless_values = [_as_float(r.get("Faceless %")) or 0 for r in perf_agg_data if r.get("Faceless %")]
-            sla_values = [_as_float(r.get("Citizen Service SLA % (within SLA)")) or 0 for r in perf_agg_data if r.get("Citizen Service SLA % (within SLA)")]
+            # Average faceless and SLA percentages - try multiple field name variations
+            faceless_values = []
+            sla_values = []
+            for r in perf_agg_data:
+                # Try multiple field name variations for Faceless %
+                faceless_val = (
+                    _as_float(r.get("Faceless %")) or
+                    _as_float(r.get("Faceless%")) or
+                    _as_float(r.get("Faceless")) or
+                    _as_float(r.get("Faceless Service Count")) or
+                    0
+                )
+                if faceless_val > 0:
+                    faceless_values.append(faceless_val)
+                
+                # Try multiple field name variations for SLA
+                sla_val = (
+                    _as_float(r.get("Citizen Service SLA % (within SLA)")) or
+                    _as_float(r.get("Citizen Service SLA %(within SLA)")) or
+                    _as_float(r.get("Citizen Service SLA")) or
+                    _as_float(r.get("CitizenServiceSLA")) or
+                    _as_float(r.get("SLA %")) or
+                    0
+                )
+                if sla_val > 0:
+                    sla_values.append(sla_val)
+            
             faceless_pct = sum(faceless_values) / len(faceless_values) if faceless_values else 0
             sla_pct = sum(sla_values) / len(sla_values) if sla_values else 0
+            
+            # If still 0, try getting from state service data as fallback
+            if faceless_pct == 0 or sla_pct == 0:
+                state_svc = await db["kpi_state_service"].find_one({"Month": current_month}, sort=[("Month", -1)])
+                if state_svc:
+                    if faceless_pct == 0:
+                        faceless_count = _as_float(state_svc.get("Faceless Service Count")) or _as_float(state_svc.get("Faceless Service Count ")) or 0
+                        online_count = _as_float(state_svc.get("Online Service Count")) or _as_float(state_svc.get("Online Service Count ")) or 0
+                        total_services = faceless_count + online_count
+                        faceless_pct = (faceless_count / total_services * 100) if total_services > 0 else 0
+                    if sla_pct == 0:
+                        sla_pct = _as_float(state_svc.get("Citizen Service SLA % (within SLA)")) or _as_float(state_svc.get("Citizen Service SLA % (within SLA) ")) or 0
             
             revenue = sum(_as_float(r.get("Revenue - Total")) or 0 for r in gen_agg_data)
             defaulter_amount = sum(_as_float(r.get("Tax Defaulter Amount")) or 0 for r in gen_agg_data)
             defaulter_count = sum(_as_float(r.get("Tax Defaulter Count")) or 0 for r in gen_agg_data)
         else:
-            faceless_pct = _as_float(rto_perf.get("Faceless %")) or 0
-            sla_pct = _as_float(rto_perf.get("Citizen Service SLA % (within SLA)")) or 0
+            # Try multiple field name variations
+            faceless_pct = (
+                _as_float(rto_perf.get("Faceless %")) or
+                _as_float(rto_perf.get("Faceless%")) or
+                _as_float(rto_perf.get("Faceless")) or
+                0
+            )
+            sla_pct = (
+                _as_float(rto_perf.get("Citizen Service SLA % (within SLA)")) or
+                _as_float(rto_perf.get("Citizen Service SLA %(within SLA)")) or
+                _as_float(rto_perf.get("Citizen Service SLA")) or
+                _as_float(rto_perf.get("CitizenServiceSLA")) or
+                _as_float(rto_perf.get("SLA %")) or
+                0
+            )
+            
+            # Fallback to state service data if RTO data is missing
+            if faceless_pct == 0 or sla_pct == 0:
+                state_svc = await db["kpi_state_service"].find_one(
+                    {"Month": current_month, "State": state} if state else {"Month": current_month},
+                    sort=[("Month", -1)]
+                )
+                if state_svc:
+                    if faceless_pct == 0:
+                        faceless_count = _as_float(state_svc.get("Faceless Service Count")) or _as_float(state_svc.get("Faceless Service Count ")) or 0
+                        online_count = _as_float(state_svc.get("Online Service Count")) or _as_float(state_svc.get("Online Service Count ")) or 0
+                        total_services = faceless_count + online_count
+                        faceless_pct = (faceless_count / total_services * 100) if total_services > 0 else 0
+                    if sla_pct == 0:
+                        sla_pct = _as_float(state_svc.get("Citizen Service SLA % (within SLA)")) or _as_float(state_svc.get("Citizen Service SLA % (within SLA) ")) or 0
+            
             revenue = _as_float(rto_gen.get("Revenue - Total")) or 0
             defaulter_amount = _as_float(rto_gen.get("Tax Defaulter Amount")) or 0
             defaulter_count = _as_float(rto_gen.get("Tax Defaulter Count")) or 0
         
+        # Log values for debugging
+        logger.info(f"RTO Performance KPIs - Faceless %: {faceless_pct}, SLA %: {sla_pct}, Revenue: {revenue}")
+        
         # Calculate KPIs
-        rto_digital_maturity_score = round((faceless_pct * sla_pct) / 100, 2)
+        # Ensure we have valid percentages before calculating
+        if faceless_pct <= 0 or sla_pct <= 0:
+            logger.warning(f"Low or zero values detected - Faceless: {faceless_pct}%, SLA: {sla_pct}%")
+        
+        rto_digital_maturity_score = round((faceless_pct * sla_pct) / 100, 2) if (faceless_pct > 0 and sla_pct > 0) else 0.0
         rto_financial_health_index = round(revenue - defaulter_amount, 2)
         rto_risk_flag = "High Risk" if defaulter_count > 100 or defaulter_amount > revenue * 0.1 else "Normal"
         
         # Composite RTO Performance Index (weighted)
+        # Normalize financial health to 0-100 scale for better scoring
+        financial_score = min(max((rto_financial_health_index / 1000000) * 100, 0), 100) if rto_financial_health_index > 0 else 0
         composite_score = round(
             (rto_digital_maturity_score * 0.4) +
-            (min(rto_financial_health_index / 1000000, 100) * 0.4) +
+            (financial_score * 0.4) +
             (sla_pct * 0.2), 2
         )
+        
+        logger.info(f"Calculated KPIs - Digital Maturity: {rto_digital_maturity_score}, Financial Health: {rto_financial_health_index}, Composite: {composite_score}")
         
         return {
             "month": rto_perf.get("Month"),
@@ -7047,10 +7123,10 @@ async def get_rto_overview():
         if not ranking_data:
             return {"error": "No RTO ranking data available"}
         
-        # Extract overall marks
+        # Extract overall marks - field name is "Marks (100)" in the Excel
         marks = []
         for record in ranking_data:
-            overall_marks = _get_field_value(record, "Overall Marks", "Overall Marks ", "OverallMarks", "Overall_Marks")
+            overall_marks = _get_field_value(record, "Marks (100)", "Marks (100) ", "Marks", "Marks (100)", "Overall Marks ", "OverallMarks", "Overall_Marks")
             if overall_marks is not None:
                 marks.append(overall_marks)
         
@@ -7065,7 +7141,7 @@ async def get_rto_overview():
         category_data = {}
         for record in ranking_data:
             category = record.get("Category") or "Unknown"
-            overall_marks = _get_field_value(record, "Overall Marks", "Overall Marks ", "OverallMarks", "Overall_Marks")
+            overall_marks = _get_field_value(record, "Marks (100)", "Marks (100) ", "Marks", "Marks (100)", "Overall Marks ", "OverallMarks", "Overall_Marks")
             if overall_marks is not None:
                 if category not in category_data:
                     category_data[category] = []
@@ -7102,10 +7178,10 @@ async def get_top_bottom_rtos(limit: int = 10):
         # Process and sort by overall marks
         rto_list = []
         for record in ranking_data:
-            rto_code = record.get("RTO") or record.get("RTO Code") or "Unknown"
-            overall_marks = _get_field_value(record, "Overall Marks", "Overall Marks ", "OverallMarks", "Overall_Marks")
-            oct_rank = _get_field_value(record, "Oct Rank", "Oct Rank ", "OctRank", "Oct_Rank")
-            nov_rank = _get_field_value(record, "Nov Rank", "Nov Rank ", "NovRank", "Nov_Rank")
+            rto_code = record.get("RTO") or record.get("RTO Code") or record.get("Code") or "Unknown"
+            overall_marks = _get_field_value(record, "Marks (100)", "Marks (100) ", "Marks", "Marks (100)", "Overall Marks ", "OverallMarks", "Overall_Marks")
+            oct_rank = _get_field_value(record, "Old rank", "Old rank ", "Old rank", "Oct Rank ", "OctRank", "Oct_Rank")
+            nov_rank = _get_field_value(record, "New Rank", "New Rank ", "New Rank", "Nov Rank ", "NovRank", "Nov_Rank")
             category = record.get("Category") or "Unknown"
             
             if overall_marks is not None:
@@ -7143,25 +7219,82 @@ async def get_rank_movement():
         
         movements = []
         for record in ranking_data:
-            rto_code = record.get("RTO") or record.get("RTO Code") or "Unknown"
-            oct_rank = _get_field_value(record, "Oct Rank", "Oct Rank ", "OctRank", "Oct_Rank")
-            nov_rank = _get_field_value(record, "Nov Rank", "Nov Rank ", "NovRank", "Nov_Rank")
+            # Try multiple field name variations for RTO code
+            rto_code = (
+                record.get("RTO") or 
+                record.get("RTO Code") or 
+                record.get("RTO Code ") or
+                record.get("Code") or 
+                record.get("Name Of The RTO Office") or
+                record.get("RTO Name") or
+                "Unknown"
+            )
             
-            if oct_rank is not None and nov_rank is not None:
-                rank_change = oct_rank - nov_rank  # Positive = improved, Negative = declined
+            # Try multiple field name variations for ranks
+            oct_rank = _get_field_value(
+                record, 
+                "Old rank", "Old rank ", "Old Rank", "Old Rank ",
+                "Oct rank", "Oct rank ", "Oct Rank", "Oct Rank ",
+                "OctRank", "Oct_Rank", "oct_rank"
+            )
+            nov_rank = _get_field_value(
+                record,
+                "New Rank", "New Rank ", "New rank", "New rank ",
+                "Nov Rank", "Nov Rank ", "Nov rank", "Nov rank ",
+                "NovRank", "Nov_Rank", "nov_rank"
+            )
+            
+            # Convert to float/int if they're strings
+            if oct_rank is not None:
+                try:
+                    oct_rank = float(oct_rank) if not isinstance(oct_rank, (int, float)) else oct_rank
+                except (ValueError, TypeError):
+                    oct_rank = None
+                    
+            if nov_rank is not None:
+                try:
+                    nov_rank = float(nov_rank) if not isinstance(nov_rank, (int, float)) else nov_rank
+                except (ValueError, TypeError):
+                    nov_rank = None
+            
+            if oct_rank is not None and nov_rank is not None and oct_rank > 0 and nov_rank > 0:
+                rank_change = int(oct_rank) - int(nov_rank)  # Positive = improved (lower rank number), Negative = declined
                 movements.append({
                     "rto_code": str(rto_code),
-                    "oct_rank": oct_rank,
-                    "nov_rank": nov_rank,
+                    "oct_rank": int(oct_rank),
+                    "nov_rank": int(nov_rank),
                     "rank_change": rank_change
                 })
         
-        # Find most improved and largest decline
-        movements.sort(key=lambda x: x["rank_change"], reverse=True)
-        most_improved = movements[0] if movements else None
+        if not movements:
+            logger.warning("No valid rank movement data found. Sample record fields: " + str(list(ranking_data[0].keys())[:10]) if ranking_data else "No records")
+            return {
+                "movements": [],
+                "most_improved": None,
+                "largest_decline": None,
+                "scatter_data": []
+            }
         
-        movements.sort(key=lambda x: x["rank_change"])
-        largest_decline = movements[0] if movements else None
+        # Find most improved (highest positive rank_change = biggest improvement)
+        # Lower rank number = better, so going from rank 10 to rank 5 is improvement of +5
+        movements_sorted_improved = sorted(movements, key=lambda x: x["rank_change"], reverse=True)
+        most_improved = movements_sorted_improved[0] if movements_sorted_improved and movements_sorted_improved[0]["rank_change"] > 0 else None
+        
+        # Find largest decline (most negative rank_change = biggest decline)
+        # Going from rank 5 to rank 10 is decline of -5
+        movements_sorted_declined = sorted(movements, key=lambda x: x["rank_change"])
+        largest_decline = movements_sorted_declined[0] if movements_sorted_declined and movements_sorted_declined[0]["rank_change"] < 0 else None
+        
+        # If no improvement/decline found, find the ones with smallest absolute change (closest to 0)
+        if not most_improved:
+            # Find RTO with highest rank_change (even if negative, it's the "best" of the bad)
+            most_improved = max(movements, key=lambda x: x["rank_change"]) if movements else None
+            
+        if not largest_decline:
+            # Find RTO with lowest rank_change (most negative)
+            largest_decline = min(movements, key=lambda x: x["rank_change"]) if movements else None
+        
+        logger.info(f"Rank movement: {len(movements)} RTOs, Most improved: {most_improved}, Largest decline: {largest_decline}")
         
         return {
             "movements": movements,
@@ -7185,29 +7318,29 @@ async def get_kpi_drivers():
         # Extract all score components and overall marks
         data_points = []
         for record in ranking_data:
-            overall_marks = _get_field_value(record, "Overall Marks", "Overall Marks ", "OverallMarks", "Overall_Marks")
+            overall_marks = _get_field_value(record, "Marks (100)", "Marks (100) ", "Marks", "Overall Marks", "Overall Marks ", "OverallMarks", "Overall_Marks")
             if overall_marks is None:
                 continue
             
             point = {"overall_marks": overall_marks}
             
-            # Get all score components
-            sarathi_score = _get_field_value(record, "Sarathi Score", "Sarathi Score ", "SarathiScore", "Sarathi_Score")
-            vahan_score = _get_field_value(record, "Vahan Score", "Vahan Score ", "VahanScore", "Vahan_Score")
-            challan_collection_score = _get_field_value(record, "Challan Collection Score", "Challan Collection Score ", "ChallanCollectionScore", "Challan_Collection_Score")
-            device_collection_score = _get_field_value(record, "Device Collection Score", "Device Collection Score ", "DeviceCollectionScore", "Device_Collection_Score")
-            online_revenue_score = _get_field_value(record, "Online Revenue Score", "Online Revenue Score ", "OnlineRevenueScore", "Online_Revenue_Score")
+            # Get all score components - using actual field names from Excel
+            sarathi_pendency = _get_field_value(record, "Sarathi Pendency", "Sarathi Pendency ", "SarathiScore", "Sarathi_Score")
+            vahan_pendency = _get_field_value(record, "Vahan Pendency", "Vahan Pendency ", "VahanScore", "Vahan_Score")
+            challan_collection_pendency = _get_field_value(record, "Challan Collection Pendency", "Challan Collection Pendency ", "ChallanCollectionScore", "Challan_Collection_Score")
+            device_collection = _get_field_value(record, "Challan collection by device", "Challan collection by device ", "Device Collection Score", "Device Collection Score ", "DeviceCollectionScore", "Device_Collection_Score")
+            online_revenue = _get_field_value(record, "Online Revenue", "Online Revenue ", "Online Revenue Score", "Online Revenue Score ", "OnlineRevenueScore", "Online_Revenue_Score")
             
-            if sarathi_score is not None:
-                point["sarathi_score"] = sarathi_score
-            if vahan_score is not None:
-                point["vahan_score"] = vahan_score
-            if challan_collection_score is not None:
-                point["challan_collection_score"] = challan_collection_score
-            if device_collection_score is not None:
-                point["device_collection_score"] = device_collection_score
-            if online_revenue_score is not None:
-                point["online_revenue_score"] = online_revenue_score
+            if sarathi_pendency is not None:
+                point["sarathi_score"] = sarathi_pendency
+            if vahan_pendency is not None:
+                point["vahan_score"] = vahan_pendency
+            if challan_collection_pendency is not None:
+                point["challan_collection_score"] = challan_collection_pendency
+            if device_collection is not None:
+                point["device_collection_score"] = device_collection
+            if online_revenue is not None:
+                point["online_revenue_score"] = online_revenue
             
             data_points.append(point)
         
@@ -7264,9 +7397,9 @@ async def get_online_revenue_analysis():
         
         for record in revenue_data:
             total_rev = _get_field_value(record, "Total Revenue", "Total Revenue ", "TotalRevenue", "Total_Revenue")
-            online_rev = _get_field_value(record, "Online Revenue", "Online Revenue ", "OnlineRevenue", "Online_Revenue")
-            cash_rev = _get_field_value(record, "Cash Revenue", "Cash Revenue ", "CashRevenue", "Cash_Revenue")
-            rto_code = record.get("RTO") or record.get("RTO Code") or "Unknown"
+            online_rev = _get_field_value(record, "Total Online Revenue", "Total Online Revenue ", "Online Revenue", "Online Revenue ", "OnlineRevenue", "Online_Revenue")
+            cash_rev = _get_field_value(record, "Total Cash Revenue", "Total Cash Revenue ", "Cash Revenue", "Cash Revenue ", "CashRevenue", "Cash_Revenue")
+            rto_code = record.get("RTO Name") or record.get("RTO Code") or record.get("RTO") or "Unknown"
             
             if total_rev is not None:
                 total_revenue_sum += total_rev
@@ -7320,10 +7453,10 @@ async def get_sarathi_pendency():
         rto_details = []
         
         for record in pendency_data:
-            total_apps = _get_field_value(record, "Total Applications", "Total Applications ", "TotalApplications", "Total_Applications")
+            total_apps = _get_field_value(record, "Applications Received", "Applications Received ", "Total Applications", "Total Applications ", "TotalApplications", "Total_Applications")
             approved = _get_field_value(record, "Approved", "Approved ", "Approved")
-            pending = _get_field_value(record, "Pending", "Pending ", "Pending")
-            rto_code = record.get("RTO") or record.get("RTO Code") or "Unknown"
+            pending = _get_field_value(record, "Pending at Office", "Pending at Office ", "Pending", "Pending ", "Pending")
+            rto_code = record.get("Name Of The RTO Office") or record.get("RTO Office Code") or record.get("RTO") or record.get("RTO Code") or "Unknown"
             
             if total_apps is not None and total_apps > 0:
                 total_applications_sum += total_apps
@@ -7369,10 +7502,10 @@ async def get_vahan_pendency():
         rto_details = []
         
         for record in pendency_data:
-            total_apps = _get_field_value(record, "Total Applications", "Total Applications ", "TotalApplications", "Total_Applications")
+            total_apps = _get_field_value(record, "Total Applications received", "Total Applications received ", "Total Applications", "Total Applications ", "TotalApplications", "Total_Applications")
             approved = _get_field_value(record, "Approved", "Approved ", "Approved")
-            pending = _get_field_value(record, "Pending", "Pending ", "Pending")
-            rto_code = record.get("RTO") or record.get("RTO Code") or "Unknown"
+            pending = _get_field_value(record, "Pending applications", "Pending applications ", "Pending", "Pending ", "Pending")
+            rto_code = record.get("RTO Name") or record.get("RTO Code") or record.get("RTO") or "Unknown"
             
             if total_apps is not None and total_apps > 0:
                 total_applications_sum += total_apps
@@ -7408,9 +7541,108 @@ async def get_vahan_pendency():
 async def get_challan_pendency():
     """Get Challan pendency analysis"""
     try:
+        # Try rto_challan_pendency first, then fallback to rto_max_manual_challan_table or ranking data
         pendency_data = await db["rto_challan_pendency"].find({}).to_list(1000)
         
+        # If no dedicated challan pendency data, try manual challan table or use ranking data
         if not pendency_data:
+            # Try rto_max_manual_challan_table
+            manual_challan_data = await db["rto_max_manual_challan_table"].find({}).to_list(1000)
+            if manual_challan_data:
+                rto_details = []
+                total_challans_sum = 0
+                pending_sum = 0
+                
+                for record in manual_challan_data:
+                    rto_name = record.get("CCTV Challan") or "Unknown"
+                    # Skip header row
+                    if rto_name in ["RTO Office", "Sum of Total Challans", "Sum of Challans Pending"]:
+                        continue
+                    
+                    device_challan = _get_field_value(record, "Device Challan", "Device Challan ", "DeviceChallan")
+                    manual_challan = _get_field_value(record, "Manual Challan", "Manual Challan ", "ManualChallan")
+                    sub_total = _get_field_value(record, "Sub Total", "Sub Total ", "SubTotal")
+                    
+                    total_challans = sub_total if sub_total is not None else ((device_challan or 0) + (manual_challan or 0))
+                    pending = manual_challan if manual_challan is not None else 0
+                    disposed = (total_challans - pending) if total_challans else 0
+                    device_collection = device_challan if device_challan is not None else 0
+                    
+                    if total_challans and total_challans > 0:
+                        total_challans_sum += total_challans
+                        pending_sum += pending
+                        
+                        pending_pct = (pending / total_challans * 100) if total_challans > 0 else 0
+                        disposal_pct = (disposed / total_challans * 100) if total_challans > 0 else 0
+                        device_pct = (device_collection / total_challans * 100) if total_challans > 0 else 0
+                        
+                        rto_details.append({
+                            "rto_code": str(rto_name),
+                            "total_challans": total_challans,
+                            "pending": pending,
+                            "disposed": disposed,
+                            "device_collection": device_collection,
+                            "pending_percentage": round(pending_pct, 2),
+                            "disposal_percentage": round(disposal_pct, 2),
+                            "device_collection_percentage": round(device_pct, 2)
+                        })
+                
+                if rto_details:
+                    weighted_pending_ratio = (pending_sum / total_challans_sum * 100) if total_challans_sum > 0 else 0
+                    rto_details.sort(key=lambda x: x["pending_percentage"], reverse=True)
+                    worst_pending = rto_details[:10]
+                    
+                    return {
+                        "weighted_pending_ratio": round(weighted_pending_ratio, 2),
+                        "total_challans": total_challans_sum,
+                        "total_pending": pending_sum,
+                        "worst_pending_rtos": worst_pending
+                    }
+            
+            # Fallback to ranking data if manual challan table not available
+            ranking_data = await db["rto_ranking"].find({}).to_list(1000)
+            if ranking_data:
+                rto_details = []
+                for record in ranking_data:
+                    rto_code = record.get("RTO") or record.get("Code") or "Unknown"
+                    challan_pendency = _get_field_value(record, "Challan Collection Pendency", "Challan Collection Pendency ", "ChallanCollectionPendency")
+                    device_collection = _get_field_value(record, "Challan collection by device", "Challan collection by device ", "DeviceCollection")
+                    
+                    if challan_pendency is not None:
+                        pendency_pct = challan_pendency if challan_pendency <= 100 else challan_pendency / 100
+                        device_pct = device_collection if device_collection is not None and device_collection <= 100 else (device_collection / 100 if device_collection else 0)
+                        
+                        # Estimate totals based on pendency percentage
+                        estimated_total = 1000
+                        estimated_pending = round(estimated_total * pendency_pct / 100, 0)
+                        estimated_disposed = estimated_total - estimated_pending
+                        
+                        rto_details.append({
+                            "rto_code": str(rto_code),
+                            "total_challans": estimated_total,
+                            "pending": estimated_pending,
+                            "disposed": estimated_disposed,
+                            "device_collection": round(estimated_total * device_pct / 100, 0) if device_pct else 0,
+                            "pending_percentage": round(pendency_pct, 2),
+                            "disposal_percentage": round(100 - pendency_pct, 2) if pendency_pct else 0,
+                            "device_collection_percentage": round(device_pct, 2) if device_pct else 0
+                        })
+                
+                if rto_details:
+                    total_pending = sum(r["pending"] for r in rto_details)
+                    total_challans = sum(r["total_challans"] for r in rto_details)
+                    weighted_pending_ratio = (total_pending / total_challans * 100) if total_challans > 0 else 0
+                    
+                    rto_details.sort(key=lambda x: x["pending_percentage"], reverse=True)
+                    worst_pending = rto_details[:10]
+                    
+                    return {
+                        "weighted_pending_ratio": round(weighted_pending_ratio, 2),
+                        "total_challans": total_challans,
+                        "total_pending": total_pending,
+                        "worst_pending_rtos": worst_pending
+                    }
+            
             return {"error": "No Challan pendency data available"}
         
         total_challans_sum = 0
@@ -7479,9 +7711,9 @@ async def get_all_rto_data():
             if rto_code not in rto_map:
                 rto_map[rto_code] = {"rto_code": rto_code}
             
-            rto_map[rto_code]["overall_marks"] = _get_field_value(record, "Overall Marks", "Overall Marks ", "OverallMarks", "Overall_Marks")
-            rto_map[rto_code]["oct_rank"] = _get_field_value(record, "Oct Rank", "Oct Rank ", "OctRank", "Oct_Rank")
-            rto_map[rto_code]["nov_rank"] = _get_field_value(record, "Nov Rank", "Nov Rank ", "NovRank", "Nov_Rank")
+            rto_map[rto_code]["overall_marks"] = _get_field_value(record, "Marks (100)", "Overall Marks ", "OverallMarks", "Overall_Marks")
+            rto_map[rto_code]["oct_rank"] = _get_field_value(record, "Old rank", "Oct Rank ", "OctRank", "Oct_Rank")
+            rto_map[rto_code]["nov_rank"] = _get_field_value(record, "New Rank", "Nov Rank ", "NovRank", "Nov_Rank")
             rto_map[rto_code]["category"] = record.get("Category")
             rto_map[rto_code]["sarathi_score"] = _get_field_value(record, "Sarathi Score", "Sarathi Score ", "SarathiScore", "Sarathi_Score")
             rto_map[rto_code]["vahan_score"] = _get_field_value(record, "Vahan Score", "Vahan Score ", "VahanScore", "Vahan_Score")
@@ -7571,6 +7803,87 @@ async def get_all_rto_data():
         logger.error(f"Error fetching all RTO data: {e}", exc_info=True)
         raise HTTPException(status_code=500, detail=str(e))
 
+@kpi_router.get("/drilldown/rto-performance-ranking")
+async def get_rto_performance_ranking():
+    """Get RTO Performance Ranking - Top 5 and Bottom 5 by Citizen Service SLA and Grievance SLA"""
+    try:
+        # Get latest month
+        latest_month_doc = await db["kpi_rto_performance"].find_one({}, sort=[("Month", -1)])
+        if not latest_month_doc:
+            return {"error": "No RTO performance data available"}
+        
+        current_month = latest_month_doc.get("Month")
+        
+        # Get all RTO performance data for the latest month
+        rto_perf_data = await db["kpi_rto_performance"].find({"Month": current_month}).to_list(1000)
+        
+        if not rto_perf_data:
+            return {"error": "No RTO performance data available for latest month"}
+        
+        # Extract RTO code, Citizen Service SLA, and Grievance SLA
+        rto_list = []
+        for record in rto_perf_data:
+            rto_code = record.get("RTO") or record.get("RTO Code") or "Unknown"
+            citizen_sla = _get_field_value(
+                record,
+                "Citizen Service SLA % (within SLA)", "Citizen Service SLA % (within SLA) ",
+                "Citizen Service SLA", "Citizen Service SLA ",
+                "CitizenServiceSLA", "Citizen_Service_SLA"
+            )
+            grievance_sla = _get_field_value(
+                record,
+                "Grievance SLA % (within SLA)", "Grievance SLA % (within SLA) ",
+                "Grievance SLA", "Grievance SLA ",
+                "GrievanceSLA", "Grievance_SLA"
+            )
+            
+            # Calculate average SLA for ranking
+            if citizen_sla is not None and grievance_sla is not None:
+                avg_sla = (float(citizen_sla) + float(grievance_sla)) / 2
+                rto_list.append({
+                    "rto": str(rto_code),
+                    "citizen_sla": float(citizen_sla) if citizen_sla is not None else 0,
+                    "grievance_sla": float(grievance_sla) if grievance_sla is not None else 0,
+                    "avg_sla": avg_sla
+                })
+        
+        if not rto_list:
+            return {"error": "No valid RTO performance data found"}
+        
+        # Sort by average SLA (descending for top, ascending for bottom)
+        rto_list.sort(key=lambda x: x["avg_sla"], reverse=True)
+        
+        # Get Top 5 and Bottom 5
+        top_5 = rto_list[:5]
+        bottom_5 = rto_list[-5:] if len(rto_list) >= 5 else rto_list
+        bottom_5.reverse()  # Reverse so worst is first
+        
+        # Combine Top 5 and Bottom 5 for the chart
+        # Format: Top 5 first, then Bottom 5
+        chart_data = []
+        for rto in top_5:
+            chart_data.append({
+                "rto": rto["rto"],
+                "citizen_sla": round(rto["citizen_sla"], 2),
+                "grievance_sla": round(rto["grievance_sla"], 2)
+            })
+        for rto in bottom_5:
+            chart_data.append({
+                "rto": rto["rto"],
+                "citizen_sla": round(rto["citizen_sla"], 2),
+                "grievance_sla": round(rto["grievance_sla"], 2)
+            })
+        
+        return {
+            "rto_ranking": chart_data,
+            "top_5": top_5,
+            "bottom_5": bottom_5,
+            "month": current_month
+        }
+    except Exception as e:
+        logger.error(f"Error fetching RTO performance ranking: {e}", exc_info=True)
+        raise HTTPException(status_code=500, detail=str(e))
+
 api_router.include_router(dashboard_router)
 api_router.include_router(kpi_router)
 api_router.include_router(rto_analysis_router)
@@ -7590,9 +7903,9 @@ _cors_origins_raw = os.environ.get("CORS_ORIGINS", "").strip()
 # - if CORS_ORIGINS contains "*": allow any origin but DISABLE credentials (required by CORS spec)
 _cors_allow_origin_regex = None
 if not _cors_origins_raw:
-    _cors_allow_origins = ["http://localhost:3000", "http://127.0.0.1:3000"]
-    # Allow common private LAN ranges for dev (e.g., http://192.168.1.10:3000)
-    _cors_allow_origin_regex = r"^http://((localhost)|(127\.0\.0\.1)|((10|192\.168|172\.(1[6-9]|2\d|3[0-1]))\.\d+\.\d+\.\d+))(:3000)?$"
+    _cors_allow_origins = ["http://localhost:3000", "http://127.0.0.1:3000", "http://localhost:3003", "http://127.0.0.1:3003"]
+    # Allow common private LAN ranges for dev (e.g., http://192.168.1.10:3000 or :3003)
+    _cors_allow_origin_regex = r"^http://((localhost)|(127\.0\.0\.1)|((10|192\.168|172\.(1[6-9]|2\d|3[0-1]))\.\d+\.\d+\.\d+))(:300[0-3])?$"
     _cors_allow_credentials = True
 else:
     _cors_allow_origins = [o.strip() for o in _cors_origins_raw.split(",") if o.strip()]
