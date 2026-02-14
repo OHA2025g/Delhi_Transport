@@ -25,35 +25,35 @@ import Sidebar from "@/components/Sidebar";
 import FloatingChatbot from "@/components/FloatingChatbot";
 import GeoFilterBar from "@/components/GeoFilterBar";
 
-// Backend URL configuration - using direct connection to avoid proxy issues
-const _isDev = process.env.NODE_ENV !== "production";
-// In production, use relative API path (proxied through nginx)
+// Backend URL configuration - using relative paths in production (proxied through nginx)
+// In production, always use relative path /api which nginx proxies to backend
 // In development, use explicit backend URL
-const _rawBackendUrl = (process.env.REACT_APP_BACKEND_URL || process.env.REACT_APP_API_URL || "").trim();
-const _hasExplicitBackend =
-  !!_rawBackendUrl && !["undefined", "null"].includes(_rawBackendUrl.toLowerCase());
+const _isDev = process.env.NODE_ENV !== "production";
 
 // Determine API URL based on environment
+// In production, always use relative path (nginx proxy handles it)
+// In development, use environment variable or default to localhost
 let API_URL;
-if (process.env.REACT_APP_API_URL) {
-  // If REACT_APP_API_URL is set, use it directly (for production)
-  API_URL = process.env.REACT_APP_API_URL.trim().replace(/\/+$/, "");
-} else if (_hasExplicitBackend) {
-  // Construct from REACT_APP_BACKEND_URL
-  const backendUrl = _rawBackendUrl.replace(/\/+$/, "");
-  API_URL = `${backendUrl}/api`;
+if (_isDev) {
+  // Development: use explicit backend URL from env or default to localhost
+  const _rawBackendUrl = (process.env.REACT_APP_BACKEND_URL || process.env.REACT_APP_API_URL || "").trim();
+  const _hasExplicitBackend = !!_rawBackendUrl && !["undefined", "null"].includes(_rawBackendUrl.toLowerCase());
+  
+  if (process.env.REACT_APP_API_URL) {
+    API_URL = process.env.REACT_APP_API_URL.trim().replace(/\/+$/, "");
+  } else if (_hasExplicitBackend) {
+    const backendUrl = _rawBackendUrl.replace(/\/+$/, "");
+    API_URL = `${backendUrl}/api`;
+  } else {
+    API_URL = "http://localhost:8003/api";
+  }
 } else {
-  // Default to relative path in production, localhost in development
-  // Note: window is not available at module load time, so we'll check at runtime
-  API_URL = null; // Will be determined dynamically
+  // Production: always use relative path (nginx proxy)
+  API_URL = "/api";
 }
 
-// Export API constant - will be set dynamically if needed
-export const API = API_URL || (typeof window !== "undefined" 
-  ? (window.location.hostname !== "localhost" && window.location.hostname !== "127.0.0.1"
-      ? "/api" 
-      : "http://localhost:8003/api")
-  : "http://localhost:8003/api");
+// Export API constant
+export const API = API_URL;
 
 // Layout wrapper for dashboard pages
 const DashboardLayout = ({ children }) => {

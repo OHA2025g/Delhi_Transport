@@ -59,9 +59,9 @@ services:
       - "3003:80"
     depends_on:
       - backend
-    environment:
-      - REACT_APP_BACKEND_URL=https://delhitransport.demo.agrayianailabs.com
-      - REACT_APP_API_URL=https://delhitransport.demo.agrayianailabs.com/api
+    # In production, frontend uses relative /api path (proxied by nginx)
+    # No need to set REACT_APP_API_URL in production - it will use relative path
+    # REACT_APP_BACKEND_URL and REACT_APP_API_URL are only needed for development
     healthcheck:
       test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost/health"]
       interval: 30s
