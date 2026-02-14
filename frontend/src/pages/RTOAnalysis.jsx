@@ -51,58 +51,197 @@ const RTOAnalysis = () => {
 
   const fetchAllData = useCallback(async () => {
     setLoading(true);
-    try {
-      const state = searchParams.get("state_cd") || null;
-      const month = null; // Can be made dynamic if needed
-      
-      const [
-        overviewRes,
-        topBottomRes,
-        rankMovementRes,
-        kpiDriversRes,
-        onlineRevenueRes,
-        sarathiRes,
-        vahanRes,
-        challanRes,
-        allDataRes,
-        rtoPerformanceRes,
-        rtoPerfRes,
-        rtoDerivedRes
-      ] = await Promise.all([
-        axios.get(`${API}/rto-analysis/overview`),
-        axios.get(`${API}/rto-analysis/top-bottom?limit=10`),
-        axios.get(`${API}/rto-analysis/rank-movement`),
-        axios.get(`${API}/rto-analysis/kpi-drivers`),
-        axios.get(`${API}/rto-analysis/online-revenue`),
-        axios.get(`${API}/rto-analysis/sarathi-pendency`),
-        axios.get(`${API}/rto-analysis/vahan-pendency`),
-        axios.get(`${API}/rto-analysis/challan-pendency`),
-        axios.get(`${API}/rto-analysis/all-data`),
-        axios.get(`${API}/kpi/advanced/rto-performance`).catch(() => ({ data: null })),
-        axios.get(`${API}/kpi/rto/performance`, { params: { state, month } }),
-        axios.get(`${API}/kpi/rto/derived`, { params: { state, rto: null, month } })
-      ]);
+    const state = searchParams.get("state_cd") || null;
+    const month = null; // Can be made dynamic if needed
+    
+    // Use Promise.allSettled to handle partial failures gracefully
+    const results = await Promise.allSettled([
+        axios.get(`${API}/rto-analysis/overview`).catch(err => {
+          if (process.env.NODE_ENV !== 'production') console.error("Error fetching overview:", err);
+          return { data: null, error: err.message };
+        }),
+        axios.get(`${API}/rto-analysis/top-bottom?limit=10`).catch(err => {
+          if (process.env.NODE_ENV !== 'production') console.error("Error fetching top-bottom:", err);
+          return { data: null, error: err.message };
+        }),
+        axios.get(`${API}/rto-analysis/rank-movement`).catch(err => {
+          if (process.env.NODE_ENV !== 'production') console.error("Error fetching rank-movement:", err);
+          return { data: null, error: err.message };
+        }),
+        axios.get(`${API}/rto-analysis/kpi-drivers`).catch(err => {
+          if (process.env.NODE_ENV !== 'production') console.error("Error fetching kpi-drivers:", err);
+          return { data: null, error: err.message };
+        }),
+        axios.get(`${API}/rto-analysis/online-revenue`).catch(err => {
+          if (process.env.NODE_ENV !== 'production') console.error("Error fetching online-revenue:", err);
+          return { data: null, error: err.message };
+        }),
+        axios.get(`${API}/rto-analysis/sarathi-pendency`).catch(err => {
+          if (process.env.NODE_ENV !== 'production') console.error("Error fetching sarathi-pendency:", err);
+          return { data: null, error: err.message };
+        }),
+        axios.get(`${API}/rto-analysis/vahan-pendency`).catch(err => {
+          if (process.env.NODE_ENV !== 'production') console.error("Error fetching vahan-pendency:", err);
+          return { data: null, error: err.message };
+        }),
+        axios.get(`${API}/rto-analysis/challan-pendency`).catch(err => {
+          if (process.env.NODE_ENV !== 'production') console.error("Error fetching challan-pendency:", err);
+          return { data: null, error: err.message };
+        }),
+        axios.get(`${API}/rto-analysis/all-data`).catch(err => {
+          if (process.env.NODE_ENV !== 'production') console.error("Error fetching all-data:", err);
+          return { data: null, error: err.message };
+        }),
+        axios.get(`${API}/kpi/advanced/rto-performance`).catch(err => {
+          if (process.env.NODE_ENV !== 'production') console.error("Error fetching advanced rto-performance:", err);
+          return { data: null, error: err.message };
+        }),
+        axios.get(`${API}/kpi/rto/performance`, { params: { state, month } }).catch(err => {
+          if (process.env.NODE_ENV !== 'production') console.error("Error fetching rto performance:", err);
+          return { data: null, error: err.message };
+        }),
+        axios.get(`${API}/kpi/rto/derived`, { params: { state, rto: null, month } }).catch(err => {
+          if (process.env.NODE_ENV !== 'production') console.error("Error fetching rto derived:", err);
+          return { data: null, error: err.message };
+        })
+    ]);
 
-      setOverview(overviewRes.data);
-      setTopBottom(topBottomRes.data);
-      setRankMovement(rankMovementRes.data);
-      setKpiDrivers(kpiDriversRes.data);
-      setOnlineRevenue(onlineRevenueRes.data);
-      setSarathiPendency(sarathiRes.data);
-      setVahanPendency(vahanRes.data);
-      setChallanPendency(challanRes.data);
-      setAllData(allDataRes.data);
-      setRtoPerformanceKPIs(rtoPerformanceRes.data);
-      setRtoPerformanceData(rtoPerfRes.data?.data || []);
-      setRtoDerivedKPIs(rtoDerivedRes.data);
+    // Extract data from results, handling both fulfilled and rejected promises
+    const [
+      overviewRes,
+      topBottomRes,
+      rankMovementRes,
+      kpiDriversRes,
+      onlineRevenueRes,
+      sarathiRes,
+      vahanRes,
+      challanRes,
+      allDataRes,
+      rtoPerformanceRes,
+      rtoPerfRes,
+      rtoDerivedRes
+    ] = results.map(result => 
+      result.status === 'fulfilled' ? result.value : { data: null, error: result.reason?.message || 'Unknown error' }
+    );
 
-      toast.success("RTO Analysis data loaded");
-    } catch (error) {
-      console.error("Error fetching RTO analysis data:", error);
-      toast.error("Failed to load RTO analysis data");
-    } finally {
-      setLoading(false);
+    // Set data, handling null/error cases with conditional logging (dev only)
+    const isDev = process.env.NODE_ENV !== 'production';
+    
+    if (overviewRes?.data) {
+      if (overviewRes.data.error) {
+        if (isDev) console.warn("Overview endpoint returned error:", overviewRes.data.error);
+      } else {
+        setOverview(overviewRes.data);
+        if (isDev) console.log("Overview data loaded");
+      }
     }
+    
+    if (topBottomRes?.data) {
+      if (topBottomRes.data.error) {
+        if (isDev) console.warn("Top-Bottom endpoint returned error:", topBottomRes.data.error);
+      } else {
+        setTopBottom(topBottomRes.data);
+        if (isDev) console.log("Top-Bottom data loaded");
+      }
+    }
+    
+    if (rankMovementRes?.data) {
+      if (rankMovementRes.data.error) {
+        if (isDev) console.warn("Rank-Movement endpoint returned error:", rankMovementRes.data.error);
+      } else {
+        setRankMovement(rankMovementRes.data);
+        if (isDev) console.log("Rank-Movement data loaded");
+      }
+    }
+    
+    if (kpiDriversRes?.data) {
+      if (kpiDriversRes.data.error) {
+        if (isDev) console.warn("KPI-Drivers endpoint returned error:", kpiDriversRes.data.error);
+      } else {
+        setKpiDrivers(kpiDriversRes.data);
+        if (isDev) console.log("KPI-Drivers data loaded");
+      }
+    }
+    
+    if (onlineRevenueRes?.data) {
+      if (onlineRevenueRes.data.error) {
+        if (isDev) console.warn("Online-Revenue endpoint returned error:", onlineRevenueRes.data.error);
+      } else {
+        setOnlineRevenue(onlineRevenueRes.data);
+        if (isDev) console.log("Online-Revenue data loaded");
+      }
+    }
+    
+    if (sarathiRes?.data) {
+      if (sarathiRes.data.error) {
+        if (isDev) console.warn("Sarathi-Pendency endpoint returned error:", sarathiRes.data.error);
+      } else {
+        setSarathiPendency(sarathiRes.data);
+        if (isDev) console.log("Sarathi-Pendency data loaded");
+      }
+    }
+    
+    if (vahanRes?.data) {
+      if (vahanRes.data.error) {
+        if (isDev) console.warn("Vahan-Pendency endpoint returned error:", vahanRes.data.error);
+      } else {
+        setVahanPendency(vahanRes.data);
+        if (isDev) console.log("Vahan-Pendency data loaded");
+      }
+    }
+    
+    if (challanRes?.data) {
+      if (challanRes.data.error) {
+        if (isDev) console.warn("Challan-Pendency endpoint returned error:", challanRes.data.error);
+      } else {
+        setChallanPendency(challanRes.data);
+        if (isDev) console.log("Challan-Pendency data loaded");
+      }
+    }
+    
+    if (allDataRes?.data) {
+      if (allDataRes.data.error) {
+        if (isDev) console.warn("All-Data endpoint returned error:", allDataRes.data.error);
+      } else {
+        setAllData(allDataRes.data);
+        if (isDev) console.log("All-Data loaded");
+      }
+    }
+    
+    if (rtoPerformanceRes?.data) {
+      if (rtoPerformanceRes.data.error) {
+        if (isDev) console.warn("RTO Performance KPIs endpoint returned error:", rtoPerformanceRes.data.error);
+      } else {
+        setRtoPerformanceKPIs(rtoPerformanceRes.data);
+        if (isDev) console.log("RTO Performance KPIs loaded");
+      }
+    }
+    
+    if (rtoPerfRes?.data?.data) {
+      setRtoPerformanceData(rtoPerfRes.data.data);
+      if (isDev) console.log("RTO Performance data loaded:", rtoPerfRes.data.data.length, "records");
+    }
+    
+    if (rtoDerivedRes?.data) {
+      if (rtoDerivedRes.data.error) {
+        if (isDev) console.warn("RTO Derived KPIs endpoint returned error:", rtoDerivedRes.data.error);
+      } else {
+        setRtoDerivedKPIs(rtoDerivedRes.data);
+        if (isDev) console.log("RTO Derived KPIs loaded");
+      }
+    }
+
+    // Count successful loads
+    const successCount = results.filter(r => r.status === 'fulfilled' && r.value?.data && !r.value.data.error).length;
+    const totalCount = results.length;
+
+    if (successCount > 0) {
+      toast.success(`RTO Analysis data loaded (${successCount}/${totalCount} endpoints)`);
+    } else {
+      toast.error("Failed to load RTO analysis data from all endpoints");
+    }
+
+    setLoading(false);
   }, [searchParams]);
 
   useEffect(() => {
@@ -280,8 +419,8 @@ const RTOAnalysis = () => {
       rto: d.rto || "Unknown"
     })).filter(d => d.x > 0 && d.y > 0); // Filter out invalid data
     
-    // Log for debugging
-    if (data.length > 0) {
+    // Log for debugging (development only)
+    if (data.length > 0 && process.env.NODE_ENV !== 'production') {
       console.log("Scatter data sample:", data.slice(0, 5));
       console.log("Data range - X:", Math.min(...data.map(d => d.x)), "to", Math.max(...data.map(d => d.x)));
       console.log("Data range - Y:", Math.min(...data.map(d => d.y)), "to", Math.max(...data.map(d => d.y)));
@@ -478,7 +617,7 @@ const RTOAnalysis = () => {
             )}
 
             {/* Category Comparison */}
-            {categoryComparisonData.length > 0 && (
+            {categoryComparisonData.length > 0 ? (
               <Card className="bg-gray-800/50 border-gray-700">
                 <CardHeader>
                   <CardTitle className="text-white">Category Performance Comparison</CardTitle>
@@ -496,13 +635,19 @@ const RTOAnalysis = () => {
                   </ResponsiveContainer>
                 </CardContent>
               </Card>
-            )}
+            ) : overview ? (
+              <Card className="bg-gray-800/50 border-gray-700">
+                <CardContent className="p-10 text-center">
+                  <p className="text-gray-400">Category comparison data is not available.</p>
+                </CardContent>
+              </Card>
+            ) : null}
           </TabsContent>
 
           {/* Performance Tab */}
           <TabsContent value="performance" className="space-y-6">
             {/* Rank Movement */}
-            {rankMovement && (
+            {rankMovement && rankMovement.scatter_data ? (
               <>
                 <Card className="bg-gray-800/50 border-gray-700">
                   <CardHeader>
@@ -598,6 +743,14 @@ const RTOAnalysis = () => {
                   </Card>
                 )}
               </>
+            ) : (
+              <Card className="bg-gray-800/50 border-gray-700">
+                <CardContent className="p-10 text-center">
+                  <AlertTriangle className="w-12 h-12 text-yellow-500 mx-auto mb-4" />
+                  <p className="text-gray-400">Rank movement data is loading or unavailable.</p>
+                  <p className="text-gray-500 text-sm mt-2">Please check the console for details or refresh the page.</p>
+                </CardContent>
+              </Card>
             )}
           </TabsContent>
 
