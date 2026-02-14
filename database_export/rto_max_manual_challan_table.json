@@ -1,0 +1,359 @@
+[
+  {
+    "_id": "698ec0002d2b92cf4e8efe40",
+    "CCTV Challan": "RTO Office",
+    "Device Challan": "Sum of Total Challans ",
+    "Manual Challan": "Sum of Challans Pending ",
+    "Sub Total": "Sum of Total Challans "
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efe41",
+    "CCTV Challan": "Yawatmal ",
+    "Device Challan": 0,
+    "Manual Challan": 0,
+    "Sub Total": 143
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efe42",
+    "CCTV Challan": "Kalyan ",
+    "Device Challan": 0,
+    "Manual Challan": 0,
+    "Sub Total": 127
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efe43",
+    "CCTV Challan": "Nagpur (east)",
+    "Device Challan": 0,
+    "Manual Challan": 0,
+    "Sub Total": 85
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efe44",
+    "CCTV Challan": "Gadchiroli ",
+    "Device Challan": 0,
+    "Manual Challan": 0,
+    "Sub Total": 168
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efe45",
+    "CCTV Challan": "Ambejogai ",
+    "Device Challan": 0,
+    "Manual Challan": 0,
+    "Sub Total": 24
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efe46",
+    "CCTV Challan": "Pen (Raigad) ",
+    "Device Challan": 0,
+    "Manual Challan": 0,
+    "Sub Total": 186
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efe47",
+    "CCTV Challan": "Malegaon ",
+    "Device Challan": 0,
+    "Manual Challan": 0,
+    "Sub Total": 171
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efe48",
+    "CCTV Challan": "Borivali ",
+    "Device Challan": 0,
+    "Manual Challan": 0,
+    "Sub Total": 73
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efe49",
+    "CCTV Challan": "Baramati ",
+    "Device Challan": 0,
+    "Manual Challan": 0,
+    "Sub Total": 167
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efe4a",
+    "CCTV Challan": "Ratnagiri ",
+    "Device Challan": 0,
+    "Manual Challan": 0,
+    "Sub Total": 258
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efe4b",
+    "CCTV Challan": "Akola ",
+    "Device Challan": 0,
+    "Manual Challan": 0,
+    "Sub Total": 400
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efe4c",
+    "CCTV Challan": "Pimpri-chinchwad ",
+    "Device Challan": 0,
+    "Manual Challan": 0,
+    "Sub Total": 745
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efe4d",
+    "CCTV Challan": "Nagpur (rural) ",
+    "Device Challan": 0,
+    "Manual Challan": 0,
+    "Sub Total": 3704
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efe4e",
+    "CCTV Challan": "Nashik ",
+    "Device Challan": 5,
+    "Manual Challan": 5,
+    "Sub Total": 1728
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efe4f",
+    "CCTV Challan": "Aurangabad ",
+    "Device Challan": 3,
+    "Manual Challan": 3,
+    "Sub Total": 415
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efe50",
+    "CCTV Challan": "Mumbai (central) ",
+    "Device Challan": 0,
+    "Manual Challan": 0,
+    "Sub Total": 199
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efe51",
+    "CCTV Challan": "Chandrapur ",
+    "Device Challan": 0,
+    "Manual Challan": 0,
+    "Sub Total": 651
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efe52",
+    "CCTV Challan": "Pune ",
+    "Device Challan": 0,
+    "Manual Challan": 0,
+    "Sub Total": 666
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efe53",
+    "CCTV Challan": "Mumbai (e) ",
+    "Device Challan": 0,
+    "Manual Challan": 0,
+    "Sub Total": 238
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efe54",
+    "CCTV Challan": "Bhuldhana ",
+    "Device Challan": 1,
+    "Manual Challan": 1,
+    "Sub Total": 56
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efe55",
+    "CCTV Challan": "Thane ",
+    "Device Challan": 30,
+    "Manual Challan": 28,
+    "Sub Total": 1684
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efe56",
+    "CCTV Challan": "Dhule ",
+    "Device Challan": 0,
+    "Manual Challan": 0,
+    "Sub Total": 2236
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efe57",
+    "CCTV Challan": "Latur ",
+    "Device Challan": 55,
+    "Manual Challan": 54,
+    "Sub Total": 2792
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efe58",
+    "CCTV Challan": "Vasai ",
+    "Device Challan": 9,
+    "Manual Challan": 8,
+    "Sub Total": 363
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efe59",
+    "CCTV Challan": "Kolhapur ",
+    "Device Challan": 102,
+    "Manual Challan": 96,
+    "Sub Total": 3584
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efe5a",
+    "CCTV Challan": "Solapur ",
+    "Device Challan": 73,
+    "Manual Challan": 69,
+    "Sub Total": 3136
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efe5b",
+    "CCTV Challan": "Jalgaon ",
+    "Device Challan": 35,
+    "Manual Challan": 31,
+    "Sub Total": 1122
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efe5c",
+    "CCTV Challan": "Akluj ",
+    "Device Challan": 5,
+    "Manual Challan": 5,
+    "Sub Total": 123
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efe5d",
+    "CCTV Challan": "Nandurbar ",
+    "Device Challan": 4,
+    "Manual Challan": 4,
+    "Sub Total": 195
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efe5e",
+    "CCTV Challan": "Osmanabad ",
+    "Device Challan": 9,
+    "Manual Challan": 9,
+    "Sub Total": 210
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efe5f",
+    "CCTV Challan": "Nanded ",
+    "Device Challan": 43,
+    "Manual Challan": 42,
+    "Sub Total": 937
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efe60",
+    "CCTV Challan": "Sangli ",
+    "Device Challan": 31,
+    "Manual Challan": 30,
+    "Sub Total": 445
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efe61",
+    "CCTV Challan": "Gondhia ",
+    "Device Challan": 14,
+    "Manual Challan": 14,
+    "Sub Total": 156
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efe62",
+    "CCTV Challan": "Amrawati ",
+    "Device Challan": 43,
+    "Manual Challan": 40,
+    "Sub Total": 475
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efe63",
+    "CCTV Challan": "Satara ",
+    "Device Challan": 27,
+    "Manual Challan": 25,
+    "Sub Total": 274
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efe64",
+    "CCTV Challan": "Bhandara ",
+    "Device Challan": 9,
+    "Manual Challan": 8,
+    "Sub Total": 91
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efe65",
+    "CCTV Challan": "Wardha ",
+    "Device Challan": 34,
+    "Manual Challan": 30,
+    "Sub Total": 321
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efe66",
+    "CCTV Challan": "Nagpur (u) ",
+    "Device Challan": 27,
+    "Manual Challan": 26,
+    "Sub Total": 205
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efe67",
+    "CCTV Challan": "Hingoli ",
+    "Device Challan": 113,
+    "Manual Challan": 106,
+    "Sub Total": 458
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efe68",
+    "CCTV Challan": "Vashi (new Mumbai) ",
+    "Device Challan": 173,
+    "Manual Challan": 165,
+    "Sub Total": 576
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efe69",
+    "CCTV Challan": "Jalana ",
+    "Device Challan": 59,
+    "Manual Challan": 54,
+    "Sub Total": 195
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efe6a",
+    "CCTV Challan": "Washim ",
+    "Device Challan": 23,
+    "Manual Challan": 22,
+    "Sub Total": 60
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efe6b",
+    "CCTV Challan": "Ahmednagar ",
+    "Device Challan": 28,
+    "Manual Challan": 25,
+    "Sub Total": 215
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efe6c",
+    "CCTV Challan": "Karad ",
+    "Device Challan": 97,
+    "Manual Challan": 90,
+    "Sub Total": 192
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efe6d",
+    "CCTV Challan": "Panvel ",
+    "Device Challan": 283,
+    "Manual Challan": 264,
+    "Sub Total": 560
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efe6e",
+    "CCTV Challan": "Mumbai (w) ",
+    "Device Challan": 0,
+    "Manual Challan": 0,
+    "Sub Total": 445
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efe6f",
+    "CCTV Challan": "Parbhani ",
+    "Device Challan": 37,
+    "Manual Challan": 35,
+    "Sub Total": 39
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efe70",
+    "CCTV Challan": "Beed ",
+    "Device Challan": 42,
+    "Manual Challan": 40,
+    "Sub Total": 22
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efe71",
+    "CCTV Challan": "Sindhudurg (kudal) ",
+    "Device Challan": 0,
+    "Manual Challan": 0,
+    "Sub Total": 0
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efe72",
+    "CCTV Challan": "Srirampur ",
+    "Device Challan": 0,
+    "Manual Challan": 0,
+    "Sub Total": 0
+  }
+]

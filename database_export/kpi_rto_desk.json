@@ -1,0 +1,2402 @@
+[
+  {
+    "_id": "698ec0002d2b92cf4e8efb20",
+    "Month": "2025-04",
+    "State": "Maharashtra",
+    "RTO": "MAH-RTO-1",
+    "Citizen Service SLA % (within SLA)": 95.87,
+    "Grievance SLA % (within SLA)": 70.91
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb21",
+    "Month": "2025-05",
+    "State": "Maharashtra",
+    "RTO": "MAH-RTO-1",
+    "Citizen Service SLA % (within SLA)": 93.82,
+    "Grievance SLA % (within SLA)": 100
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb22",
+    "Month": "2025-06",
+    "State": "Maharashtra",
+    "RTO": "MAH-RTO-1",
+    "Citizen Service SLA % (within SLA)": 94.11,
+    "Grievance SLA % (within SLA)": 77.92
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb23",
+    "Month": "2025-07",
+    "State": "Maharashtra",
+    "RTO": "MAH-RTO-1",
+    "Citizen Service SLA % (within SLA)": 92.41,
+    "Grievance SLA % (within SLA)": 77.04
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb24",
+    "Month": "2025-08",
+    "State": "Maharashtra",
+    "RTO": "MAH-RTO-1",
+    "Citizen Service SLA % (within SLA)": 97.16,
+    "Grievance SLA % (within SLA)": 79.31
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb25",
+    "Month": "2025-09",
+    "State": "Maharashtra",
+    "RTO": "MAH-RTO-1",
+    "Citizen Service SLA % (within SLA)": 91.37,
+    "Grievance SLA % (within SLA)": 80
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb26",
+    "Month": "2025-10",
+    "State": "Maharashtra",
+    "RTO": "MAH-RTO-1",
+    "Citizen Service SLA % (within SLA)": 88.27,
+    "Grievance SLA % (within SLA)": 96.4
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb27",
+    "Month": "2025-11",
+    "State": "Maharashtra",
+    "RTO": "MAH-RTO-1",
+    "Citizen Service SLA % (within SLA)": 91.52,
+    "Grievance SLA % (within SLA)": 82.09
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb28",
+    "Month": "2025-12",
+    "State": "Maharashtra",
+    "RTO": "MAH-RTO-1",
+    "Citizen Service SLA % (within SLA)": 85.27,
+    "Grievance SLA % (within SLA)": 72.9
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb29",
+    "Month": "2026-01",
+    "State": "Maharashtra",
+    "RTO": "MAH-RTO-1",
+    "Citizen Service SLA % (within SLA)": 84.74,
+    "Grievance SLA % (within SLA)": 86.78
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb2a",
+    "Month": "2025-04",
+    "State": "Maharashtra",
+    "RTO": "MAH-RTO-2",
+    "Citizen Service SLA % (within SLA)": 95.9,
+    "Grievance SLA % (within SLA)": 82.08
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb2b",
+    "Month": "2025-05",
+    "State": "Maharashtra",
+    "RTO": "MAH-RTO-2",
+    "Citizen Service SLA % (within SLA)": 98.85,
+    "Grievance SLA % (within SLA)": 80.98
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb2c",
+    "Month": "2025-06",
+    "State": "Maharashtra",
+    "RTO": "MAH-RTO-2",
+    "Citizen Service SLA % (within SLA)": 89.81,
+    "Grievance SLA % (within SLA)": 78.44
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb2d",
+    "Month": "2025-07",
+    "State": "Maharashtra",
+    "RTO": "MAH-RTO-2",
+    "Citizen Service SLA % (within SLA)": 95.95,
+    "Grievance SLA % (within SLA)": 100
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb2e",
+    "Month": "2025-08",
+    "State": "Maharashtra",
+    "RTO": "MAH-RTO-2",
+    "Citizen Service SLA % (within SLA)": 82.19,
+    "Grievance SLA % (within SLA)": 83.58
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb2f",
+    "Month": "2025-09",
+    "State": "Maharashtra",
+    "RTO": "MAH-RTO-2",
+    "Citizen Service SLA % (within SLA)": 97.32,
+    "Grievance SLA % (within SLA)": 75.87
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb30",
+    "Month": "2025-10",
+    "State": "Maharashtra",
+    "RTO": "MAH-RTO-2",
+    "Citizen Service SLA % (within SLA)": 93.83,
+    "Grievance SLA % (within SLA)": 94.55
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb31",
+    "Month": "2025-11",
+    "State": "Maharashtra",
+    "RTO": "MAH-RTO-2",
+    "Citizen Service SLA % (within SLA)": 91.39,
+    "Grievance SLA % (within SLA)": 89.85
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb32",
+    "Month": "2025-12",
+    "State": "Maharashtra",
+    "RTO": "MAH-RTO-2",
+    "Citizen Service SLA % (within SLA)": 99.8,
+    "Grievance SLA % (within SLA)": 99.64
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb33",
+    "Month": "2026-01",
+    "State": "Maharashtra",
+    "RTO": "MAH-RTO-2",
+    "Citizen Service SLA % (within SLA)": 90.69,
+    "Grievance SLA % (within SLA)": 82.27
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb34",
+    "Month": "2025-04",
+    "State": "Maharashtra",
+    "RTO": "MAH-RTO-3",
+    "Citizen Service SLA % (within SLA)": 86.4,
+    "Grievance SLA % (within SLA)": 92.84
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb35",
+    "Month": "2025-05",
+    "State": "Maharashtra",
+    "RTO": "MAH-RTO-3",
+    "Citizen Service SLA % (within SLA)": 84.14,
+    "Grievance SLA % (within SLA)": 84.23
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb36",
+    "Month": "2025-06",
+    "State": "Maharashtra",
+    "RTO": "MAH-RTO-3",
+    "Citizen Service SLA % (within SLA)": 91.51,
+    "Grievance SLA % (within SLA)": 82.48
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb37",
+    "Month": "2025-07",
+    "State": "Maharashtra",
+    "RTO": "MAH-RTO-3",
+    "Citizen Service SLA % (within SLA)": 92.4,
+    "Grievance SLA % (within SLA)": 100
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb38",
+    "Month": "2025-08",
+    "State": "Maharashtra",
+    "RTO": "MAH-RTO-3",
+    "Citizen Service SLA % (within SLA)": 90.39,
+    "Grievance SLA % (within SLA)": 82.95
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb39",
+    "Month": "2025-09",
+    "State": "Maharashtra",
+    "RTO": "MAH-RTO-3",
+    "Citizen Service SLA % (within SLA)": 96.08,
+    "Grievance SLA % (within SLA)": 87.68
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb3a",
+    "Month": "2025-10",
+    "State": "Maharashtra",
+    "RTO": "MAH-RTO-3",
+    "Citizen Service SLA % (within SLA)": 98.2,
+    "Grievance SLA % (within SLA)": 87.15
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb3b",
+    "Month": "2025-11",
+    "State": "Maharashtra",
+    "RTO": "MAH-RTO-3",
+    "Citizen Service SLA % (within SLA)": 89.76,
+    "Grievance SLA % (within SLA)": 73.51
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb3c",
+    "Month": "2025-12",
+    "State": "Maharashtra",
+    "RTO": "MAH-RTO-3",
+    "Citizen Service SLA % (within SLA)": 82.9,
+    "Grievance SLA % (within SLA)": 73.15
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb3d",
+    "Month": "2026-01",
+    "State": "Maharashtra",
+    "RTO": "MAH-RTO-3",
+    "Citizen Service SLA % (within SLA)": 92.9,
+    "Grievance SLA % (within SLA)": 76.46
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb3e",
+    "Month": "2025-04",
+    "State": "Gujarat",
+    "RTO": "GUJ-RTO-1",
+    "Citizen Service SLA % (within SLA)": 97.28,
+    "Grievance SLA % (within SLA)": 86.21
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb3f",
+    "Month": "2025-05",
+    "State": "Gujarat",
+    "RTO": "GUJ-RTO-1",
+    "Citizen Service SLA % (within SLA)": 89.78,
+    "Grievance SLA % (within SLA)": 80.09
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb40",
+    "Month": "2025-06",
+    "State": "Gujarat",
+    "RTO": "GUJ-RTO-1",
+    "Citizen Service SLA % (within SLA)": 94.11,
+    "Grievance SLA % (within SLA)": 80.37
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb41",
+    "Month": "2025-07",
+    "State": "Gujarat",
+    "RTO": "GUJ-RTO-1",
+    "Citizen Service SLA % (within SLA)": 86.07,
+    "Grievance SLA % (within SLA)": 94.32
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb42",
+    "Month": "2025-08",
+    "State": "Gujarat",
+    "RTO": "GUJ-RTO-1",
+    "Citizen Service SLA % (within SLA)": 92.77,
+    "Grievance SLA % (within SLA)": 84.36
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb43",
+    "Month": "2025-09",
+    "State": "Gujarat",
+    "RTO": "GUJ-RTO-1",
+    "Citizen Service SLA % (within SLA)": 94.21,
+    "Grievance SLA % (within SLA)": 86.06
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb44",
+    "Month": "2025-10",
+    "State": "Gujarat",
+    "RTO": "GUJ-RTO-1",
+    "Citizen Service SLA % (within SLA)": 92.92,
+    "Grievance SLA % (within SLA)": 80.28
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb45",
+    "Month": "2025-11",
+    "State": "Gujarat",
+    "RTO": "GUJ-RTO-1",
+    "Citizen Service SLA % (within SLA)": 100,
+    "Grievance SLA % (within SLA)": 81.94
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb46",
+    "Month": "2025-12",
+    "State": "Gujarat",
+    "RTO": "GUJ-RTO-1",
+    "Citizen Service SLA % (within SLA)": 98.78,
+    "Grievance SLA % (within SLA)": 84.68
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb47",
+    "Month": "2026-01",
+    "State": "Gujarat",
+    "RTO": "GUJ-RTO-1",
+    "Citizen Service SLA % (within SLA)": 95.04,
+    "Grievance SLA % (within SLA)": 91.14
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb48",
+    "Month": "2025-04",
+    "State": "Gujarat",
+    "RTO": "GUJ-RTO-2",
+    "Citizen Service SLA % (within SLA)": 96.73,
+    "Grievance SLA % (within SLA)": 80.12
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb49",
+    "Month": "2025-05",
+    "State": "Gujarat",
+    "RTO": "GUJ-RTO-2",
+    "Citizen Service SLA % (within SLA)": 96.38,
+    "Grievance SLA % (within SLA)": 98.93
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb4a",
+    "Month": "2025-06",
+    "State": "Gujarat",
+    "RTO": "GUJ-RTO-2",
+    "Citizen Service SLA % (within SLA)": 89.71,
+    "Grievance SLA % (within SLA)": 86.24
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb4b",
+    "Month": "2025-07",
+    "State": "Gujarat",
+    "RTO": "GUJ-RTO-2",
+    "Citizen Service SLA % (within SLA)": 88.38,
+    "Grievance SLA % (within SLA)": 83.57
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb4c",
+    "Month": "2025-08",
+    "State": "Gujarat",
+    "RTO": "GUJ-RTO-2",
+    "Citizen Service SLA % (within SLA)": 99.56,
+    "Grievance SLA % (within SLA)": 78.97
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb4d",
+    "Month": "2025-09",
+    "State": "Gujarat",
+    "RTO": "GUJ-RTO-2",
+    "Citizen Service SLA % (within SLA)": 86.29,
+    "Grievance SLA % (within SLA)": 97.28
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb4e",
+    "Month": "2025-10",
+    "State": "Gujarat",
+    "RTO": "GUJ-RTO-2",
+    "Citizen Service SLA % (within SLA)": 94.12,
+    "Grievance SLA % (within SLA)": 100
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb4f",
+    "Month": "2025-11",
+    "State": "Gujarat",
+    "RTO": "GUJ-RTO-2",
+    "Citizen Service SLA % (within SLA)": 88.75,
+    "Grievance SLA % (within SLA)": 86.88
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb50",
+    "Month": "2025-12",
+    "State": "Gujarat",
+    "RTO": "GUJ-RTO-2",
+    "Citizen Service SLA % (within SLA)": 87.7,
+    "Grievance SLA % (within SLA)": 87
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb51",
+    "Month": "2026-01",
+    "State": "Gujarat",
+    "RTO": "GUJ-RTO-2",
+    "Citizen Service SLA % (within SLA)": 82.13,
+    "Grievance SLA % (within SLA)": 90.79
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb52",
+    "Month": "2025-04",
+    "State": "Gujarat",
+    "RTO": "GUJ-RTO-3",
+    "Citizen Service SLA % (within SLA)": 92.62,
+    "Grievance SLA % (within SLA)": 85.6
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb53",
+    "Month": "2025-05",
+    "State": "Gujarat",
+    "RTO": "GUJ-RTO-3",
+    "Citizen Service SLA % (within SLA)": 89.05,
+    "Grievance SLA % (within SLA)": 79.74
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb54",
+    "Month": "2025-06",
+    "State": "Gujarat",
+    "RTO": "GUJ-RTO-3",
+    "Citizen Service SLA % (within SLA)": 94.64,
+    "Grievance SLA % (within SLA)": 77.8
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb55",
+    "Month": "2025-07",
+    "State": "Gujarat",
+    "RTO": "GUJ-RTO-3",
+    "Citizen Service SLA % (within SLA)": 93.56,
+    "Grievance SLA % (within SLA)": 100
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb56",
+    "Month": "2025-08",
+    "State": "Gujarat",
+    "RTO": "GUJ-RTO-3",
+    "Citizen Service SLA % (within SLA)": 98.43,
+    "Grievance SLA % (within SLA)": 75.46
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb57",
+    "Month": "2025-09",
+    "State": "Gujarat",
+    "RTO": "GUJ-RTO-3",
+    "Citizen Service SLA % (within SLA)": 88.32,
+    "Grievance SLA % (within SLA)": 88.95
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb58",
+    "Month": "2025-10",
+    "State": "Gujarat",
+    "RTO": "GUJ-RTO-3",
+    "Citizen Service SLA % (within SLA)": 90.65,
+    "Grievance SLA % (within SLA)": 76.2
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb59",
+    "Month": "2025-11",
+    "State": "Gujarat",
+    "RTO": "GUJ-RTO-3",
+    "Citizen Service SLA % (within SLA)": 92.93,
+    "Grievance SLA % (within SLA)": 85.93
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb5a",
+    "Month": "2025-12",
+    "State": "Gujarat",
+    "RTO": "GUJ-RTO-3",
+    "Citizen Service SLA % (within SLA)": 100,
+    "Grievance SLA % (within SLA)": 84.23
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb5b",
+    "Month": "2026-01",
+    "State": "Gujarat",
+    "RTO": "GUJ-RTO-3",
+    "Citizen Service SLA % (within SLA)": 96.84,
+    "Grievance SLA % (within SLA)": 77.13
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb5c",
+    "Month": "2025-04",
+    "State": "Delhi",
+    "RTO": "DEL-RTO-1",
+    "Citizen Service SLA % (within SLA)": 85.86,
+    "Grievance SLA % (within SLA)": 91.05
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb5d",
+    "Month": "2025-05",
+    "State": "Delhi",
+    "RTO": "DEL-RTO-1",
+    "Citizen Service SLA % (within SLA)": 96.42,
+    "Grievance SLA % (within SLA)": 79.3
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb5e",
+    "Month": "2025-06",
+    "State": "Delhi",
+    "RTO": "DEL-RTO-1",
+    "Citizen Service SLA % (within SLA)": 91.12,
+    "Grievance SLA % (within SLA)": 76.33
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb5f",
+    "Month": "2025-07",
+    "State": "Delhi",
+    "RTO": "DEL-RTO-1",
+    "Citizen Service SLA % (within SLA)": 90.09,
+    "Grievance SLA % (within SLA)": 91.86
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb60",
+    "Month": "2025-08",
+    "State": "Delhi",
+    "RTO": "DEL-RTO-1",
+    "Citizen Service SLA % (within SLA)": 88.83,
+    "Grievance SLA % (within SLA)": 84.26
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb61",
+    "Month": "2025-09",
+    "State": "Delhi",
+    "RTO": "DEL-RTO-1",
+    "Citizen Service SLA % (within SLA)": 85.35,
+    "Grievance SLA % (within SLA)": 81.46
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb62",
+    "Month": "2025-10",
+    "State": "Delhi",
+    "RTO": "DEL-RTO-1",
+    "Citizen Service SLA % (within SLA)": 99.79,
+    "Grievance SLA % (within SLA)": 86.51
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb63",
+    "Month": "2025-11",
+    "State": "Delhi",
+    "RTO": "DEL-RTO-1",
+    "Citizen Service SLA % (within SLA)": 85.99,
+    "Grievance SLA % (within SLA)": 83.8
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb64",
+    "Month": "2025-12",
+    "State": "Delhi",
+    "RTO": "DEL-RTO-1",
+    "Citizen Service SLA % (within SLA)": 83.01,
+    "Grievance SLA % (within SLA)": 78.9
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb65",
+    "Month": "2026-01",
+    "State": "Delhi",
+    "RTO": "DEL-RTO-1",
+    "Citizen Service SLA % (within SLA)": 97.8,
+    "Grievance SLA % (within SLA)": 85
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb66",
+    "Month": "2025-04",
+    "State": "Delhi",
+    "RTO": "DEL-RTO-2",
+    "Citizen Service SLA % (within SLA)": 100,
+    "Grievance SLA % (within SLA)": 85.33
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb67",
+    "Month": "2025-05",
+    "State": "Delhi",
+    "RTO": "DEL-RTO-2",
+    "Citizen Service SLA % (within SLA)": 90.82,
+    "Grievance SLA % (within SLA)": 90.49
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb68",
+    "Month": "2025-06",
+    "State": "Delhi",
+    "RTO": "DEL-RTO-2",
+    "Citizen Service SLA % (within SLA)": 77.64,
+    "Grievance SLA % (within SLA)": 87.43
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb69",
+    "Month": "2025-07",
+    "State": "Delhi",
+    "RTO": "DEL-RTO-2",
+    "Citizen Service SLA % (within SLA)": 90.76,
+    "Grievance SLA % (within SLA)": 96.4
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb6a",
+    "Month": "2025-08",
+    "State": "Delhi",
+    "RTO": "DEL-RTO-2",
+    "Citizen Service SLA % (within SLA)": 95.82,
+    "Grievance SLA % (within SLA)": 78.06
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb6b",
+    "Month": "2025-09",
+    "State": "Delhi",
+    "RTO": "DEL-RTO-2",
+    "Citizen Service SLA % (within SLA)": 97.21,
+    "Grievance SLA % (within SLA)": 84.16
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb6c",
+    "Month": "2025-10",
+    "State": "Delhi",
+    "RTO": "DEL-RTO-2",
+    "Citizen Service SLA % (within SLA)": 86.48,
+    "Grievance SLA % (within SLA)": 87.38
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb6d",
+    "Month": "2025-11",
+    "State": "Delhi",
+    "RTO": "DEL-RTO-2",
+    "Citizen Service SLA % (within SLA)": 89.99,
+    "Grievance SLA % (within SLA)": 96.77
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb6e",
+    "Month": "2025-12",
+    "State": "Delhi",
+    "RTO": "DEL-RTO-2",
+    "Citizen Service SLA % (within SLA)": 92.7,
+    "Grievance SLA % (within SLA)": 87.44
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb6f",
+    "Month": "2026-01",
+    "State": "Delhi",
+    "RTO": "DEL-RTO-2",
+    "Citizen Service SLA % (within SLA)": 95.5,
+    "Grievance SLA % (within SLA)": 93.65
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb70",
+    "Month": "2025-04",
+    "State": "Delhi",
+    "RTO": "DEL-RTO-3",
+    "Citizen Service SLA % (within SLA)": 94.92,
+    "Grievance SLA % (within SLA)": 95.94
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb71",
+    "Month": "2025-05",
+    "State": "Delhi",
+    "RTO": "DEL-RTO-3",
+    "Citizen Service SLA % (within SLA)": 94.04,
+    "Grievance SLA % (within SLA)": 87.17
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb72",
+    "Month": "2025-06",
+    "State": "Delhi",
+    "RTO": "DEL-RTO-3",
+    "Citizen Service SLA % (within SLA)": 97.2,
+    "Grievance SLA % (within SLA)": 85.36
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb73",
+    "Month": "2025-07",
+    "State": "Delhi",
+    "RTO": "DEL-RTO-3",
+    "Citizen Service SLA % (within SLA)": 91.17,
+    "Grievance SLA % (within SLA)": 98.05
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb74",
+    "Month": "2025-08",
+    "State": "Delhi",
+    "RTO": "DEL-RTO-3",
+    "Citizen Service SLA % (within SLA)": 99.11,
+    "Grievance SLA % (within SLA)": 85.94
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb75",
+    "Month": "2025-09",
+    "State": "Delhi",
+    "RTO": "DEL-RTO-3",
+    "Citizen Service SLA % (within SLA)": 88.73,
+    "Grievance SLA % (within SLA)": 96.24
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb76",
+    "Month": "2025-10",
+    "State": "Delhi",
+    "RTO": "DEL-RTO-3",
+    "Citizen Service SLA % (within SLA)": 95,
+    "Grievance SLA % (within SLA)": 88.21
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb77",
+    "Month": "2025-11",
+    "State": "Delhi",
+    "RTO": "DEL-RTO-3",
+    "Citizen Service SLA % (within SLA)": 89.39,
+    "Grievance SLA % (within SLA)": 88.32
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb78",
+    "Month": "2025-12",
+    "State": "Delhi",
+    "RTO": "DEL-RTO-3",
+    "Citizen Service SLA % (within SLA)": 90.89,
+    "Grievance SLA % (within SLA)": 81.35
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb79",
+    "Month": "2026-01",
+    "State": "Delhi",
+    "RTO": "DEL-RTO-3",
+    "Citizen Service SLA % (within SLA)": 91.65,
+    "Grievance SLA % (within SLA)": 87.86
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb7a",
+    "Month": "2025-04",
+    "State": "Karnataka",
+    "RTO": "KAR-RTO-1",
+    "Citizen Service SLA % (within SLA)": 89.12,
+    "Grievance SLA % (within SLA)": 92.33
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb7b",
+    "Month": "2025-05",
+    "State": "Karnataka",
+    "RTO": "KAR-RTO-1",
+    "Citizen Service SLA % (within SLA)": 97.44,
+    "Grievance SLA % (within SLA)": 92.79
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb7c",
+    "Month": "2025-06",
+    "State": "Karnataka",
+    "RTO": "KAR-RTO-1",
+    "Citizen Service SLA % (within SLA)": 89.62,
+    "Grievance SLA % (within SLA)": 91.29
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb7d",
+    "Month": "2025-07",
+    "State": "Karnataka",
+    "RTO": "KAR-RTO-1",
+    "Citizen Service SLA % (within SLA)": 91.39,
+    "Grievance SLA % (within SLA)": 77.35
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb7e",
+    "Month": "2025-08",
+    "State": "Karnataka",
+    "RTO": "KAR-RTO-1",
+    "Citizen Service SLA % (within SLA)": 94.36,
+    "Grievance SLA % (within SLA)": 87.02
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb7f",
+    "Month": "2025-09",
+    "State": "Karnataka",
+    "RTO": "KAR-RTO-1",
+    "Citizen Service SLA % (within SLA)": 100,
+    "Grievance SLA % (within SLA)": 96.2
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb80",
+    "Month": "2025-10",
+    "State": "Karnataka",
+    "RTO": "KAR-RTO-1",
+    "Citizen Service SLA % (within SLA)": 94.56,
+    "Grievance SLA % (within SLA)": 87.74
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb81",
+    "Month": "2025-11",
+    "State": "Karnataka",
+    "RTO": "KAR-RTO-1",
+    "Citizen Service SLA % (within SLA)": 91.82,
+    "Grievance SLA % (within SLA)": 78.97
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb82",
+    "Month": "2025-12",
+    "State": "Karnataka",
+    "RTO": "KAR-RTO-1",
+    "Citizen Service SLA % (within SLA)": 82.31,
+    "Grievance SLA % (within SLA)": 79.89
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb83",
+    "Month": "2026-01",
+    "State": "Karnataka",
+    "RTO": "KAR-RTO-1",
+    "Citizen Service SLA % (within SLA)": 90.76,
+    "Grievance SLA % (within SLA)": 71.26
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb84",
+    "Month": "2025-04",
+    "State": "Karnataka",
+    "RTO": "KAR-RTO-2",
+    "Citizen Service SLA % (within SLA)": 88.28,
+    "Grievance SLA % (within SLA)": 84.27
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb85",
+    "Month": "2025-05",
+    "State": "Karnataka",
+    "RTO": "KAR-RTO-2",
+    "Citizen Service SLA % (within SLA)": 89.92,
+    "Grievance SLA % (within SLA)": 81.37
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb86",
+    "Month": "2025-06",
+    "State": "Karnataka",
+    "RTO": "KAR-RTO-2",
+    "Citizen Service SLA % (within SLA)": 89.29,
+    "Grievance SLA % (within SLA)": 98.07
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb87",
+    "Month": "2025-07",
+    "State": "Karnataka",
+    "RTO": "KAR-RTO-2",
+    "Citizen Service SLA % (within SLA)": 94.31,
+    "Grievance SLA % (within SLA)": 82.08
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb88",
+    "Month": "2025-08",
+    "State": "Karnataka",
+    "RTO": "KAR-RTO-2",
+    "Citizen Service SLA % (within SLA)": 90.66,
+    "Grievance SLA % (within SLA)": 85.8
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb89",
+    "Month": "2025-09",
+    "State": "Karnataka",
+    "RTO": "KAR-RTO-2",
+    "Citizen Service SLA % (within SLA)": 87.16,
+    "Grievance SLA % (within SLA)": 80.62
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb8a",
+    "Month": "2025-10",
+    "State": "Karnataka",
+    "RTO": "KAR-RTO-2",
+    "Citizen Service SLA % (within SLA)": 96.05,
+    "Grievance SLA % (within SLA)": 83.06
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb8b",
+    "Month": "2025-11",
+    "State": "Karnataka",
+    "RTO": "KAR-RTO-2",
+    "Citizen Service SLA % (within SLA)": 85.53,
+    "Grievance SLA % (within SLA)": 85.7
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb8c",
+    "Month": "2025-12",
+    "State": "Karnataka",
+    "RTO": "KAR-RTO-2",
+    "Citizen Service SLA % (within SLA)": 91.59,
+    "Grievance SLA % (within SLA)": 72.19
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb8d",
+    "Month": "2026-01",
+    "State": "Karnataka",
+    "RTO": "KAR-RTO-2",
+    "Citizen Service SLA % (within SLA)": 90.8,
+    "Grievance SLA % (within SLA)": 92.08
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb8e",
+    "Month": "2025-04",
+    "State": "Karnataka",
+    "RTO": "KAR-RTO-3",
+    "Citizen Service SLA % (within SLA)": 93.26,
+    "Grievance SLA % (within SLA)": 100
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb8f",
+    "Month": "2025-05",
+    "State": "Karnataka",
+    "RTO": "KAR-RTO-3",
+    "Citizen Service SLA % (within SLA)": 97.26,
+    "Grievance SLA % (within SLA)": 96.14
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb90",
+    "Month": "2025-06",
+    "State": "Karnataka",
+    "RTO": "KAR-RTO-3",
+    "Citizen Service SLA % (within SLA)": 100,
+    "Grievance SLA % (within SLA)": 91.31
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb91",
+    "Month": "2025-07",
+    "State": "Karnataka",
+    "RTO": "KAR-RTO-3",
+    "Citizen Service SLA % (within SLA)": 91.82,
+    "Grievance SLA % (within SLA)": 92.82
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb92",
+    "Month": "2025-08",
+    "State": "Karnataka",
+    "RTO": "KAR-RTO-3",
+    "Citizen Service SLA % (within SLA)": 88.2,
+    "Grievance SLA % (within SLA)": 86.75
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb93",
+    "Month": "2025-09",
+    "State": "Karnataka",
+    "RTO": "KAR-RTO-3",
+    "Citizen Service SLA % (within SLA)": 87.76,
+    "Grievance SLA % (within SLA)": 88.79
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb94",
+    "Month": "2025-10",
+    "State": "Karnataka",
+    "RTO": "KAR-RTO-3",
+    "Citizen Service SLA % (within SLA)": 87.74,
+    "Grievance SLA % (within SLA)": 81.19
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb95",
+    "Month": "2025-11",
+    "State": "Karnataka",
+    "RTO": "KAR-RTO-3",
+    "Citizen Service SLA % (within SLA)": 93.07,
+    "Grievance SLA % (within SLA)": 85.04
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb96",
+    "Month": "2025-12",
+    "State": "Karnataka",
+    "RTO": "KAR-RTO-3",
+    "Citizen Service SLA % (within SLA)": 81.36,
+    "Grievance SLA % (within SLA)": 75.81
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb97",
+    "Month": "2026-01",
+    "State": "Karnataka",
+    "RTO": "KAR-RTO-3",
+    "Citizen Service SLA % (within SLA)": 85.26,
+    "Grievance SLA % (within SLA)": 79.82
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb98",
+    "Month": "2025-04",
+    "State": "Tamil Nadu",
+    "RTO": "TAM-RTO-1",
+    "Citizen Service SLA % (within SLA)": 93.07,
+    "Grievance SLA % (within SLA)": 87.53
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb99",
+    "Month": "2025-05",
+    "State": "Tamil Nadu",
+    "RTO": "TAM-RTO-1",
+    "Citizen Service SLA % (within SLA)": 96.33,
+    "Grievance SLA % (within SLA)": 91.27
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb9a",
+    "Month": "2025-06",
+    "State": "Tamil Nadu",
+    "RTO": "TAM-RTO-1",
+    "Citizen Service SLA % (within SLA)": 96.36,
+    "Grievance SLA % (within SLA)": 90.26
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb9b",
+    "Month": "2025-07",
+    "State": "Tamil Nadu",
+    "RTO": "TAM-RTO-1",
+    "Citizen Service SLA % (within SLA)": 92.05,
+    "Grievance SLA % (within SLA)": 93.7
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb9c",
+    "Month": "2025-08",
+    "State": "Tamil Nadu",
+    "RTO": "TAM-RTO-1",
+    "Citizen Service SLA % (within SLA)": 95.6,
+    "Grievance SLA % (within SLA)": 88.63
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb9d",
+    "Month": "2025-09",
+    "State": "Tamil Nadu",
+    "RTO": "TAM-RTO-1",
+    "Citizen Service SLA % (within SLA)": 97.36,
+    "Grievance SLA % (within SLA)": 69.58
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb9e",
+    "Month": "2025-10",
+    "State": "Tamil Nadu",
+    "RTO": "TAM-RTO-1",
+    "Citizen Service SLA % (within SLA)": 89.55,
+    "Grievance SLA % (within SLA)": 83.86
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efb9f",
+    "Month": "2025-11",
+    "State": "Tamil Nadu",
+    "RTO": "TAM-RTO-1",
+    "Citizen Service SLA % (within SLA)": 96.76,
+    "Grievance SLA % (within SLA)": 97
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efba0",
+    "Month": "2025-12",
+    "State": "Tamil Nadu",
+    "RTO": "TAM-RTO-1",
+    "Citizen Service SLA % (within SLA)": 83.75,
+    "Grievance SLA % (within SLA)": 95.88
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efba1",
+    "Month": "2026-01",
+    "State": "Tamil Nadu",
+    "RTO": "TAM-RTO-1",
+    "Citizen Service SLA % (within SLA)": 85.14,
+    "Grievance SLA % (within SLA)": 78.01
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efba2",
+    "Month": "2025-04",
+    "State": "Tamil Nadu",
+    "RTO": "TAM-RTO-2",
+    "Citizen Service SLA % (within SLA)": 89.83,
+    "Grievance SLA % (within SLA)": 83.77
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efba3",
+    "Month": "2025-05",
+    "State": "Tamil Nadu",
+    "RTO": "TAM-RTO-2",
+    "Citizen Service SLA % (within SLA)": 83.21,
+    "Grievance SLA % (within SLA)": 90.55
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efba4",
+    "Month": "2025-06",
+    "State": "Tamil Nadu",
+    "RTO": "TAM-RTO-2",
+    "Citizen Service SLA % (within SLA)": 94.4,
+    "Grievance SLA % (within SLA)": 93.38
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efba5",
+    "Month": "2025-07",
+    "State": "Tamil Nadu",
+    "RTO": "TAM-RTO-2",
+    "Citizen Service SLA % (within SLA)": 88.83,
+    "Grievance SLA % (within SLA)": 85.72
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efba6",
+    "Month": "2025-08",
+    "State": "Tamil Nadu",
+    "RTO": "TAM-RTO-2",
+    "Citizen Service SLA % (within SLA)": 90.85,
+    "Grievance SLA % (within SLA)": 97.82
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efba7",
+    "Month": "2025-09",
+    "State": "Tamil Nadu",
+    "RTO": "TAM-RTO-2",
+    "Citizen Service SLA % (within SLA)": 76.83,
+    "Grievance SLA % (within SLA)": 79.3
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efba8",
+    "Month": "2025-10",
+    "State": "Tamil Nadu",
+    "RTO": "TAM-RTO-2",
+    "Citizen Service SLA % (within SLA)": 91.03,
+    "Grievance SLA % (within SLA)": 78.4
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efba9",
+    "Month": "2025-11",
+    "State": "Tamil Nadu",
+    "RTO": "TAM-RTO-2",
+    "Citizen Service SLA % (within SLA)": 89.71,
+    "Grievance SLA % (within SLA)": 85.12
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efbaa",
+    "Month": "2025-12",
+    "State": "Tamil Nadu",
+    "RTO": "TAM-RTO-2",
+    "Citizen Service SLA % (within SLA)": 87.71,
+    "Grievance SLA % (within SLA)": 86.45
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efbab",
+    "Month": "2026-01",
+    "State": "Tamil Nadu",
+    "RTO": "TAM-RTO-2",
+    "Citizen Service SLA % (within SLA)": 94.14,
+    "Grievance SLA % (within SLA)": 84.35
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efbac",
+    "Month": "2025-04",
+    "State": "Tamil Nadu",
+    "RTO": "TAM-RTO-3",
+    "Citizen Service SLA % (within SLA)": 88.73,
+    "Grievance SLA % (within SLA)": 84.84
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efbad",
+    "Month": "2025-05",
+    "State": "Tamil Nadu",
+    "RTO": "TAM-RTO-3",
+    "Citizen Service SLA % (within SLA)": 90.96,
+    "Grievance SLA % (within SLA)": 73.82
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efbae",
+    "Month": "2025-06",
+    "State": "Tamil Nadu",
+    "RTO": "TAM-RTO-3",
+    "Citizen Service SLA % (within SLA)": 93.31,
+    "Grievance SLA % (within SLA)": 82.84
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efbaf",
+    "Month": "2025-07",
+    "State": "Tamil Nadu",
+    "RTO": "TAM-RTO-3",
+    "Citizen Service SLA % (within SLA)": 97.31,
+    "Grievance SLA % (within SLA)": 90.14
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efbb0",
+    "Month": "2025-08",
+    "State": "Tamil Nadu",
+    "RTO": "TAM-RTO-3",
+    "Citizen Service SLA % (within SLA)": 96.85,
+    "Grievance SLA % (within SLA)": 78.92
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efbb1",
+    "Month": "2025-09",
+    "State": "Tamil Nadu",
+    "RTO": "TAM-RTO-3",
+    "Citizen Service SLA % (within SLA)": 89.14,
+    "Grievance SLA % (within SLA)": 77.3
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efbb2",
+    "Month": "2025-10",
+    "State": "Tamil Nadu",
+    "RTO": "TAM-RTO-3",
+    "Citizen Service SLA % (within SLA)": 87.47,
+    "Grievance SLA % (within SLA)": 94.76
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efbb3",
+    "Month": "2025-11",
+    "State": "Tamil Nadu",
+    "RTO": "TAM-RTO-3",
+    "Citizen Service SLA % (within SLA)": 98.44,
+    "Grievance SLA % (within SLA)": 77.96
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efbb4",
+    "Month": "2025-12",
+    "State": "Tamil Nadu",
+    "RTO": "TAM-RTO-3",
+    "Citizen Service SLA % (within SLA)": 88.71,
+    "Grievance SLA % (within SLA)": 85.47
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efbb5",
+    "Month": "2026-01",
+    "State": "Tamil Nadu",
+    "RTO": "TAM-RTO-3",
+    "Citizen Service SLA % (within SLA)": 93.93,
+    "Grievance SLA % (within SLA)": 73.68
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efbb6",
+    "Month": "2025-04",
+    "State": "Uttar Pradesh",
+    "RTO": "UTT-RTO-1",
+    "Citizen Service SLA % (within SLA)": 82.98,
+    "Grievance SLA % (within SLA)": 89.43
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efbb7",
+    "Month": "2025-05",
+    "State": "Uttar Pradesh",
+    "RTO": "UTT-RTO-1",
+    "Citizen Service SLA % (within SLA)": 81.25,
+    "Grievance SLA % (within SLA)": 82.87
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efbb8",
+    "Month": "2025-06",
+    "State": "Uttar Pradesh",
+    "RTO": "UTT-RTO-1",
+    "Citizen Service SLA % (within SLA)": 91.81,
+    "Grievance SLA % (within SLA)": 88.91
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efbb9",
+    "Month": "2025-07",
+    "State": "Uttar Pradesh",
+    "RTO": "UTT-RTO-1",
+    "Citizen Service SLA % (within SLA)": 90.29,
+    "Grievance SLA % (within SLA)": 83.44
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efbba",
+    "Month": "2025-08",
+    "State": "Uttar Pradesh",
+    "RTO": "UTT-RTO-1",
+    "Citizen Service SLA % (within SLA)": 95.22,
+    "Grievance SLA % (within SLA)": 88
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efbbb",
+    "Month": "2025-09",
+    "State": "Uttar Pradesh",
+    "RTO": "UTT-RTO-1",
+    "Citizen Service SLA % (within SLA)": 87.76,
+    "Grievance SLA % (within SLA)": 86.26
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efbbc",
+    "Month": "2025-10",
+    "State": "Uttar Pradesh",
+    "RTO": "UTT-RTO-1",
+    "Citizen Service SLA % (within SLA)": 92.92,
+    "Grievance SLA % (within SLA)": 98.03
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efbbd",
+    "Month": "2025-11",
+    "State": "Uttar Pradesh",
+    "RTO": "UTT-RTO-1",
+    "Citizen Service SLA % (within SLA)": 94.93,
+    "Grievance SLA % (within SLA)": 94.5
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efbbe",
+    "Month": "2025-12",
+    "State": "Uttar Pradesh",
+    "RTO": "UTT-RTO-1",
+    "Citizen Service SLA % (within SLA)": 87.95,
+    "Grievance SLA % (within SLA)": 82.33
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efbbf",
+    "Month": "2026-01",
+    "State": "Uttar Pradesh",
+    "RTO": "UTT-RTO-1",
+    "Citizen Service SLA % (within SLA)": 89.82,
+    "Grievance SLA % (within SLA)": 84.99
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efbc0",
+    "Month": "2025-04",
+    "State": "Uttar Pradesh",
+    "RTO": "UTT-RTO-2",
+    "Citizen Service SLA % (within SLA)": 85.96,
+    "Grievance SLA % (within SLA)": 94.86
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efbc1",
+    "Month": "2025-05",
+    "State": "Uttar Pradesh",
+    "RTO": "UTT-RTO-2",
+    "Citizen Service SLA % (within SLA)": 95.42,
+    "Grievance SLA % (within SLA)": 83.86
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efbc2",
+    "Month": "2025-06",
+    "State": "Uttar Pradesh",
+    "RTO": "UTT-RTO-2",
+    "Citizen Service SLA % (within SLA)": 94.21,
+    "Grievance SLA % (within SLA)": 87.56
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efbc3",
+    "Month": "2025-07",
+    "State": "Uttar Pradesh",
+    "RTO": "UTT-RTO-2",
+    "Citizen Service SLA % (within SLA)": 94.6,
+    "Grievance SLA % (within SLA)": 76.59
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efbc4",
+    "Month": "2025-08",
+    "State": "Uttar Pradesh",
+    "RTO": "UTT-RTO-2",
+    "Citizen Service SLA % (within SLA)": 90.27,
+    "Grievance SLA % (within SLA)": 85.59
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efbc5",
+    "Month": "2025-09",
+    "State": "Uttar Pradesh",
+    "RTO": "UTT-RTO-2",
+    "Citizen Service SLA % (within SLA)": 94.12,
+    "Grievance SLA % (within SLA)": 81.6
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efbc6",
+    "Month": "2025-10",
+    "State": "Uttar Pradesh",
+    "RTO": "UTT-RTO-2",
+    "Citizen Service SLA % (within SLA)": 78.5,
+    "Grievance SLA % (within SLA)": 78.43
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efbc7",
+    "Month": "2025-11",
+    "State": "Uttar Pradesh",
+    "RTO": "UTT-RTO-2",
+    "Citizen Service SLA % (within SLA)": 90.69,
+    "Grievance SLA % (within SLA)": 86.45
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efbc8",
+    "Month": "2025-12",
+    "State": "Uttar Pradesh",
+    "RTO": "UTT-RTO-2",
+    "Citizen Service SLA % (within SLA)": 99.42,
+    "Grievance SLA % (within SLA)": 90.08
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efbc9",
+    "Month": "2026-01",
+    "State": "Uttar Pradesh",
+    "RTO": "UTT-RTO-2",
+    "Citizen Service SLA % (within SLA)": 91.41,
+    "Grievance SLA % (within SLA)": 85.77
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efbca",
+    "Month": "2025-04",
+    "State": "Uttar Pradesh",
+    "RTO": "UTT-RTO-3",
+    "Citizen Service SLA % (within SLA)": 96.52,
+    "Grievance SLA % (within SLA)": 81.87
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efbcb",
+    "Month": "2025-05",
+    "State": "Uttar Pradesh",
+    "RTO": "UTT-RTO-3",
+    "Citizen Service SLA % (within SLA)": 90.3,
+    "Grievance SLA % (within SLA)": 78.38
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efbcc",
+    "Month": "2025-06",
+    "State": "Uttar Pradesh",
+    "RTO": "UTT-RTO-3",
+    "Citizen Service SLA % (within SLA)": 98.09,
+    "Grievance SLA % (within SLA)": 88.75
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efbcd",
+    "Month": "2025-07",
+    "State": "Uttar Pradesh",
+    "RTO": "UTT-RTO-3",
+    "Citizen Service SLA % (within SLA)": 87.46,
+    "Grievance SLA % (within SLA)": 85.2
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efbce",
+    "Month": "2025-08",
+    "State": "Uttar Pradesh",
+    "RTO": "UTT-RTO-3",
+    "Citizen Service SLA % (within SLA)": 93.55,
+    "Grievance SLA % (within SLA)": 84.24
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efbcf",
+    "Month": "2025-09",
+    "State": "Uttar Pradesh",
+    "RTO": "UTT-RTO-3",
+    "Citizen Service SLA % (within SLA)": 88.33,
+    "Grievance SLA % (within SLA)": 81.42
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efbd0",
+    "Month": "2025-10",
+    "State": "Uttar Pradesh",
+    "RTO": "UTT-RTO-3",
+    "Citizen Service SLA % (within SLA)": 92.69,
+    "Grievance SLA % (within SLA)": 83.49
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efbd1",
+    "Month": "2025-11",
+    "State": "Uttar Pradesh",
+    "RTO": "UTT-RTO-3",
+    "Citizen Service SLA % (within SLA)": 88.73,
+    "Grievance SLA % (within SLA)": 76.65
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efbd2",
+    "Month": "2025-12",
+    "State": "Uttar Pradesh",
+    "RTO": "UTT-RTO-3",
+    "Citizen Service SLA % (within SLA)": 91.39,
+    "Grievance SLA % (within SLA)": 84.73
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efbd3",
+    "Month": "2026-01",
+    "State": "Uttar Pradesh",
+    "RTO": "UTT-RTO-3",
+    "Citizen Service SLA % (within SLA)": 89.39,
+    "Grievance SLA % (within SLA)": 87.39
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efbd4",
+    "Month": "2025-04",
+    "State": "Rajasthan",
+    "RTO": "RAJ-RTO-1",
+    "Citizen Service SLA % (within SLA)": 94.74,
+    "Grievance SLA % (within SLA)": 90.91
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efbd5",
+    "Month": "2025-05",
+    "State": "Rajasthan",
+    "RTO": "RAJ-RTO-1",
+    "Citizen Service SLA % (within SLA)": 93.76,
+    "Grievance SLA % (within SLA)": 84.32
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efbd6",
+    "Month": "2025-06",
+    "State": "Rajasthan",
+    "RTO": "RAJ-RTO-1",
+    "Citizen Service SLA % (within SLA)": 88.17,
+    "Grievance SLA % (within SLA)": 78.69
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efbd7",
+    "Month": "2025-07",
+    "State": "Rajasthan",
+    "RTO": "RAJ-RTO-1",
+    "Citizen Service SLA % (within SLA)": 88.03,
+    "Grievance SLA % (within SLA)": 86.14
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efbd8",
+    "Month": "2025-08",
+    "State": "Rajasthan",
+    "RTO": "RAJ-RTO-1",
+    "Citizen Service SLA % (within SLA)": 87.07,
+    "Grievance SLA % (within SLA)": 86.67
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efbd9",
+    "Month": "2025-09",
+    "State": "Rajasthan",
+    "RTO": "RAJ-RTO-1",
+    "Citizen Service SLA % (within SLA)": 86.17,
+    "Grievance SLA % (within SLA)": 74.37
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efbda",
+    "Month": "2025-10",
+    "State": "Rajasthan",
+    "RTO": "RAJ-RTO-1",
+    "Citizen Service SLA % (within SLA)": 95.1,
+    "Grievance SLA % (within SLA)": 82.68
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efbdb",
+    "Month": "2025-11",
+    "State": "Rajasthan",
+    "RTO": "RAJ-RTO-1",
+    "Citizen Service SLA % (within SLA)": 86.81,
+    "Grievance SLA % (within SLA)": 78.34
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efbdc",
+    "Month": "2025-12",
+    "State": "Rajasthan",
+    "RTO": "RAJ-RTO-1",
+    "Citizen Service SLA % (within SLA)": 93.12,
+    "Grievance SLA % (within SLA)": 95.62
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efbdd",
+    "Month": "2026-01",
+    "State": "Rajasthan",
+    "RTO": "RAJ-RTO-1",
+    "Citizen Service SLA % (within SLA)": 88.98,
+    "Grievance SLA % (within SLA)": 84.49
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efbde",
+    "Month": "2025-04",
+    "State": "Rajasthan",
+    "RTO": "RAJ-RTO-2",
+    "Citizen Service SLA % (within SLA)": 96.36,
+    "Grievance SLA % (within SLA)": 73.33
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efbdf",
+    "Month": "2025-05",
+    "State": "Rajasthan",
+    "RTO": "RAJ-RTO-2",
+    "Citizen Service SLA % (within SLA)": 100,
+    "Grievance SLA % (within SLA)": 100
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efbe0",
+    "Month": "2025-06",
+    "State": "Rajasthan",
+    "RTO": "RAJ-RTO-2",
+    "Citizen Service SLA % (within SLA)": 77.47,
+    "Grievance SLA % (within SLA)": 85.32
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efbe1",
+    "Month": "2025-07",
+    "State": "Rajasthan",
+    "RTO": "RAJ-RTO-2",
+    "Citizen Service SLA % (within SLA)": 87.41,
+    "Grievance SLA % (within SLA)": 84.15
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efbe2",
+    "Month": "2025-08",
+    "State": "Rajasthan",
+    "RTO": "RAJ-RTO-2",
+    "Citizen Service SLA % (within SLA)": 88.91,
+    "Grievance SLA % (within SLA)": 91.68
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efbe3",
+    "Month": "2025-09",
+    "State": "Rajasthan",
+    "RTO": "RAJ-RTO-2",
+    "Citizen Service SLA % (within SLA)": 90.44,
+    "Grievance SLA % (within SLA)": 79.62
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efbe4",
+    "Month": "2025-10",
+    "State": "Rajasthan",
+    "RTO": "RAJ-RTO-2",
+    "Citizen Service SLA % (within SLA)": 90.14,
+    "Grievance SLA % (within SLA)": 89.6
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efbe5",
+    "Month": "2025-11",
+    "State": "Rajasthan",
+    "RTO": "RAJ-RTO-2",
+    "Citizen Service SLA % (within SLA)": 85.08,
+    "Grievance SLA % (within SLA)": 74.48
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efbe6",
+    "Month": "2025-12",
+    "State": "Rajasthan",
+    "RTO": "RAJ-RTO-2",
+    "Citizen Service SLA % (within SLA)": 100,
+    "Grievance SLA % (within SLA)": 81.5
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efbe7",
+    "Month": "2026-01",
+    "State": "Rajasthan",
+    "RTO": "RAJ-RTO-2",
+    "Citizen Service SLA % (within SLA)": 90.31,
+    "Grievance SLA % (within SLA)": 83.22
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efbe8",
+    "Month": "2025-04",
+    "State": "Rajasthan",
+    "RTO": "RAJ-RTO-3",
+    "Citizen Service SLA % (within SLA)": 93.74,
+    "Grievance SLA % (within SLA)": 98.41
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efbe9",
+    "Month": "2025-05",
+    "State": "Rajasthan",
+    "RTO": "RAJ-RTO-3",
+    "Citizen Service SLA % (within SLA)": 93.9,
+    "Grievance SLA % (within SLA)": 75.37
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efbea",
+    "Month": "2025-06",
+    "State": "Rajasthan",
+    "RTO": "RAJ-RTO-3",
+    "Citizen Service SLA % (within SLA)": 84.08,
+    "Grievance SLA % (within SLA)": 83.21
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efbeb",
+    "Month": "2025-07",
+    "State": "Rajasthan",
+    "RTO": "RAJ-RTO-3",
+    "Citizen Service SLA % (within SLA)": 89.66,
+    "Grievance SLA % (within SLA)": 73.95
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efbec",
+    "Month": "2025-08",
+    "State": "Rajasthan",
+    "RTO": "RAJ-RTO-3",
+    "Citizen Service SLA % (within SLA)": 95.1,
+    "Grievance SLA % (within SLA)": 78.4
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efbed",
+    "Month": "2025-09",
+    "State": "Rajasthan",
+    "RTO": "RAJ-RTO-3",
+    "Citizen Service SLA % (within SLA)": 98.47,
+    "Grievance SLA % (within SLA)": 98.74
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efbee",
+    "Month": "2025-10",
+    "State": "Rajasthan",
+    "RTO": "RAJ-RTO-3",
+    "Citizen Service SLA % (within SLA)": 89.76,
+    "Grievance SLA % (within SLA)": 89.07
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efbef",
+    "Month": "2025-11",
+    "State": "Rajasthan",
+    "RTO": "RAJ-RTO-3",
+    "Citizen Service SLA % (within SLA)": 84.84,
+    "Grievance SLA % (within SLA)": 90.37
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efbf0",
+    "Month": "2025-12",
+    "State": "Rajasthan",
+    "RTO": "RAJ-RTO-3",
+    "Citizen Service SLA % (within SLA)": 88.51,
+    "Grievance SLA % (within SLA)": 78.39
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efbf1",
+    "Month": "2026-01",
+    "State": "Rajasthan",
+    "RTO": "RAJ-RTO-3",
+    "Citizen Service SLA % (within SLA)": 89.55,
+    "Grievance SLA % (within SLA)": 82.74
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efbf2",
+    "Month": "2025-04",
+    "State": "Madhya Pradesh",
+    "RTO": "MAD-RTO-1",
+    "Citizen Service SLA % (within SLA)": 89.37,
+    "Grievance SLA % (within SLA)": 92.65
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efbf3",
+    "Month": "2025-05",
+    "State": "Madhya Pradesh",
+    "RTO": "MAD-RTO-1",
+    "Citizen Service SLA % (within SLA)": 87.07,
+    "Grievance SLA % (within SLA)": 98.15
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efbf4",
+    "Month": "2025-06",
+    "State": "Madhya Pradesh",
+    "RTO": "MAD-RTO-1",
+    "Citizen Service SLA % (within SLA)": 84.37,
+    "Grievance SLA % (within SLA)": 97.31
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efbf5",
+    "Month": "2025-07",
+    "State": "Madhya Pradesh",
+    "RTO": "MAD-RTO-1",
+    "Citizen Service SLA % (within SLA)": 85.92,
+    "Grievance SLA % (within SLA)": 85.99
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efbf6",
+    "Month": "2025-08",
+    "State": "Madhya Pradesh",
+    "RTO": "MAD-RTO-1",
+    "Citizen Service SLA % (within SLA)": 88.55,
+    "Grievance SLA % (within SLA)": 83.59
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efbf7",
+    "Month": "2025-09",
+    "State": "Madhya Pradesh",
+    "RTO": "MAD-RTO-1",
+    "Citizen Service SLA % (within SLA)": 95.01,
+    "Grievance SLA % (within SLA)": 96.5
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efbf8",
+    "Month": "2025-10",
+    "State": "Madhya Pradesh",
+    "RTO": "MAD-RTO-1",
+    "Citizen Service SLA % (within SLA)": 96.95,
+    "Grievance SLA % (within SLA)": 83.17
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efbf9",
+    "Month": "2025-11",
+    "State": "Madhya Pradesh",
+    "RTO": "MAD-RTO-1",
+    "Citizen Service SLA % (within SLA)": 91.92,
+    "Grievance SLA % (within SLA)": 80.53
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efbfa",
+    "Month": "2025-12",
+    "State": "Madhya Pradesh",
+    "RTO": "MAD-RTO-1",
+    "Citizen Service SLA % (within SLA)": 86.04,
+    "Grievance SLA % (within SLA)": 77.98
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efbfb",
+    "Month": "2026-01",
+    "State": "Madhya Pradesh",
+    "RTO": "MAD-RTO-1",
+    "Citizen Service SLA % (within SLA)": 88.81,
+    "Grievance SLA % (within SLA)": 87.75
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efbfc",
+    "Month": "2025-04",
+    "State": "Madhya Pradesh",
+    "RTO": "MAD-RTO-2",
+    "Citizen Service SLA % (within SLA)": 81.44,
+    "Grievance SLA % (within SLA)": 85.68
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efbfd",
+    "Month": "2025-05",
+    "State": "Madhya Pradesh",
+    "RTO": "MAD-RTO-2",
+    "Citizen Service SLA % (within SLA)": 98.58,
+    "Grievance SLA % (within SLA)": 93.85
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efbfe",
+    "Month": "2025-06",
+    "State": "Madhya Pradesh",
+    "RTO": "MAD-RTO-2",
+    "Citizen Service SLA % (within SLA)": 88.07,
+    "Grievance SLA % (within SLA)": 76.22
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efbff",
+    "Month": "2025-07",
+    "State": "Madhya Pradesh",
+    "RTO": "MAD-RTO-2",
+    "Citizen Service SLA % (within SLA)": 93.3,
+    "Grievance SLA % (within SLA)": 69.78
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efc00",
+    "Month": "2025-08",
+    "State": "Madhya Pradesh",
+    "RTO": "MAD-RTO-2",
+    "Citizen Service SLA % (within SLA)": 96.55,
+    "Grievance SLA % (within SLA)": 84.5
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efc01",
+    "Month": "2025-09",
+    "State": "Madhya Pradesh",
+    "RTO": "MAD-RTO-2",
+    "Citizen Service SLA % (within SLA)": 100,
+    "Grievance SLA % (within SLA)": 73.91
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efc02",
+    "Month": "2025-10",
+    "State": "Madhya Pradesh",
+    "RTO": "MAD-RTO-2",
+    "Citizen Service SLA % (within SLA)": 95.59,
+    "Grievance SLA % (within SLA)": 85.3
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efc03",
+    "Month": "2025-11",
+    "State": "Madhya Pradesh",
+    "RTO": "MAD-RTO-2",
+    "Citizen Service SLA % (within SLA)": 89.34,
+    "Grievance SLA % (within SLA)": 76.41
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efc04",
+    "Month": "2025-12",
+    "State": "Madhya Pradesh",
+    "RTO": "MAD-RTO-2",
+    "Citizen Service SLA % (within SLA)": 93.98,
+    "Grievance SLA % (within SLA)": 90.73
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efc05",
+    "Month": "2026-01",
+    "State": "Madhya Pradesh",
+    "RTO": "MAD-RTO-2",
+    "Citizen Service SLA % (within SLA)": 99.93,
+    "Grievance SLA % (within SLA)": 93.06
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efc06",
+    "Month": "2025-04",
+    "State": "Madhya Pradesh",
+    "RTO": "MAD-RTO-3",
+    "Citizen Service SLA % (within SLA)": 88.03,
+    "Grievance SLA % (within SLA)": 78.97
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efc07",
+    "Month": "2025-05",
+    "State": "Madhya Pradesh",
+    "RTO": "MAD-RTO-3",
+    "Citizen Service SLA % (within SLA)": 84.16,
+    "Grievance SLA % (within SLA)": 96.31
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efc08",
+    "Month": "2025-06",
+    "State": "Madhya Pradesh",
+    "RTO": "MAD-RTO-3",
+    "Citizen Service SLA % (within SLA)": 87.11,
+    "Grievance SLA % (within SLA)": 96.36
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efc09",
+    "Month": "2025-07",
+    "State": "Madhya Pradesh",
+    "RTO": "MAD-RTO-3",
+    "Citizen Service SLA % (within SLA)": 93.63,
+    "Grievance SLA % (within SLA)": 88.31
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efc0a",
+    "Month": "2025-08",
+    "State": "Madhya Pradesh",
+    "RTO": "MAD-RTO-3",
+    "Citizen Service SLA % (within SLA)": 89.47,
+    "Grievance SLA % (within SLA)": 90.62
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efc0b",
+    "Month": "2025-09",
+    "State": "Madhya Pradesh",
+    "RTO": "MAD-RTO-3",
+    "Citizen Service SLA % (within SLA)": 90.92,
+    "Grievance SLA % (within SLA)": 83.42
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efc0c",
+    "Month": "2025-10",
+    "State": "Madhya Pradesh",
+    "RTO": "MAD-RTO-3",
+    "Citizen Service SLA % (within SLA)": 94.48,
+    "Grievance SLA % (within SLA)": 84.99
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efc0d",
+    "Month": "2025-11",
+    "State": "Madhya Pradesh",
+    "RTO": "MAD-RTO-3",
+    "Citizen Service SLA % (within SLA)": 87.01,
+    "Grievance SLA % (within SLA)": 90.2
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efc0e",
+    "Month": "2025-12",
+    "State": "Madhya Pradesh",
+    "RTO": "MAD-RTO-3",
+    "Citizen Service SLA % (within SLA)": 90.68,
+    "Grievance SLA % (within SLA)": 89.42
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efc0f",
+    "Month": "2026-01",
+    "State": "Madhya Pradesh",
+    "RTO": "MAD-RTO-3",
+    "Citizen Service SLA % (within SLA)": 88.73,
+    "Grievance SLA % (within SLA)": 77.54
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efc10",
+    "Month": "2025-04",
+    "State": "West Bengal",
+    "RTO": "WES-RTO-1",
+    "Citizen Service SLA % (within SLA)": 99.68,
+    "Grievance SLA % (within SLA)": 96.83
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efc11",
+    "Month": "2025-05",
+    "State": "West Bengal",
+    "RTO": "WES-RTO-1",
+    "Citizen Service SLA % (within SLA)": 95.42,
+    "Grievance SLA % (within SLA)": 83.29
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efc12",
+    "Month": "2025-06",
+    "State": "West Bengal",
+    "RTO": "WES-RTO-1",
+    "Citizen Service SLA % (within SLA)": 89.5,
+    "Grievance SLA % (within SLA)": 95.68
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efc13",
+    "Month": "2025-07",
+    "State": "West Bengal",
+    "RTO": "WES-RTO-1",
+    "Citizen Service SLA % (within SLA)": 89.23,
+    "Grievance SLA % (within SLA)": 81.57
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efc14",
+    "Month": "2025-08",
+    "State": "West Bengal",
+    "RTO": "WES-RTO-1",
+    "Citizen Service SLA % (within SLA)": 100,
+    "Grievance SLA % (within SLA)": 85.67
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efc15",
+    "Month": "2025-09",
+    "State": "West Bengal",
+    "RTO": "WES-RTO-1",
+    "Citizen Service SLA % (within SLA)": 99.84,
+    "Grievance SLA % (within SLA)": 76.21
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efc16",
+    "Month": "2025-10",
+    "State": "West Bengal",
+    "RTO": "WES-RTO-1",
+    "Citizen Service SLA % (within SLA)": 93.59,
+    "Grievance SLA % (within SLA)": 100
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efc17",
+    "Month": "2025-11",
+    "State": "West Bengal",
+    "RTO": "WES-RTO-1",
+    "Citizen Service SLA % (within SLA)": 91.15,
+    "Grievance SLA % (within SLA)": 84.15
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efc18",
+    "Month": "2025-12",
+    "State": "West Bengal",
+    "RTO": "WES-RTO-1",
+    "Citizen Service SLA % (within SLA)": 85.16,
+    "Grievance SLA % (within SLA)": 93.58
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efc19",
+    "Month": "2026-01",
+    "State": "West Bengal",
+    "RTO": "WES-RTO-1",
+    "Citizen Service SLA % (within SLA)": 87.15,
+    "Grievance SLA % (within SLA)": 85.34
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efc1a",
+    "Month": "2025-04",
+    "State": "West Bengal",
+    "RTO": "WES-RTO-2",
+    "Citizen Service SLA % (within SLA)": 84.83,
+    "Grievance SLA % (within SLA)": 96.9
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efc1b",
+    "Month": "2025-05",
+    "State": "West Bengal",
+    "RTO": "WES-RTO-2",
+    "Citizen Service SLA % (within SLA)": 96.77,
+    "Grievance SLA % (within SLA)": 85.78
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efc1c",
+    "Month": "2025-06",
+    "State": "West Bengal",
+    "RTO": "WES-RTO-2",
+    "Citizen Service SLA % (within SLA)": 85.23,
+    "Grievance SLA % (within SLA)": 96.75
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efc1d",
+    "Month": "2025-07",
+    "State": "West Bengal",
+    "RTO": "WES-RTO-2",
+    "Citizen Service SLA % (within SLA)": 89.17,
+    "Grievance SLA % (within SLA)": 78.26
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efc1e",
+    "Month": "2025-08",
+    "State": "West Bengal",
+    "RTO": "WES-RTO-2",
+    "Citizen Service SLA % (within SLA)": 82.19,
+    "Grievance SLA % (within SLA)": 81.48
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efc1f",
+    "Month": "2025-09",
+    "State": "West Bengal",
+    "RTO": "WES-RTO-2",
+    "Citizen Service SLA % (within SLA)": 83.73,
+    "Grievance SLA % (within SLA)": 81.64
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efc20",
+    "Month": "2025-10",
+    "State": "West Bengal",
+    "RTO": "WES-RTO-2",
+    "Citizen Service SLA % (within SLA)": 94.72,
+    "Grievance SLA % (within SLA)": 83.37
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efc21",
+    "Month": "2025-11",
+    "State": "West Bengal",
+    "RTO": "WES-RTO-2",
+    "Citizen Service SLA % (within SLA)": 92.78,
+    "Grievance SLA % (within SLA)": 80.94
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efc22",
+    "Month": "2025-12",
+    "State": "West Bengal",
+    "RTO": "WES-RTO-2",
+    "Citizen Service SLA % (within SLA)": 91.33,
+    "Grievance SLA % (within SLA)": 99.45
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efc23",
+    "Month": "2026-01",
+    "State": "West Bengal",
+    "RTO": "WES-RTO-2",
+    "Citizen Service SLA % (within SLA)": 89.26,
+    "Grievance SLA % (within SLA)": 88.69
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efc24",
+    "Month": "2025-04",
+    "State": "West Bengal",
+    "RTO": "WES-RTO-3",
+    "Citizen Service SLA % (within SLA)": 83.17,
+    "Grievance SLA % (within SLA)": 96.64
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efc25",
+    "Month": "2025-05",
+    "State": "West Bengal",
+    "RTO": "WES-RTO-3",
+    "Citizen Service SLA % (within SLA)": 88.61,
+    "Grievance SLA % (within SLA)": 93.35
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efc26",
+    "Month": "2025-06",
+    "State": "West Bengal",
+    "RTO": "WES-RTO-3",
+    "Citizen Service SLA % (within SLA)": 90.38,
+    "Grievance SLA % (within SLA)": 90.28
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efc27",
+    "Month": "2025-07",
+    "State": "West Bengal",
+    "RTO": "WES-RTO-3",
+    "Citizen Service SLA % (within SLA)": 94.36,
+    "Grievance SLA % (within SLA)": 82.83
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efc28",
+    "Month": "2025-08",
+    "State": "West Bengal",
+    "RTO": "WES-RTO-3",
+    "Citizen Service SLA % (within SLA)": 96.46,
+    "Grievance SLA % (within SLA)": 80.69
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efc29",
+    "Month": "2025-09",
+    "State": "West Bengal",
+    "RTO": "WES-RTO-3",
+    "Citizen Service SLA % (within SLA)": 94.89,
+    "Grievance SLA % (within SLA)": 83.27
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efc2a",
+    "Month": "2025-10",
+    "State": "West Bengal",
+    "RTO": "WES-RTO-3",
+    "Citizen Service SLA % (within SLA)": 92.75,
+    "Grievance SLA % (within SLA)": 82.77
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efc2b",
+    "Month": "2025-11",
+    "State": "West Bengal",
+    "RTO": "WES-RTO-3",
+    "Citizen Service SLA % (within SLA)": 91.25,
+    "Grievance SLA % (within SLA)": 78.48
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efc2c",
+    "Month": "2025-12",
+    "State": "West Bengal",
+    "RTO": "WES-RTO-3",
+    "Citizen Service SLA % (within SLA)": 92.24,
+    "Grievance SLA % (within SLA)": 86.31
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efc2d",
+    "Month": "2026-01",
+    "State": "West Bengal",
+    "RTO": "WES-RTO-3",
+    "Citizen Service SLA % (within SLA)": 88.3,
+    "Grievance SLA % (within SLA)": 85.61
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efc2e",
+    "Month": "2025-04",
+    "State": "Telangana",
+    "RTO": "TEL-RTO-1",
+    "Citizen Service SLA % (within SLA)": 91.67,
+    "Grievance SLA % (within SLA)": 81.69
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efc2f",
+    "Month": "2025-05",
+    "State": "Telangana",
+    "RTO": "TEL-RTO-1",
+    "Citizen Service SLA % (within SLA)": 90.36,
+    "Grievance SLA % (within SLA)": 78.96
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efc30",
+    "Month": "2025-06",
+    "State": "Telangana",
+    "RTO": "TEL-RTO-1",
+    "Citizen Service SLA % (within SLA)": 100,
+    "Grievance SLA % (within SLA)": 93.41
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efc31",
+    "Month": "2025-07",
+    "State": "Telangana",
+    "RTO": "TEL-RTO-1",
+    "Citizen Service SLA % (within SLA)": 92.37,
+    "Grievance SLA % (within SLA)": 94.2
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efc32",
+    "Month": "2025-08",
+    "State": "Telangana",
+    "RTO": "TEL-RTO-1",
+    "Citizen Service SLA % (within SLA)": 81.1,
+    "Grievance SLA % (within SLA)": 68.1
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efc33",
+    "Month": "2025-09",
+    "State": "Telangana",
+    "RTO": "TEL-RTO-1",
+    "Citizen Service SLA % (within SLA)": 89,
+    "Grievance SLA % (within SLA)": 76.35
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efc34",
+    "Month": "2025-10",
+    "State": "Telangana",
+    "RTO": "TEL-RTO-1",
+    "Citizen Service SLA % (within SLA)": 89.82,
+    "Grievance SLA % (within SLA)": 87.44
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efc35",
+    "Month": "2025-11",
+    "State": "Telangana",
+    "RTO": "TEL-RTO-1",
+    "Citizen Service SLA % (within SLA)": 95.6,
+    "Grievance SLA % (within SLA)": 78.03
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efc36",
+    "Month": "2025-12",
+    "State": "Telangana",
+    "RTO": "TEL-RTO-1",
+    "Citizen Service SLA % (within SLA)": 93,
+    "Grievance SLA % (within SLA)": 86.1
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efc37",
+    "Month": "2026-01",
+    "State": "Telangana",
+    "RTO": "TEL-RTO-1",
+    "Citizen Service SLA % (within SLA)": 92.74,
+    "Grievance SLA % (within SLA)": 82.36
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efc38",
+    "Month": "2025-04",
+    "State": "Telangana",
+    "RTO": "TEL-RTO-2",
+    "Citizen Service SLA % (within SLA)": 97.92,
+    "Grievance SLA % (within SLA)": 85.28
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efc39",
+    "Month": "2025-05",
+    "State": "Telangana",
+    "RTO": "TEL-RTO-2",
+    "Citizen Service SLA % (within SLA)": 99.87,
+    "Grievance SLA % (within SLA)": 80.47
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efc3a",
+    "Month": "2025-06",
+    "State": "Telangana",
+    "RTO": "TEL-RTO-2",
+    "Citizen Service SLA % (within SLA)": 94.71,
+    "Grievance SLA % (within SLA)": 85.58
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efc3b",
+    "Month": "2025-07",
+    "State": "Telangana",
+    "RTO": "TEL-RTO-2",
+    "Citizen Service SLA % (within SLA)": 89.36,
+    "Grievance SLA % (within SLA)": 90.43
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efc3c",
+    "Month": "2025-08",
+    "State": "Telangana",
+    "RTO": "TEL-RTO-2",
+    "Citizen Service SLA % (within SLA)": 89.5,
+    "Grievance SLA % (within SLA)": 67.37
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efc3d",
+    "Month": "2025-09",
+    "State": "Telangana",
+    "RTO": "TEL-RTO-2",
+    "Citizen Service SLA % (within SLA)": 75.69,
+    "Grievance SLA % (within SLA)": 94.91
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efc3e",
+    "Month": "2025-10",
+    "State": "Telangana",
+    "RTO": "TEL-RTO-2",
+    "Citizen Service SLA % (within SLA)": 97.15,
+    "Grievance SLA % (within SLA)": 99.21
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efc3f",
+    "Month": "2025-11",
+    "State": "Telangana",
+    "RTO": "TEL-RTO-2",
+    "Citizen Service SLA % (within SLA)": 90.91,
+    "Grievance SLA % (within SLA)": 76.95
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efc40",
+    "Month": "2025-12",
+    "State": "Telangana",
+    "RTO": "TEL-RTO-2",
+    "Citizen Service SLA % (within SLA)": 88.9,
+    "Grievance SLA % (within SLA)": 86.08
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efc41",
+    "Month": "2026-01",
+    "State": "Telangana",
+    "RTO": "TEL-RTO-2",
+    "Citizen Service SLA % (within SLA)": 85.96,
+    "Grievance SLA % (within SLA)": 97.54
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efc42",
+    "Month": "2025-04",
+    "State": "Telangana",
+    "RTO": "TEL-RTO-3",
+    "Citizen Service SLA % (within SLA)": 100,
+    "Grievance SLA % (within SLA)": 89.35
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efc43",
+    "Month": "2025-05",
+    "State": "Telangana",
+    "RTO": "TEL-RTO-3",
+    "Citizen Service SLA % (within SLA)": 90.95,
+    "Grievance SLA % (within SLA)": 76.94
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efc44",
+    "Month": "2025-06",
+    "State": "Telangana",
+    "RTO": "TEL-RTO-3",
+    "Citizen Service SLA % (within SLA)": 98.73,
+    "Grievance SLA % (within SLA)": 86.53
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efc45",
+    "Month": "2025-07",
+    "State": "Telangana",
+    "RTO": "TEL-RTO-3",
+    "Citizen Service SLA % (within SLA)": 89.55,
+    "Grievance SLA % (within SLA)": 89.37
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efc46",
+    "Month": "2025-08",
+    "State": "Telangana",
+    "RTO": "TEL-RTO-3",
+    "Citizen Service SLA % (within SLA)": 88.07,
+    "Grievance SLA % (within SLA)": 87.03
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efc47",
+    "Month": "2025-09",
+    "State": "Telangana",
+    "RTO": "TEL-RTO-3",
+    "Citizen Service SLA % (within SLA)": 83.79,
+    "Grievance SLA % (within SLA)": 93.61
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efc48",
+    "Month": "2025-10",
+    "State": "Telangana",
+    "RTO": "TEL-RTO-3",
+    "Citizen Service SLA % (within SLA)": 90.48,
+    "Grievance SLA % (within SLA)": 94.11
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efc49",
+    "Month": "2025-11",
+    "State": "Telangana",
+    "RTO": "TEL-RTO-3",
+    "Citizen Service SLA % (within SLA)": 89.99,
+    "Grievance SLA % (within SLA)": 85.05
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efc4a",
+    "Month": "2025-12",
+    "State": "Telangana",
+    "RTO": "TEL-RTO-3",
+    "Citizen Service SLA % (within SLA)": 84.94,
+    "Grievance SLA % (within SLA)": 91.32
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efc4b",
+    "Month": "2026-01",
+    "State": "Telangana",
+    "RTO": "TEL-RTO-3",
+    "Citizen Service SLA % (within SLA)": 86.62,
+    "Grievance SLA % (within SLA)": 82.6
+  }
+]

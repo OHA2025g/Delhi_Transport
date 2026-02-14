@@ -1,0 +1,1002 @@
+[
+  {
+    "_id": "698ec0002d2b92cf4e8efddc",
+    "Month": "2025-04",
+    "State": "Maharashtra",
+    "Driver Count": 985,
+    "DL Due for Renewal - Count": 66,
+    "CL Due for Renewal - Count": 15,
+    "e-Challan on DL Due - Count": 94,
+    "e-Challan on DL Due - Amount": 1735398.67
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efddd",
+    "Month": "2025-05",
+    "State": "Maharashtra",
+    "Driver Count": 174,
+    "DL Due for Renewal - Count": 6,
+    "CL Due for Renewal - Count": 5,
+    "e-Challan on DL Due - Count": 12,
+    "e-Challan on DL Due - Amount": 331061.77
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efdde",
+    "Month": "2025-06",
+    "State": "Maharashtra",
+    "Driver Count": 1092,
+    "DL Due for Renewal - Count": 157,
+    "CL Due for Renewal - Count": 14,
+    "e-Challan on DL Due - Count": 33,
+    "e-Challan on DL Due - Amount": 1458737.55
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efddf",
+    "Month": "2025-07",
+    "State": "Maharashtra",
+    "Driver Count": 375,
+    "DL Due for Renewal - Count": 13,
+    "CL Due for Renewal - Count": 8,
+    "e-Challan on DL Due - Count": 28,
+    "e-Challan on DL Due - Amount": 1325343.33
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efde0",
+    "Month": "2025-08",
+    "State": "Maharashtra",
+    "Driver Count": 852,
+    "DL Due for Renewal - Count": 42,
+    "CL Due for Renewal - Count": 74,
+    "e-Challan on DL Due - Count": 84,
+    "e-Challan on DL Due - Amount": 1773034.38
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efde1",
+    "Month": "2025-09",
+    "State": "Maharashtra",
+    "Driver Count": 536,
+    "DL Due for Renewal - Count": 69,
+    "CL Due for Renewal - Count": 9,
+    "e-Challan on DL Due - Count": 21,
+    "e-Challan on DL Due - Amount": 1493793.71
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efde2",
+    "Month": "2025-10",
+    "State": "Maharashtra",
+    "Driver Count": 1103,
+    "DL Due for Renewal - Count": 92,
+    "CL Due for Renewal - Count": 41,
+    "e-Challan on DL Due - Count": 78,
+    "e-Challan on DL Due - Amount": 965301.67
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efde3",
+    "Month": "2025-11",
+    "State": "Maharashtra",
+    "Driver Count": 1117,
+    "DL Due for Renewal - Count": 100,
+    "CL Due for Renewal - Count": 36,
+    "e-Challan on DL Due - Count": 18,
+    "e-Challan on DL Due - Amount": 829517.52
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efde4",
+    "Month": "2025-12",
+    "State": "Maharashtra",
+    "Driver Count": 415,
+    "DL Due for Renewal - Count": 11,
+    "CL Due for Renewal - Count": 39,
+    "e-Challan on DL Due - Count": 14,
+    "e-Challan on DL Due - Amount": 273072.78
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efde5",
+    "Month": "2026-01",
+    "State": "Maharashtra",
+    "Driver Count": 1755,
+    "DL Due for Renewal - Count": 56,
+    "CL Due for Renewal - Count": 69,
+    "e-Challan on DL Due - Count": 164,
+    "e-Challan on DL Due - Amount": 1108676.2
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efde6",
+    "Month": "2025-04",
+    "State": "Gujarat",
+    "Driver Count": 1446,
+    "DL Due for Renewal - Count": 5,
+    "CL Due for Renewal - Count": 3,
+    "e-Challan on DL Due - Count": 137,
+    "e-Challan on DL Due - Amount": 1820747.42
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efde7",
+    "Month": "2025-05",
+    "State": "Gujarat",
+    "Driver Count": 1681,
+    "DL Due for Renewal - Count": 222,
+    "CL Due for Renewal - Count": 168,
+    "e-Challan on DL Due - Count": 166,
+    "e-Challan on DL Due - Amount": 1984588.56
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efde8",
+    "Month": "2025-06",
+    "State": "Gujarat",
+    "Driver Count": 721,
+    "DL Due for Renewal - Count": 63,
+    "CL Due for Renewal - Count": 0,
+    "e-Challan on DL Due - Count": 83,
+    "e-Challan on DL Due - Amount": 1898711.58
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efde9",
+    "Month": "2025-07",
+    "State": "Gujarat",
+    "Driver Count": 732,
+    "DL Due for Renewal - Count": 34,
+    "CL Due for Renewal - Count": 38,
+    "e-Challan on DL Due - Count": 75,
+    "e-Challan on DL Due - Amount": 1589095.88
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efdea",
+    "Month": "2025-08",
+    "State": "Gujarat",
+    "Driver Count": 504,
+    "DL Due for Renewal - Count": 58,
+    "CL Due for Renewal - Count": 37,
+    "e-Challan on DL Due - Count": 54,
+    "e-Challan on DL Due - Amount": 780696.22
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efdeb",
+    "Month": "2025-09",
+    "State": "Gujarat",
+    "Driver Count": 296,
+    "DL Due for Renewal - Count": 18,
+    "CL Due for Renewal - Count": 22,
+    "e-Challan on DL Due - Count": 23,
+    "e-Challan on DL Due - Amount": 1480852.98
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efdec",
+    "Month": "2025-10",
+    "State": "Gujarat",
+    "Driver Count": 1788,
+    "DL Due for Renewal - Count": 236,
+    "CL Due for Renewal - Count": 104,
+    "e-Challan on DL Due - Count": 188,
+    "e-Challan on DL Due - Amount": 1448252.46
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efded",
+    "Month": "2025-11",
+    "State": "Gujarat",
+    "Driver Count": 1011,
+    "DL Due for Renewal - Count": 145,
+    "CL Due for Renewal - Count": 51,
+    "e-Challan on DL Due - Count": 21,
+    "e-Challan on DL Due - Amount": 1901672.9
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efdee",
+    "Month": "2025-12",
+    "State": "Gujarat",
+    "Driver Count": 176,
+    "DL Due for Renewal - Count": 1,
+    "CL Due for Renewal - Count": 11,
+    "e-Challan on DL Due - Count": 12,
+    "e-Challan on DL Due - Amount": 198589.97
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efdef",
+    "Month": "2026-01",
+    "State": "Gujarat",
+    "Driver Count": 1094,
+    "DL Due for Renewal - Count": 93,
+    "CL Due for Renewal - Count": 93,
+    "e-Challan on DL Due - Count": 51,
+    "e-Challan on DL Due - Amount": 181586.67
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efdf0",
+    "Month": "2025-04",
+    "State": "Delhi",
+    "Driver Count": 1085,
+    "DL Due for Renewal - Count": 105,
+    "CL Due for Renewal - Count": 30,
+    "e-Challan on DL Due - Count": 95,
+    "e-Challan on DL Due - Amount": 364887.12
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efdf1",
+    "Month": "2025-05",
+    "State": "Delhi",
+    "Driver Count": 1095,
+    "DL Due for Renewal - Count": 114,
+    "CL Due for Renewal - Count": 2,
+    "e-Challan on DL Due - Count": 23,
+    "e-Challan on DL Due - Amount": 292044.97
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efdf2",
+    "Month": "2025-06",
+    "State": "Delhi",
+    "Driver Count": 736,
+    "DL Due for Renewal - Count": 16,
+    "CL Due for Renewal - Count": 66,
+    "e-Challan on DL Due - Count": 53,
+    "e-Challan on DL Due - Amount": 1562005.8
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efdf3",
+    "Month": "2025-07",
+    "State": "Delhi",
+    "Driver Count": 180,
+    "DL Due for Renewal - Count": 16,
+    "CL Due for Renewal - Count": 12,
+    "e-Challan on DL Due - Count": 17,
+    "e-Challan on DL Due - Amount": 1191125.14
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efdf4",
+    "Month": "2025-08",
+    "State": "Delhi",
+    "Driver Count": 1417,
+    "DL Due for Renewal - Count": 169,
+    "CL Due for Renewal - Count": 24,
+    "e-Challan on DL Due - Count": 166,
+    "e-Challan on DL Due - Amount": 794100.42
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efdf5",
+    "Month": "2025-09",
+    "State": "Delhi",
+    "Driver Count": 467,
+    "DL Due for Renewal - Count": 10,
+    "CL Due for Renewal - Count": 12,
+    "e-Challan on DL Due - Count": 7,
+    "e-Challan on DL Due - Amount": 1203005.64
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efdf6",
+    "Month": "2025-10",
+    "State": "Delhi",
+    "Driver Count": 793,
+    "DL Due for Renewal - Count": 65,
+    "CL Due for Renewal - Count": 48,
+    "e-Challan on DL Due - Count": 17,
+    "e-Challan on DL Due - Amount": 1766567.83
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efdf7",
+    "Month": "2025-11",
+    "State": "Delhi",
+    "Driver Count": 169,
+    "DL Due for Renewal - Count": 24,
+    "CL Due for Renewal - Count": 16,
+    "e-Challan on DL Due - Count": 5,
+    "e-Challan on DL Due - Amount": 429628.2
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efdf8",
+    "Month": "2025-12",
+    "State": "Delhi",
+    "Driver Count": 1075,
+    "DL Due for Renewal - Count": 34,
+    "CL Due for Renewal - Count": 85,
+    "e-Challan on DL Due - Count": 50,
+    "e-Challan on DL Due - Amount": 1709389.81
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efdf9",
+    "Month": "2026-01",
+    "State": "Delhi",
+    "Driver Count": 812,
+    "DL Due for Renewal - Count": 72,
+    "CL Due for Renewal - Count": 1,
+    "e-Challan on DL Due - Count": 6,
+    "e-Challan on DL Due - Amount": 956498.59
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efdfa",
+    "Month": "2025-04",
+    "State": "Karnataka",
+    "Driver Count": 807,
+    "DL Due for Renewal - Count": 11,
+    "CL Due for Renewal - Count": 68,
+    "e-Challan on DL Due - Count": 39,
+    "e-Challan on DL Due - Amount": 818969.88
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efdfb",
+    "Month": "2025-05",
+    "State": "Karnataka",
+    "Driver Count": 971,
+    "DL Due for Renewal - Count": 94,
+    "CL Due for Renewal - Count": 74,
+    "e-Challan on DL Due - Count": 64,
+    "e-Challan on DL Due - Amount": 1752014.47
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efdfc",
+    "Month": "2025-06",
+    "State": "Karnataka",
+    "Driver Count": 619,
+    "DL Due for Renewal - Count": 1,
+    "CL Due for Renewal - Count": 2,
+    "e-Challan on DL Due - Count": 58,
+    "e-Challan on DL Due - Amount": 64863.52
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efdfd",
+    "Month": "2025-07",
+    "State": "Karnataka",
+    "Driver Count": 1489,
+    "DL Due for Renewal - Count": 68,
+    "CL Due for Renewal - Count": 145,
+    "e-Challan on DL Due - Count": 157,
+    "e-Challan on DL Due - Amount": 1387020.06
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efdfe",
+    "Month": "2025-08",
+    "State": "Karnataka",
+    "Driver Count": 1145,
+    "DL Due for Renewal - Count": 29,
+    "CL Due for Renewal - Count": 39,
+    "e-Challan on DL Due - Count": 67,
+    "e-Challan on DL Due - Amount": 1449370.28
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efdff",
+    "Month": "2025-09",
+    "State": "Karnataka",
+    "Driver Count": 607,
+    "DL Due for Renewal - Count": 86,
+    "CL Due for Renewal - Count": 48,
+    "e-Challan on DL Due - Count": 46,
+    "e-Challan on DL Due - Amount": 68857.31
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efe00",
+    "Month": "2025-10",
+    "State": "Karnataka",
+    "Driver Count": 390,
+    "DL Due for Renewal - Count": 29,
+    "CL Due for Renewal - Count": 31,
+    "e-Challan on DL Due - Count": 7,
+    "e-Challan on DL Due - Amount": 114603.51
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efe01",
+    "Month": "2025-11",
+    "State": "Karnataka",
+    "Driver Count": 588,
+    "DL Due for Renewal - Count": 53,
+    "CL Due for Renewal - Count": 48,
+    "e-Challan on DL Due - Count": 55,
+    "e-Challan on DL Due - Amount": 91399.9
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efe02",
+    "Month": "2025-12",
+    "State": "Karnataka",
+    "Driver Count": 634,
+    "DL Due for Renewal - Count": 75,
+    "CL Due for Renewal - Count": 5,
+    "e-Challan on DL Due - Count": 54,
+    "e-Challan on DL Due - Amount": 1508934.04
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efe03",
+    "Month": "2026-01",
+    "State": "Karnataka",
+    "Driver Count": 508,
+    "DL Due for Renewal - Count": 18,
+    "CL Due for Renewal - Count": 10,
+    "e-Challan on DL Due - Count": 24,
+    "e-Challan on DL Due - Amount": 257106.64
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efe04",
+    "Month": "2025-04",
+    "State": "Tamil Nadu",
+    "Driver Count": 1086,
+    "DL Due for Renewal - Count": 38,
+    "CL Due for Renewal - Count": 61,
+    "e-Challan on DL Due - Count": 39,
+    "e-Challan on DL Due - Amount": 652484.55
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efe05",
+    "Month": "2025-05",
+    "State": "Tamil Nadu",
+    "Driver Count": 1588,
+    "DL Due for Renewal - Count": 41,
+    "CL Due for Renewal - Count": 13,
+    "e-Challan on DL Due - Count": 36,
+    "e-Challan on DL Due - Amount": 1804911.39
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efe06",
+    "Month": "2025-06",
+    "State": "Tamil Nadu",
+    "Driver Count": 440,
+    "DL Due for Renewal - Count": 52,
+    "CL Due for Renewal - Count": 31,
+    "e-Challan on DL Due - Count": 18,
+    "e-Challan on DL Due - Amount": 1896334.21
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efe07",
+    "Month": "2025-07",
+    "State": "Tamil Nadu",
+    "Driver Count": 1329,
+    "DL Due for Renewal - Count": 47,
+    "CL Due for Renewal - Count": 121,
+    "e-Challan on DL Due - Count": 65,
+    "e-Challan on DL Due - Amount": 1630780.12
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efe08",
+    "Month": "2025-08",
+    "State": "Tamil Nadu",
+    "Driver Count": 1584,
+    "DL Due for Renewal - Count": 105,
+    "CL Due for Renewal - Count": 111,
+    "e-Challan on DL Due - Count": 44,
+    "e-Challan on DL Due - Amount": 749700.23
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efe09",
+    "Month": "2025-09",
+    "State": "Tamil Nadu",
+    "Driver Count": 591,
+    "DL Due for Renewal - Count": 44,
+    "CL Due for Renewal - Count": 16,
+    "e-Challan on DL Due - Count": 44,
+    "e-Challan on DL Due - Amount": 823100.87
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efe0a",
+    "Month": "2025-10",
+    "State": "Tamil Nadu",
+    "Driver Count": 1443,
+    "DL Due for Renewal - Count": 93,
+    "CL Due for Renewal - Count": 140,
+    "e-Challan on DL Due - Count": 45,
+    "e-Challan on DL Due - Amount": 1079987.65
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efe0b",
+    "Month": "2025-11",
+    "State": "Tamil Nadu",
+    "Driver Count": 1707,
+    "DL Due for Renewal - Count": 56,
+    "CL Due for Renewal - Count": 33,
+    "e-Challan on DL Due - Count": 177,
+    "e-Challan on DL Due - Amount": 1499786.8
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efe0c",
+    "Month": "2025-12",
+    "State": "Tamil Nadu",
+    "Driver Count": 934,
+    "DL Due for Renewal - Count": 57,
+    "CL Due for Renewal - Count": 62,
+    "e-Challan on DL Due - Count": 84,
+    "e-Challan on DL Due - Amount": 33851.96
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efe0d",
+    "Month": "2026-01",
+    "State": "Tamil Nadu",
+    "Driver Count": 271,
+    "DL Due for Renewal - Count": 14,
+    "CL Due for Renewal - Count": 19,
+    "e-Challan on DL Due - Count": 14,
+    "e-Challan on DL Due - Amount": 950201.04
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efe0e",
+    "Month": "2025-04",
+    "State": "Uttar Pradesh",
+    "Driver Count": 565,
+    "DL Due for Renewal - Count": 63,
+    "CL Due for Renewal - Count": 41,
+    "e-Challan on DL Due - Count": 65,
+    "e-Challan on DL Due - Amount": 772394.32
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efe0f",
+    "Month": "2025-05",
+    "State": "Uttar Pradesh",
+    "Driver Count": 1313,
+    "DL Due for Renewal - Count": 69,
+    "CL Due for Renewal - Count": 115,
+    "e-Challan on DL Due - Count": 96,
+    "e-Challan on DL Due - Amount": 576882.16
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efe10",
+    "Month": "2025-06",
+    "State": "Uttar Pradesh",
+    "Driver Count": 174,
+    "DL Due for Renewal - Count": 3,
+    "CL Due for Renewal - Count": 9,
+    "e-Challan on DL Due - Count": 20,
+    "e-Challan on DL Due - Amount": 1622869.31
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efe11",
+    "Month": "2025-07",
+    "State": "Uttar Pradesh",
+    "Driver Count": 924,
+    "DL Due for Renewal - Count": 133,
+    "CL Due for Renewal - Count": 87,
+    "e-Challan on DL Due - Count": 24,
+    "e-Challan on DL Due - Amount": 55262.25
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efe12",
+    "Month": "2025-08",
+    "State": "Uttar Pradesh",
+    "Driver Count": 1128,
+    "DL Due for Renewal - Count": 74,
+    "CL Due for Renewal - Count": 34,
+    "e-Challan on DL Due - Count": 126,
+    "e-Challan on DL Due - Amount": 293884.17
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efe13",
+    "Month": "2025-09",
+    "State": "Uttar Pradesh",
+    "Driver Count": 379,
+    "DL Due for Renewal - Count": 6,
+    "CL Due for Renewal - Count": 11,
+    "e-Challan on DL Due - Count": 3,
+    "e-Challan on DL Due - Amount": 1534735.64
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efe14",
+    "Month": "2025-10",
+    "State": "Uttar Pradesh",
+    "Driver Count": 1592,
+    "DL Due for Renewal - Count": 187,
+    "CL Due for Renewal - Count": 79,
+    "e-Challan on DL Due - Count": 133,
+    "e-Challan on DL Due - Amount": 125517.85
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efe15",
+    "Month": "2025-11",
+    "State": "Uttar Pradesh",
+    "Driver Count": 1643,
+    "DL Due for Renewal - Count": 178,
+    "CL Due for Renewal - Count": 63,
+    "e-Challan on DL Due - Count": 88,
+    "e-Challan on DL Due - Amount": 332630.96
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efe16",
+    "Month": "2025-12",
+    "State": "Uttar Pradesh",
+    "Driver Count": 530,
+    "DL Due for Renewal - Count": 23,
+    "CL Due for Renewal - Count": 0,
+    "e-Challan on DL Due - Count": 32,
+    "e-Challan on DL Due - Amount": 672709.92
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efe17",
+    "Month": "2026-01",
+    "State": "Uttar Pradesh",
+    "Driver Count": 441,
+    "DL Due for Renewal - Count": 64,
+    "CL Due for Renewal - Count": 30,
+    "e-Challan on DL Due - Count": 25,
+    "e-Challan on DL Due - Amount": 756858.01
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efe18",
+    "Month": "2025-04",
+    "State": "Rajasthan",
+    "Driver Count": 505,
+    "DL Due for Renewal - Count": 51,
+    "CL Due for Renewal - Count": 39,
+    "e-Challan on DL Due - Count": 39,
+    "e-Challan on DL Due - Amount": 24829.78
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efe19",
+    "Month": "2025-05",
+    "State": "Rajasthan",
+    "Driver Count": 1203,
+    "DL Due for Renewal - Count": 111,
+    "CL Due for Renewal - Count": 49,
+    "e-Challan on DL Due - Count": 35,
+    "e-Challan on DL Due - Amount": 762962.61
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efe1a",
+    "Month": "2025-06",
+    "State": "Rajasthan",
+    "Driver Count": 599,
+    "DL Due for Renewal - Count": 63,
+    "CL Due for Renewal - Count": 28,
+    "e-Challan on DL Due - Count": 40,
+    "e-Challan on DL Due - Amount": 749937.19
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efe1b",
+    "Month": "2025-07",
+    "State": "Rajasthan",
+    "Driver Count": 401,
+    "DL Due for Renewal - Count": 10,
+    "CL Due for Renewal - Count": 38,
+    "e-Challan on DL Due - Count": 24,
+    "e-Challan on DL Due - Amount": 652344.73
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efe1c",
+    "Month": "2025-08",
+    "State": "Rajasthan",
+    "Driver Count": 1341,
+    "DL Due for Renewal - Count": 184,
+    "CL Due for Renewal - Count": 103,
+    "e-Challan on DL Due - Count": 86,
+    "e-Challan on DL Due - Amount": 1734608.71
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efe1d",
+    "Month": "2025-09",
+    "State": "Rajasthan",
+    "Driver Count": 1563,
+    "DL Due for Renewal - Count": 91,
+    "CL Due for Renewal - Count": 151,
+    "e-Challan on DL Due - Count": 155,
+    "e-Challan on DL Due - Amount": 131943.07
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efe1e",
+    "Month": "2025-10",
+    "State": "Rajasthan",
+    "Driver Count": 364,
+    "DL Due for Renewal - Count": 16,
+    "CL Due for Renewal - Count": 28,
+    "e-Challan on DL Due - Count": 3,
+    "e-Challan on DL Due - Amount": 82667.36
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efe1f",
+    "Month": "2025-11",
+    "State": "Rajasthan",
+    "Driver Count": 466,
+    "DL Due for Renewal - Count": 64,
+    "CL Due for Renewal - Count": 33,
+    "e-Challan on DL Due - Count": 40,
+    "e-Challan on DL Due - Amount": 1257717.93
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efe20",
+    "Month": "2025-12",
+    "State": "Rajasthan",
+    "Driver Count": 1436,
+    "DL Due for Renewal - Count": 115,
+    "CL Due for Renewal - Count": 123,
+    "e-Challan on DL Due - Count": 98,
+    "e-Challan on DL Due - Amount": 1284606.96
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efe21",
+    "Month": "2026-01",
+    "State": "Rajasthan",
+    "Driver Count": 1707,
+    "DL Due for Renewal - Count": 212,
+    "CL Due for Renewal - Count": 85,
+    "e-Challan on DL Due - Count": 122,
+    "e-Challan on DL Due - Amount": 1502189.91
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efe22",
+    "Month": "2025-04",
+    "State": "Madhya Pradesh",
+    "Driver Count": 979,
+    "DL Due for Renewal - Count": 41,
+    "CL Due for Renewal - Count": 88,
+    "e-Challan on DL Due - Count": 115,
+    "e-Challan on DL Due - Amount": 83156.47
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efe23",
+    "Month": "2025-05",
+    "State": "Madhya Pradesh",
+    "Driver Count": 340,
+    "DL Due for Renewal - Count": 20,
+    "CL Due for Renewal - Count": 5,
+    "e-Challan on DL Due - Count": 36,
+    "e-Challan on DL Due - Amount": 377435.47
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efe24",
+    "Month": "2025-06",
+    "State": "Madhya Pradesh",
+    "Driver Count": 1518,
+    "DL Due for Renewal - Count": 32,
+    "CL Due for Renewal - Count": 119,
+    "e-Challan on DL Due - Count": 66,
+    "e-Challan on DL Due - Amount": 867825.51
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efe25",
+    "Month": "2025-07",
+    "State": "Madhya Pradesh",
+    "Driver Count": 1508,
+    "DL Due for Renewal - Count": 211,
+    "CL Due for Renewal - Count": 18,
+    "e-Challan on DL Due - Count": 151,
+    "e-Challan on DL Due - Amount": 938897.48
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efe26",
+    "Month": "2025-08",
+    "State": "Madhya Pradesh",
+    "Driver Count": 329,
+    "DL Due for Renewal - Count": 48,
+    "CL Due for Renewal - Count": 26,
+    "e-Challan on DL Due - Count": 25,
+    "e-Challan on DL Due - Amount": 1749844.29
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efe27",
+    "Month": "2025-09",
+    "State": "Madhya Pradesh",
+    "Driver Count": 386,
+    "DL Due for Renewal - Count": 14,
+    "CL Due for Renewal - Count": 1,
+    "e-Challan on DL Due - Count": 22,
+    "e-Challan on DL Due - Amount": 78840.08
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efe28",
+    "Month": "2025-10",
+    "State": "Madhya Pradesh",
+    "Driver Count": 1242,
+    "DL Due for Renewal - Count": 1,
+    "CL Due for Renewal - Count": 99,
+    "e-Challan on DL Due - Count": 105,
+    "e-Challan on DL Due - Amount": 254221.37
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efe29",
+    "Month": "2025-11",
+    "State": "Madhya Pradesh",
+    "Driver Count": 1586,
+    "DL Due for Renewal - Count": 130,
+    "CL Due for Renewal - Count": 137,
+    "e-Challan on DL Due - Count": 132,
+    "e-Challan on DL Due - Amount": 83824.48
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efe2a",
+    "Month": "2025-12",
+    "State": "Madhya Pradesh",
+    "Driver Count": 1292,
+    "DL Due for Renewal - Count": 87,
+    "CL Due for Renewal - Count": 110,
+    "e-Challan on DL Due - Count": 106,
+    "e-Challan on DL Due - Amount": 1781667.36
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efe2b",
+    "Month": "2026-01",
+    "State": "Madhya Pradesh",
+    "Driver Count": 253,
+    "DL Due for Renewal - Count": 11,
+    "CL Due for Renewal - Count": 5,
+    "e-Challan on DL Due - Count": 30,
+    "e-Challan on DL Due - Amount": 1692192.17
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efe2c",
+    "Month": "2025-04",
+    "State": "West Bengal",
+    "Driver Count": 516,
+    "DL Due for Renewal - Count": 50,
+    "CL Due for Renewal - Count": 4,
+    "e-Challan on DL Due - Count": 24,
+    "e-Challan on DL Due - Amount": 1427998.54
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efe2d",
+    "Month": "2025-05",
+    "State": "West Bengal",
+    "Driver Count": 1590,
+    "DL Due for Renewal - Count": 195,
+    "CL Due for Renewal - Count": 82,
+    "e-Challan on DL Due - Count": 57,
+    "e-Challan on DL Due - Amount": 1985803.53
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efe2e",
+    "Month": "2025-06",
+    "State": "West Bengal",
+    "Driver Count": 1154,
+    "DL Due for Renewal - Count": 158,
+    "CL Due for Renewal - Count": 50,
+    "e-Challan on DL Due - Count": 67,
+    "e-Challan on DL Due - Amount": 1451203.23
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efe2f",
+    "Month": "2025-07",
+    "State": "West Bengal",
+    "Driver Count": 481,
+    "DL Due for Renewal - Count": 38,
+    "CL Due for Renewal - Count": 10,
+    "e-Challan on DL Due - Count": 44,
+    "e-Challan on DL Due - Amount": 1657424.76
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efe30",
+    "Month": "2025-08",
+    "State": "West Bengal",
+    "Driver Count": 1683,
+    "DL Due for Renewal - Count": 5,
+    "CL Due for Renewal - Count": 106,
+    "e-Challan on DL Due - Count": 15,
+    "e-Challan on DL Due - Amount": 686205.48
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efe31",
+    "Month": "2025-09",
+    "State": "West Bengal",
+    "Driver Count": 1008,
+    "DL Due for Renewal - Count": 139,
+    "CL Due for Renewal - Count": 46,
+    "e-Challan on DL Due - Count": 48,
+    "e-Challan on DL Due - Amount": 1777274.19
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efe32",
+    "Month": "2025-10",
+    "State": "West Bengal",
+    "Driver Count": 669,
+    "DL Due for Renewal - Count": 46,
+    "CL Due for Renewal - Count": 6,
+    "e-Challan on DL Due - Count": 23,
+    "e-Challan on DL Due - Amount": 1803277.46
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efe33",
+    "Month": "2025-11",
+    "State": "West Bengal",
+    "Driver Count": 693,
+    "DL Due for Renewal - Count": 58,
+    "CL Due for Renewal - Count": 61,
+    "e-Challan on DL Due - Count": 30,
+    "e-Challan on DL Due - Amount": 107925.87
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efe34",
+    "Month": "2025-12",
+    "State": "West Bengal",
+    "Driver Count": 1649,
+    "DL Due for Renewal - Count": 27,
+    "CL Due for Renewal - Count": 35,
+    "e-Challan on DL Due - Count": 27,
+    "e-Challan on DL Due - Amount": 742375.86
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efe35",
+    "Month": "2026-01",
+    "State": "West Bengal",
+    "Driver Count": 1313,
+    "DL Due for Renewal - Count": 119,
+    "CL Due for Renewal - Count": 1,
+    "e-Challan on DL Due - Count": 48,
+    "e-Challan on DL Due - Amount": 149744.71
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efe36",
+    "Month": "2025-04",
+    "State": "Telangana",
+    "Driver Count": 930,
+    "DL Due for Renewal - Count": 37,
+    "CL Due for Renewal - Count": 8,
+    "e-Challan on DL Due - Count": 45,
+    "e-Challan on DL Due - Amount": 1984694.46
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efe37",
+    "Month": "2025-05",
+    "State": "Telangana",
+    "Driver Count": 1242,
+    "DL Due for Renewal - Count": 73,
+    "CL Due for Renewal - Count": 59,
+    "e-Challan on DL Due - Count": 13,
+    "e-Challan on DL Due - Amount": 1170607.33
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efe38",
+    "Month": "2025-06",
+    "State": "Telangana",
+    "Driver Count": 184,
+    "DL Due for Renewal - Count": 25,
+    "CL Due for Renewal - Count": 9,
+    "e-Challan on DL Due - Count": 18,
+    "e-Challan on DL Due - Amount": 1675712.25
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efe39",
+    "Month": "2025-07",
+    "State": "Telangana",
+    "Driver Count": 755,
+    "DL Due for Renewal - Count": 105,
+    "CL Due for Renewal - Count": 39,
+    "e-Challan on DL Due - Count": 57,
+    "e-Challan on DL Due - Amount": 1989947.01
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efe3a",
+    "Month": "2025-08",
+    "State": "Telangana",
+    "Driver Count": 468,
+    "DL Due for Renewal - Count": 2,
+    "CL Due for Renewal - Count": 20,
+    "e-Challan on DL Due - Count": 47,
+    "e-Challan on DL Due - Amount": 1716881.13
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efe3b",
+    "Month": "2025-09",
+    "State": "Telangana",
+    "Driver Count": 1063,
+    "DL Due for Renewal - Count": 146,
+    "CL Due for Renewal - Count": 52,
+    "e-Challan on DL Due - Count": 61,
+    "e-Challan on DL Due - Amount": 1579756.73
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efe3c",
+    "Month": "2025-10",
+    "State": "Telangana",
+    "Driver Count": 671,
+    "DL Due for Renewal - Count": 19,
+    "CL Due for Renewal - Count": 25,
+    "e-Challan on DL Due - Count": 48,
+    "e-Challan on DL Due - Amount": 730117.4
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efe3d",
+    "Month": "2025-11",
+    "State": "Telangana",
+    "Driver Count": 695,
+    "DL Due for Renewal - Count": 62,
+    "CL Due for Renewal - Count": 49,
+    "e-Challan on DL Due - Count": 56,
+    "e-Challan on DL Due - Amount": 707195.96
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efe3e",
+    "Month": "2025-12",
+    "State": "Telangana",
+    "Driver Count": 1220,
+    "DL Due for Renewal - Count": 39,
+    "CL Due for Renewal - Count": 8,
+    "e-Challan on DL Due - Count": 47,
+    "e-Challan on DL Due - Amount": 1334635.35
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8efe3f",
+    "Month": "2026-01",
+    "State": "Telangana",
+    "Driver Count": 364,
+    "DL Due for Renewal - Count": 37,
+    "CL Due for Renewal - Count": 7,
+    "e-Challan on DL Due - Count": 32,
+    "e-Challan on DL Due - Amount": 270542.48
+  }
+]

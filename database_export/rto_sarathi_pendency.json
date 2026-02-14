@@ -1,0 +1,512 @@
+[
+  {
+    "_id": "698ec0002d2b92cf4e8eff3d",
+    "S.No": 48,
+    "RTO Office Code": "MH48",
+    "Name Of The RTO Office": "DY. RTO VASAI-VIRAR",
+    "Applications Received": 16255,
+    "Pending at Office": 5169,
+    "Pendency": 0.31799446324207936,
+    "Marks": 17.78419064344126
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8eff3e",
+    "S.No": 49,
+    "RTO Office Code": "MH49",
+    "Name Of The RTO Office": "DY.RTO, NAGPUR (EAST)",
+    "Applications Received": 14478,
+    "Pending at Office": 4188,
+    "Pendency": 0.28926647326978866,
+    "Marks": 19.550396193275528
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8eff3f",
+    "S.No": 8,
+    "RTO Office Code": "MH08",
+    "Name Of The RTO Office": "DY.RTO,RATNAGIRI",
+    "Applications Received": 8022,
+    "Pending at Office": 2263,
+    "Pendency": 0.28209922712540514,
+    "Marks": 20.047109719098604
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8eff40",
+    "S.No": 40,
+    "RTO Office Code": "MH40",
+    "Name Of The RTO Office": "RTO,NAGPUR_RURAL",
+    "Applications Received": 9134,
+    "Pending at Office": 2514,
+    "Pendency": 0.2752353842785198,
+    "Marks": 20.54704620439774
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8eff41",
+    "S.No": 46,
+    "RTO Office Code": "MH46",
+    "Name Of The RTO Office": "RTO, PANVEL",
+    "Applications Received": 12826,
+    "Pending at Office": 3501,
+    "Pendency": 0.2729611726181194,
+    "Marks": 20.718236603444716
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8eff42",
+    "S.No": 31,
+    "RTO Office Code": "MH31",
+    "Name Of The RTO Office": "RTO,NAGPUR_CITY",
+    "Applications Received": 13428,
+    "Pending at Office": 3261,
+    "Pendency": 0.24285075960679178,
+    "Marks": 23.287035078714872
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8eff43",
+    "S.No": 34,
+    "RTO Office Code": "MH34",
+    "Name Of The RTO Office": "DY. RTO,CHANDRAPUR",
+    "Applications Received": 7977,
+    "Pending at Office": 1886,
+    "Pendency": 0.23642973548953242,
+    "Marks": 23.919470815067136
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8eff44",
+    "S.No": 19,
+    "RTO Office Code": "MH19",
+    "Name Of The RTO Office": "DY.RTO,JALGAON",
+    "Applications Received": 14857,
+    "Pending at Office": 3462,
+    "Pendency": 0.23302147136030155,
+    "Marks": 24.269326448083568
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8eff45",
+    "S.No": 9,
+    "RTO Office Code": "MH09",
+    "Name Of The RTO Office": "RTO,KOLHAPUR",
+    "Applications Received": 23110,
+    "Pending at Office": 5341,
+    "Pendency": 0.2311120726958027,
+    "Marks": 24.469834448240057
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8eff46",
+    "S.No": 5,
+    "RTO Office Code": "MH05",
+    "Name Of The RTO Office": "DY.RTO,KALYAN",
+    "Applications Received": 24160,
+    "Pending at Office": 5504,
+    "Pendency": 0.22781456953642384,
+    "Marks": 24.824023192914037
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8eff47",
+    "S.No": 7,
+    "RTO Office Code": "MH07",
+    "Name Of The RTO Office": "DY.RTO,SINDHUDURG",
+    "Applications Received": 4577,
+    "Pending at Office": 956,
+    "Pendency": 0.20887043915228315,
+    "Marks": 27.075512364546565
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8eff48",
+    "S.No": 4,
+    "RTO Office Code": "MH04",
+    "Name Of The RTO Office": "RTO,THANE",
+    "Applications Received": 33559,
+    "Pending at Office": 6915,
+    "Pendency": 0.20605500759855777,
+    "Marks": 27.44545849074282
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8eff49",
+    "S.No": 37,
+    "RTO Office Code": "MH37",
+    "Name Of The RTO Office": "DY. RTO,VASHIM",
+    "Applications Received": 3755,
+    "Pending at Office": 765,
+    "Pendency": 0.20372836218375498,
+    "Marks": 27.758894722547655
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8eff4a",
+    "S.No": 41,
+    "RTO Office Code": "MH41",
+    "Name Of The RTO Office": "DY.RTO,MALEGAON",
+    "Applications Received": 3874,
+    "Pending at Office": 781,
+    "Pendency": 0.201600413009809,
+    "Marks": 28.05189767930065
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8eff4b",
+    "S.No": 47,
+    "RTO Office Code": "MH47",
+    "Name Of The RTO Office": "DY.RTO,BORIVALI",
+    "Applications Received": 24430,
+    "Pending at Office": 4895,
+    "Pendency": 0.20036839950880064,
+    "Marks": 28.22438154778753
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8eff4c",
+    "S.No": 16,
+    "RTO Office Code": "MH16",
+    "Name Of The RTO Office": "DY.RTO,AHMEDNAGAR",
+    "Applications Received": 9674,
+    "Pending at Office": 1916,
+    "Pendency": 0.19805664668182757,
+    "Marks": 28.553821609132623
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8eff4d",
+    "S.No": 20,
+    "RTO Office Code": "MH20",
+    "Name Of The RTO Office": "RTO,AURANGABAD",
+    "Applications Received": 14779,
+    "Pending at Office": 2888,
+    "Pendency": 0.19541240949996616,
+    "Marks": 28.94019971570379
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8eff4e",
+    "S.No": 29,
+    "RTO Office Code": "MH29",
+    "Name Of The RTO Office": "DY.RTO,YAWATMAL",
+    "Applications Received": 9040,
+    "Pending at Office": 1719,
+    "Pendency": 0.19015486725663716,
+    "Marks": 29.74035973648485
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8eff4f",
+    "S.No": 42,
+    "RTO Office Code": "MH42",
+    "Name Of The RTO Office": "DY.RTO,BARAMATI",
+    "Applications Received": 6639,
+    "Pending at Office": 1261,
+    "Pendency": 0.18993824371140233,
+    "Marks": 29.77427845678462
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8eff50",
+    "S.No": 45,
+    "RTO Office Code": "MH45",
+    "Name Of The RTO Office": "DY.RTO,AKLUJ",
+    "Applications Received": 5498,
+    "Pending at Office": 1034,
+    "Pendency": 0.18806838850491087,
+    "Marks": 30.070306885775448
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8eff51",
+    "S.No": 26,
+    "RTO Office Code": "MH26",
+    "Name Of The RTO Office": "RTO,NANDED",
+    "Applications Received": 13365,
+    "Pending at Office": 2365,
+    "Pendency": 0.17695473251028807,
+    "Marks": 31.958874892069467
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8eff52",
+    "S.No": 21,
+    "RTO Office Code": "MH21",
+    "Name Of The RTO Office": "DY.RTO,JALNA",
+    "Applications Received": 5054,
+    "Pending at Office": 893,
+    "Pendency": 0.17669172932330826,
+    "Marks": 32.00644523382283
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8eff53",
+    "S.No": 43,
+    "RTO Office Code": "MH43",
+    "Name Of The RTO Office": "DY.RTO,VASHI",
+    "Applications Received": 10991,
+    "Pending at Office": 1906,
+    "Pendency": 0.1734146119552361,
+    "Marks": 32.611289752882655
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8eff54",
+    "S.No": 28,
+    "RTO Office Code": "MH28",
+    "Name Of The RTO Office": "DY.RTO,BULDHANA",
+    "Applications Received": 7969,
+    "Pending at Office": 1327,
+    "Pendency": 0.1665202660308696,
+    "Marks": 33.961476837945575
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8eff55",
+    "S.No": 38,
+    "RTO Office Code": "MH38",
+    "Name Of The RTO Office": "DY. RTO,HINGOLI",
+    "Applications Received": 4166,
+    "Pending at Office": 681,
+    "Pendency": 0.16346615458473357,
+    "Marks": 34.59599433425512
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8eff56",
+    "S.No": 3,
+    "RTO Office Code": "MH03",
+    "Name Of The RTO Office": "RTO,MUMBAI (EAST)",
+    "Applications Received": 30523,
+    "Pending at Office": 4961,
+    "Pendency": 0.1625331717065819,
+    "Marks": 34.79458438222859
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8eff57",
+    "S.No": 6,
+    "RTO Office Code": "MH06",
+    "Name Of The RTO Office": "DY.RTO,PEN(RAIGAD)",
+    "Applications Received": 7889,
+    "Pending at Office": 1270,
+    "Pendency": 0.16098364811763213,
+    "Marks": 35.129494355374256
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8eff58",
+    "S.No": 1,
+    "RTO Office Code": "MH01",
+    "Name Of The RTO Office": "RTO,MUMBAI CENTRAL",
+    "Applications Received": 32720,
+    "Pending at Office": 5249,
+    "Pendency": 0.16042176039119804,
+    "Marks": 35.25253771100124
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8eff59",
+    "S.No": 44,
+    "RTO Office Code": "MH44",
+    "Name Of The RTO Office": "DY.RTO,AMBEJOGAI",
+    "Applications Received": 4437,
+    "Pending at Office": 702,
+    "Pendency": 0.15821501014198783,
+    "Marks": 35.74423281824314
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8eff5a",
+    "S.No": 36,
+    "RTO Office Code": "MH36",
+    "Name Of The RTO Office": "DY. RTO,BHANDARA",
+    "Applications Received": 4073,
+    "Pending at Office": 636,
+    "Pendency": 0.15615025779523692,
+    "Marks": 36.21687365557726
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8eff5b",
+    "S.No": 18,
+    "RTO Office Code": "MH18",
+    "Name Of The RTO Office": "DY.RTO,DHULE",
+    "Applications Received": 7485,
+    "Pending at Office": 1165,
+    "Pendency": 0.15564462257849032,
+    "Marks": 36.33452967515151
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8eff5c",
+    "S.No": 14,
+    "RTO Office Code": "MH14",
+    "Name Of The RTO Office": "DY.RTO,PIMPRI-CHINCHWAD",
+    "Applications Received": 30013,
+    "Pending at Office": 4650,
+    "Pendency": 0.15493286242628193,
+    "Marks": 36.50145017198485
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8eff5d",
+    "S.No": 2,
+    "RTO Office Code": "MH02",
+    "Name Of The RTO Office": "RTO,MUMBAI (WEST",
+    "Applications Received": 29623,
+    "Pending at Office": 4498,
+    "Pendency": 0.15184147452992608,
+    "Marks": 37.244594570512604
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8eff5e",
+    "S.No": 17,
+    "RTO Office Code": "MH17",
+    "Name Of The RTO Office": "DY.RTO,SHRIRAMPUR",
+    "Applications Received": 8050,
+    "Pending at Office": 1175,
+    "Pendency": 0.14596273291925466,
+    "Marks": 38.74464423041711
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8eff5f",
+    "S.No": 12,
+    "RTO Office Code": "MH12",
+    "Name Of The RTO Office": "RTO,PUNE",
+    "Applications Received": 53182,
+    "Pending at Office": 7740,
+    "Pendency": 0.14553796397277274,
+    "Marks": 38.85772484019292
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8eff60",
+    "S.No": 10,
+    "RTO Office Code": "MH10",
+    "Name Of The RTO Office": "DY.RTO,SANGLI",
+    "Applications Received": 14815,
+    "Pending at Office": 2153,
+    "Pendency": 0.14532568342895713,
+    "Marks": 38.91448520605451
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8eff61",
+    "S.No": 39,
+    "RTO Office Code": "MH39",
+    "Name Of The RTO Office": "DY. RTO,NANDURBAR",
+    "Applications Received": 4422,
+    "Pending at Office": 638,
+    "Pendency": 0.14427860696517414,
+    "Marks": 39.196900197553056
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8eff62",
+    "S.No": 23,
+    "RTO Office Code": "MH23",
+    "Name Of The RTO Office": "DY.RTO,BEED",
+    "Applications Received": 6201,
+    "Pending at Office": 891,
+    "Pendency": 0.14368650217706821,
+    "Marks": 39.35842317942146
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8eff63",
+    "S.No": 25,
+    "RTO Office Code": "MH25",
+    "Name Of The RTO Office": "DY.RTO,OSMANABAD",
+    "Applications Received": 5954,
+    "Pending at Office": 793,
+    "Pendency": 0.1331877729257642,
+    "Marks": 42.46091089013128
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8eff64",
+    "S.No": 33,
+    "RTO Office Code": "MH33",
+    "Name Of The RTO Office": "DY. RTO,GADCHIROLI",
+    "Applications Received": 4122,
+    "Pending at Office": 549,
+    "Pendency": 0.1331877729257642,
+    "Marks": 42.46091089013128
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8eff65",
+    "S.No": 22,
+    "RTO Office Code": "MH22",
+    "Name Of The RTO Office": "DY.RTO,PARBHANI",
+    "Applications Received": 6944,
+    "Pending at Office": 921,
+    "Pendency": 0.13263248847926268,
+    "Marks": 42.63867942687455
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8eff66",
+    "S.No": 27,
+    "RTO Office Code": "MH27",
+    "Name Of The RTO Office": "RTO,AMRAVATI",
+    "Applications Received": 9964,
+    "Pending at Office": 1296,
+    "Pendency": 0.13006824568446407,
+    "Marks": 43.47928372598482
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8eff67",
+    "S.No": 35,
+    "RTO Office Code": "MH35",
+    "Name Of The RTO Office": "DY. RTO,GONDIA",
+    "Applications Received": 3792,
+    "Pending at Office": 490,
+    "Pendency": 0.12921940928270043,
+    "Marks": 43.76489715630535
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8eff68",
+    "S.No": 50,
+    "RTO Office Code": "MH50",
+    "Name Of The RTO Office": "DY.RTO, KARAD",
+    "Applications Received": 5723,
+    "Pending at Office": 662,
+    "Pendency": 0.1156735977634108,
+    "Marks": 48.88993052176646
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8eff69",
+    "S.No": 24,
+    "RTO Office Code": "MH24",
+    "Name Of The RTO Office": "RTO,LATUR",
+    "Applications Received": 9774,
+    "Pending at Office": 1107,
+    "Pendency": 0.1132596685082873,
+    "Marks": 49.93193280838636
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8eff6a",
+    "S.No": 30,
+    "RTO Office Code": "MH30",
+    "Name Of The RTO Office": "DY.RTO,AKOLA",
+    "Applications Received": 7650,
+    "Pending at Office": 854,
+    "Pendency": 0.11163398692810457,
+    "Marks": 50.65907178875614
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8eff6b",
+    "S.No": 15,
+    "RTO Office Code": "MH15",
+    "Name Of The RTO Office": "RTO,NASHIK",
+    "Applications Received": 21014,
+    "Pending at Office": 2251,
+    "Pendency": 0.10711906348148853,
+    "Marks": 52.79428305339145
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8eff6c",
+    "S.No": 13,
+    "RTO Office Code": "MH13",
+    "Name Of The RTO Office": "DY.RTO,SOLAPUR",
+    "Applications Received": 14733,
+    "Pending at Office": 1431,
+    "Pendency": 0.09712889431887599,
+    "Marks": 58.22442639251655
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8eff6d",
+    "S.No": 32,
+    "RTO Office Code": "MH32",
+    "Name Of The RTO Office": "DY. RTO,WARDHA",
+    "Applications Received": 4660,
+    "Pending at Office": 435,
+    "Pendency": 0.09334763948497854,
+    "Marks": 60.58293695542197
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8eff6e",
+    "S.No": 11,
+    "RTO Office Code": "MH11",
+    "Name Of The RTO Office": "DY.RTO,SATARA",
+    "Applications Received": 12201,
+    "Pending at Office": 690,
+    "Pendency": 0.056552741578559135,
+    "Marks": 100
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8eff6f",
+    "S.No": "Total",
+    "RTO Office Code": null,
+    "Name Of The RTO Office": null,
+    "Applications Received": 641581,
+    "Pending at Office": 114598,
+    "Pendency": null,
+    "Marks": null
+  }
+]

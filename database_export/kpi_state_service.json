@@ -1,0 +1,902 @@
+[
+  {
+    "_id": "698ebfff2d2b92cf4e8ef6d4",
+    "Month": "2025-04",
+    "State": "Maharashtra",
+    "Online Service Count": 67,
+    "Faceless Service Count": 36,
+    "Citizen Service SLA % (within SLA)": 93.13,
+    "Grievance SLA % (within SLA)": 92.6
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef6d5",
+    "Month": "2025-05",
+    "State": "Maharashtra",
+    "Online Service Count": 79,
+    "Faceless Service Count": 23,
+    "Citizen Service SLA % (within SLA)": 87.52,
+    "Grievance SLA % (within SLA)": 90.69
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef6d6",
+    "Month": "2025-06",
+    "State": "Maharashtra",
+    "Online Service Count": 55,
+    "Faceless Service Count": 30,
+    "Citizen Service SLA % (within SLA)": 94.19,
+    "Grievance SLA % (within SLA)": 86.87
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef6d7",
+    "Month": "2025-07",
+    "State": "Maharashtra",
+    "Online Service Count": 41,
+    "Faceless Service Count": 85,
+    "Citizen Service SLA % (within SLA)": 92.63,
+    "Grievance SLA % (within SLA)": 92.67
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef6d8",
+    "Month": "2025-08",
+    "State": "Maharashtra",
+    "Online Service Count": 106,
+    "Faceless Service Count": 22,
+    "Citizen Service SLA % (within SLA)": 85.52,
+    "Grievance SLA % (within SLA)": 74.52
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef6d9",
+    "Month": "2025-09",
+    "State": "Maharashtra",
+    "Online Service Count": 78,
+    "Faceless Service Count": 37,
+    "Citizen Service SLA % (within SLA)": 96.75,
+    "Grievance SLA % (within SLA)": 81.88
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef6da",
+    "Month": "2025-10",
+    "State": "Maharashtra",
+    "Online Service Count": 95,
+    "Faceless Service Count": 80,
+    "Citizen Service SLA % (within SLA)": 92.4,
+    "Grievance SLA % (within SLA)": 93.59
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef6db",
+    "Month": "2025-11",
+    "State": "Maharashtra",
+    "Online Service Count": 83,
+    "Faceless Service Count": 63,
+    "Citizen Service SLA % (within SLA)": 94.07,
+    "Grievance SLA % (within SLA)": 85.77
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef6dc",
+    "Month": "2025-12",
+    "State": "Maharashtra",
+    "Online Service Count": 120,
+    "Faceless Service Count": 80,
+    "Citizen Service SLA % (within SLA)": 92.05,
+    "Grievance SLA % (within SLA)": 86.2
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef6dd",
+    "Month": "2026-01",
+    "State": "Maharashtra",
+    "Online Service Count": 85,
+    "Faceless Service Count": 52,
+    "Citizen Service SLA % (within SLA)": 100,
+    "Grievance SLA % (within SLA)": 98.71
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef6de",
+    "Month": "2025-04",
+    "State": "Gujarat",
+    "Online Service Count": 46,
+    "Faceless Service Count": 45,
+    "Citizen Service SLA % (within SLA)": 88.32,
+    "Grievance SLA % (within SLA)": 93.13
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef6df",
+    "Month": "2025-05",
+    "State": "Gujarat",
+    "Online Service Count": 84,
+    "Faceless Service Count": 76,
+    "Citizen Service SLA % (within SLA)": 93.77,
+    "Grievance SLA % (within SLA)": 95.5
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef6e0",
+    "Month": "2025-06",
+    "State": "Gujarat",
+    "Online Service Count": 81,
+    "Faceless Service Count": 49,
+    "Citizen Service SLA % (within SLA)": 94.96,
+    "Grievance SLA % (within SLA)": 91.82
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef6e1",
+    "Month": "2025-07",
+    "State": "Gujarat",
+    "Online Service Count": 109,
+    "Faceless Service Count": 22,
+    "Citizen Service SLA % (within SLA)": 84.87,
+    "Grievance SLA % (within SLA)": 88.5
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef6e2",
+    "Month": "2025-08",
+    "State": "Gujarat",
+    "Online Service Count": 96,
+    "Faceless Service Count": 31,
+    "Citizen Service SLA % (within SLA)": 86.88,
+    "Grievance SLA % (within SLA)": 98.09
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef6e3",
+    "Month": "2025-09",
+    "State": "Gujarat",
+    "Online Service Count": 64,
+    "Faceless Service Count": 72,
+    "Citizen Service SLA % (within SLA)": 97.44,
+    "Grievance SLA % (within SLA)": 89.53
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef6e4",
+    "Month": "2025-10",
+    "State": "Gujarat",
+    "Online Service Count": 51,
+    "Faceless Service Count": 62,
+    "Citizen Service SLA % (within SLA)": 92.05,
+    "Grievance SLA % (within SLA)": 89.22
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef6e5",
+    "Month": "2025-11",
+    "State": "Gujarat",
+    "Online Service Count": 94,
+    "Faceless Service Count": 69,
+    "Citizen Service SLA % (within SLA)": 93.59,
+    "Grievance SLA % (within SLA)": 88.36
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef6e6",
+    "Month": "2025-12",
+    "State": "Gujarat",
+    "Online Service Count": 49,
+    "Faceless Service Count": 90,
+    "Citizen Service SLA % (within SLA)": 91.8,
+    "Grievance SLA % (within SLA)": 87.52
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef6e7",
+    "Month": "2026-01",
+    "State": "Gujarat",
+    "Online Service Count": 84,
+    "Faceless Service Count": 90,
+    "Citizen Service SLA % (within SLA)": 95.58,
+    "Grievance SLA % (within SLA)": 88.07
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef6e8",
+    "Month": "2025-04",
+    "State": "Delhi",
+    "Online Service Count": 86,
+    "Faceless Service Count": 83,
+    "Citizen Service SLA % (within SLA)": 92.18,
+    "Grievance SLA % (within SLA)": 86.78
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef6e9",
+    "Month": "2025-05",
+    "State": "Delhi",
+    "Online Service Count": 53,
+    "Faceless Service Count": 64,
+    "Citizen Service SLA % (within SLA)": 91.4,
+    "Grievance SLA % (within SLA)": 83.52
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef6ea",
+    "Month": "2025-06",
+    "State": "Delhi",
+    "Online Service Count": 76,
+    "Faceless Service Count": 62,
+    "Citizen Service SLA % (within SLA)": 94.04,
+    "Grievance SLA % (within SLA)": 90.35
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef6eb",
+    "Month": "2025-07",
+    "State": "Delhi",
+    "Online Service Count": 119,
+    "Faceless Service Count": 79,
+    "Citizen Service SLA % (within SLA)": 91.51,
+    "Grievance SLA % (within SLA)": 93.97
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef6ec",
+    "Month": "2025-08",
+    "State": "Delhi",
+    "Online Service Count": 52,
+    "Faceless Service Count": 36,
+    "Citizen Service SLA % (within SLA)": 96.1,
+    "Grievance SLA % (within SLA)": 88.23
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef6ed",
+    "Month": "2025-09",
+    "State": "Delhi",
+    "Online Service Count": 90,
+    "Faceless Service Count": 63,
+    "Citizen Service SLA % (within SLA)": 87.67,
+    "Grievance SLA % (within SLA)": 90.07
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef6ee",
+    "Month": "2025-10",
+    "State": "Delhi",
+    "Online Service Count": 100,
+    "Faceless Service Count": 68,
+    "Citizen Service SLA % (within SLA)": 97.15,
+    "Grievance SLA % (within SLA)": 94.6
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef6ef",
+    "Month": "2025-11",
+    "State": "Delhi",
+    "Online Service Count": 61,
+    "Faceless Service Count": 73,
+    "Citizen Service SLA % (within SLA)": 87.02,
+    "Grievance SLA % (within SLA)": 86.09
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef6f0",
+    "Month": "2025-12",
+    "State": "Delhi",
+    "Online Service Count": 114,
+    "Faceless Service Count": 56,
+    "Citizen Service SLA % (within SLA)": 91.19,
+    "Grievance SLA % (within SLA)": 84.53
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef6f1",
+    "Month": "2026-01",
+    "State": "Delhi",
+    "Online Service Count": 69,
+    "Faceless Service Count": 56,
+    "Citizen Service SLA % (within SLA)": 89.98,
+    "Grievance SLA % (within SLA)": 84.23
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef6f2",
+    "Month": "2025-04",
+    "State": "Karnataka",
+    "Online Service Count": 102,
+    "Faceless Service Count": 83,
+    "Citizen Service SLA % (within SLA)": 90.39,
+    "Grievance SLA % (within SLA)": 89.46
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef6f3",
+    "Month": "2025-05",
+    "State": "Karnataka",
+    "Online Service Count": 77,
+    "Faceless Service Count": 30,
+    "Citizen Service SLA % (within SLA)": 87.44,
+    "Grievance SLA % (within SLA)": 85.11
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef6f4",
+    "Month": "2025-06",
+    "State": "Karnataka",
+    "Online Service Count": 95,
+    "Faceless Service Count": 34,
+    "Citizen Service SLA % (within SLA)": 87.35,
+    "Grievance SLA % (within SLA)": 75.3
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef6f5",
+    "Month": "2025-07",
+    "State": "Karnataka",
+    "Online Service Count": 111,
+    "Faceless Service Count": 72,
+    "Citizen Service SLA % (within SLA)": 92.12,
+    "Grievance SLA % (within SLA)": 88.19
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef6f6",
+    "Month": "2025-08",
+    "State": "Karnataka",
+    "Online Service Count": 73,
+    "Faceless Service Count": 56,
+    "Citizen Service SLA % (within SLA)": 96.86,
+    "Grievance SLA % (within SLA)": 71.96
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef6f7",
+    "Month": "2025-09",
+    "State": "Karnataka",
+    "Online Service Count": 83,
+    "Faceless Service Count": 75,
+    "Citizen Service SLA % (within SLA)": 98.25,
+    "Grievance SLA % (within SLA)": 81.23
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef6f8",
+    "Month": "2025-10",
+    "State": "Karnataka",
+    "Online Service Count": 103,
+    "Faceless Service Count": 84,
+    "Citizen Service SLA % (within SLA)": 88.99,
+    "Grievance SLA % (within SLA)": 82.63
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef6f9",
+    "Month": "2025-11",
+    "State": "Karnataka",
+    "Online Service Count": 80,
+    "Faceless Service Count": 27,
+    "Citizen Service SLA % (within SLA)": 97.71,
+    "Grievance SLA % (within SLA)": 99.02
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef6fa",
+    "Month": "2025-12",
+    "State": "Karnataka",
+    "Online Service Count": 76,
+    "Faceless Service Count": 21,
+    "Citizen Service SLA % (within SLA)": 99.62,
+    "Grievance SLA % (within SLA)": 88.21
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef6fb",
+    "Month": "2026-01",
+    "State": "Karnataka",
+    "Online Service Count": 105,
+    "Faceless Service Count": 71,
+    "Citizen Service SLA % (within SLA)": 91.63,
+    "Grievance SLA % (within SLA)": 88.79
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef6fc",
+    "Month": "2025-04",
+    "State": "Tamil Nadu",
+    "Online Service Count": 90,
+    "Faceless Service Count": 42,
+    "Citizen Service SLA % (within SLA)": 100,
+    "Grievance SLA % (within SLA)": 93.11
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef6fd",
+    "Month": "2025-05",
+    "State": "Tamil Nadu",
+    "Online Service Count": 71,
+    "Faceless Service Count": 49,
+    "Citizen Service SLA % (within SLA)": 95.88,
+    "Grievance SLA % (within SLA)": 85.83
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef6fe",
+    "Month": "2025-06",
+    "State": "Tamil Nadu",
+    "Online Service Count": 80,
+    "Faceless Service Count": 53,
+    "Citizen Service SLA % (within SLA)": 95.63,
+    "Grievance SLA % (within SLA)": 88.19
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef6ff",
+    "Month": "2025-07",
+    "State": "Tamil Nadu",
+    "Online Service Count": 69,
+    "Faceless Service Count": 47,
+    "Citizen Service SLA % (within SLA)": 92.06,
+    "Grievance SLA % (within SLA)": 90.02
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef700",
+    "Month": "2025-08",
+    "State": "Tamil Nadu",
+    "Online Service Count": 64,
+    "Faceless Service Count": 68,
+    "Citizen Service SLA % (within SLA)": 84.25,
+    "Grievance SLA % (within SLA)": 92
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef701",
+    "Month": "2025-09",
+    "State": "Tamil Nadu",
+    "Online Service Count": 98,
+    "Faceless Service Count": 37,
+    "Citizen Service SLA % (within SLA)": 86.23,
+    "Grievance SLA % (within SLA)": 87.65
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef702",
+    "Month": "2025-10",
+    "State": "Tamil Nadu",
+    "Online Service Count": 87,
+    "Faceless Service Count": 82,
+    "Citizen Service SLA % (within SLA)": 89.23,
+    "Grievance SLA % (within SLA)": 92.99
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef703",
+    "Month": "2025-11",
+    "State": "Tamil Nadu",
+    "Online Service Count": 119,
+    "Faceless Service Count": 33,
+    "Citizen Service SLA % (within SLA)": 90.37,
+    "Grievance SLA % (within SLA)": 84.49
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef704",
+    "Month": "2025-12",
+    "State": "Tamil Nadu",
+    "Online Service Count": 76,
+    "Faceless Service Count": 38,
+    "Citizen Service SLA % (within SLA)": 93.12,
+    "Grievance SLA % (within SLA)": 81.95
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef705",
+    "Month": "2026-01",
+    "State": "Tamil Nadu",
+    "Online Service Count": 47,
+    "Faceless Service Count": 88,
+    "Citizen Service SLA % (within SLA)": 92.25,
+    "Grievance SLA % (within SLA)": 76.65
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef706",
+    "Month": "2025-04",
+    "State": "Uttar Pradesh",
+    "Online Service Count": 111,
+    "Faceless Service Count": 27,
+    "Citizen Service SLA % (within SLA)": 91.95,
+    "Grievance SLA % (within SLA)": 86.67
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef707",
+    "Month": "2025-05",
+    "State": "Uttar Pradesh",
+    "Online Service Count": 65,
+    "Faceless Service Count": 74,
+    "Citizen Service SLA % (within SLA)": 91.89,
+    "Grievance SLA % (within SLA)": 89.35
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef708",
+    "Month": "2025-06",
+    "State": "Uttar Pradesh",
+    "Online Service Count": 48,
+    "Faceless Service Count": 89,
+    "Citizen Service SLA % (within SLA)": 87.56,
+    "Grievance SLA % (within SLA)": 80.97
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef709",
+    "Month": "2025-07",
+    "State": "Uttar Pradesh",
+    "Online Service Count": 87,
+    "Faceless Service Count": 25,
+    "Citizen Service SLA % (within SLA)": 93.16,
+    "Grievance SLA % (within SLA)": 95.47
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef70a",
+    "Month": "2025-08",
+    "State": "Uttar Pradesh",
+    "Online Service Count": 58,
+    "Faceless Service Count": 59,
+    "Citizen Service SLA % (within SLA)": 81.99,
+    "Grievance SLA % (within SLA)": 77.78
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef70b",
+    "Month": "2025-09",
+    "State": "Uttar Pradesh",
+    "Online Service Count": 100,
+    "Faceless Service Count": 63,
+    "Citizen Service SLA % (within SLA)": 89.77,
+    "Grievance SLA % (within SLA)": 85.55
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef70c",
+    "Month": "2025-10",
+    "State": "Uttar Pradesh",
+    "Online Service Count": 46,
+    "Faceless Service Count": 37,
+    "Citizen Service SLA % (within SLA)": 90.75,
+    "Grievance SLA % (within SLA)": 94.3
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef70d",
+    "Month": "2025-11",
+    "State": "Uttar Pradesh",
+    "Online Service Count": 70,
+    "Faceless Service Count": 61,
+    "Citizen Service SLA % (within SLA)": 88.55,
+    "Grievance SLA % (within SLA)": 90.87
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef70e",
+    "Month": "2025-12",
+    "State": "Uttar Pradesh",
+    "Online Service Count": 108,
+    "Faceless Service Count": 46,
+    "Citizen Service SLA % (within SLA)": 93.56,
+    "Grievance SLA % (within SLA)": 88.62
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef70f",
+    "Month": "2026-01",
+    "State": "Uttar Pradesh",
+    "Online Service Count": 42,
+    "Faceless Service Count": 74,
+    "Citizen Service SLA % (within SLA)": 98.35,
+    "Grievance SLA % (within SLA)": 84.27
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef710",
+    "Month": "2025-04",
+    "State": "Rajasthan",
+    "Online Service Count": 73,
+    "Faceless Service Count": 28,
+    "Citizen Service SLA % (within SLA)": 91.1,
+    "Grievance SLA % (within SLA)": 80.34
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef711",
+    "Month": "2025-05",
+    "State": "Rajasthan",
+    "Online Service Count": 71,
+    "Faceless Service Count": 38,
+    "Citizen Service SLA % (within SLA)": 87.7,
+    "Grievance SLA % (within SLA)": 83.49
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef712",
+    "Month": "2025-06",
+    "State": "Rajasthan",
+    "Online Service Count": 92,
+    "Faceless Service Count": 49,
+    "Citizen Service SLA % (within SLA)": 94.22,
+    "Grievance SLA % (within SLA)": 84.27
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef713",
+    "Month": "2025-07",
+    "State": "Rajasthan",
+    "Online Service Count": 111,
+    "Faceless Service Count": 70,
+    "Citizen Service SLA % (within SLA)": 96.63,
+    "Grievance SLA % (within SLA)": 96.62
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef714",
+    "Month": "2025-08",
+    "State": "Rajasthan",
+    "Online Service Count": 83,
+    "Faceless Service Count": 57,
+    "Citizen Service SLA % (within SLA)": 97.45,
+    "Grievance SLA % (within SLA)": 76.72
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef715",
+    "Month": "2025-09",
+    "State": "Rajasthan",
+    "Online Service Count": 63,
+    "Faceless Service Count": 31,
+    "Citizen Service SLA % (within SLA)": 88.53,
+    "Grievance SLA % (within SLA)": 88.72
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef716",
+    "Month": "2025-10",
+    "State": "Rajasthan",
+    "Online Service Count": 40,
+    "Faceless Service Count": 75,
+    "Citizen Service SLA % (within SLA)": 91.34,
+    "Grievance SLA % (within SLA)": 99.29
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef717",
+    "Month": "2025-11",
+    "State": "Rajasthan",
+    "Online Service Count": 76,
+    "Faceless Service Count": 57,
+    "Citizen Service SLA % (within SLA)": 93.66,
+    "Grievance SLA % (within SLA)": 86.61
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef718",
+    "Month": "2025-12",
+    "State": "Rajasthan",
+    "Online Service Count": 69,
+    "Faceless Service Count": 29,
+    "Citizen Service SLA % (within SLA)": 92.02,
+    "Grievance SLA % (within SLA)": 90.69
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef719",
+    "Month": "2026-01",
+    "State": "Rajasthan",
+    "Online Service Count": 47,
+    "Faceless Service Count": 54,
+    "Citizen Service SLA % (within SLA)": 98.59,
+    "Grievance SLA % (within SLA)": 89.86
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef71a",
+    "Month": "2025-04",
+    "State": "Madhya Pradesh",
+    "Online Service Count": 70,
+    "Faceless Service Count": 59,
+    "Citizen Service SLA % (within SLA)": 87.4,
+    "Grievance SLA % (within SLA)": 87.47
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef71b",
+    "Month": "2025-05",
+    "State": "Madhya Pradesh",
+    "Online Service Count": 110,
+    "Faceless Service Count": 22,
+    "Citizen Service SLA % (within SLA)": 95.46,
+    "Grievance SLA % (within SLA)": 89.27
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef71c",
+    "Month": "2025-06",
+    "State": "Madhya Pradesh",
+    "Online Service Count": 40,
+    "Faceless Service Count": 42,
+    "Citizen Service SLA % (within SLA)": 93.96,
+    "Grievance SLA % (within SLA)": 95.2
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef71d",
+    "Month": "2025-07",
+    "State": "Madhya Pradesh",
+    "Online Service Count": 118,
+    "Faceless Service Count": 48,
+    "Citizen Service SLA % (within SLA)": 90.58,
+    "Grievance SLA % (within SLA)": 90.02
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef71e",
+    "Month": "2025-08",
+    "State": "Madhya Pradesh",
+    "Online Service Count": 108,
+    "Faceless Service Count": 90,
+    "Citizen Service SLA % (within SLA)": 93.53,
+    "Grievance SLA % (within SLA)": 66.11
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef71f",
+    "Month": "2025-09",
+    "State": "Madhya Pradesh",
+    "Online Service Count": 70,
+    "Faceless Service Count": 53,
+    "Citizen Service SLA % (within SLA)": 93.81,
+    "Grievance SLA % (within SLA)": 90.87
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef720",
+    "Month": "2025-10",
+    "State": "Madhya Pradesh",
+    "Online Service Count": 95,
+    "Faceless Service Count": 44,
+    "Citizen Service SLA % (within SLA)": 89.15,
+    "Grievance SLA % (within SLA)": 96.22
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef721",
+    "Month": "2025-11",
+    "State": "Madhya Pradesh",
+    "Online Service Count": 44,
+    "Faceless Service Count": 76,
+    "Citizen Service SLA % (within SLA)": 100,
+    "Grievance SLA % (within SLA)": 87.99
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef722",
+    "Month": "2025-12",
+    "State": "Madhya Pradesh",
+    "Online Service Count": 91,
+    "Faceless Service Count": 76,
+    "Citizen Service SLA % (within SLA)": 98.47,
+    "Grievance SLA % (within SLA)": 88.79
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef723",
+    "Month": "2026-01",
+    "State": "Madhya Pradesh",
+    "Online Service Count": 83,
+    "Faceless Service Count": 51,
+    "Citizen Service SLA % (within SLA)": 91.56,
+    "Grievance SLA % (within SLA)": 87.79
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef724",
+    "Month": "2025-04",
+    "State": "West Bengal",
+    "Online Service Count": 84,
+    "Faceless Service Count": 90,
+    "Citizen Service SLA % (within SLA)": 90.98,
+    "Grievance SLA % (within SLA)": 83.55
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef725",
+    "Month": "2025-05",
+    "State": "West Bengal",
+    "Online Service Count": 72,
+    "Faceless Service Count": 52,
+    "Citizen Service SLA % (within SLA)": 92.14,
+    "Grievance SLA % (within SLA)": 86.3
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef726",
+    "Month": "2025-06",
+    "State": "West Bengal",
+    "Online Service Count": 103,
+    "Faceless Service Count": 64,
+    "Citizen Service SLA % (within SLA)": 92.89,
+    "Grievance SLA % (within SLA)": 91.7
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef727",
+    "Month": "2025-07",
+    "State": "West Bengal",
+    "Online Service Count": 92,
+    "Faceless Service Count": 42,
+    "Citizen Service SLA % (within SLA)": 87.83,
+    "Grievance SLA % (within SLA)": 94.63
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef728",
+    "Month": "2025-08",
+    "State": "West Bengal",
+    "Online Service Count": 64,
+    "Faceless Service Count": 66,
+    "Citizen Service SLA % (within SLA)": 86.33,
+    "Grievance SLA % (within SLA)": 90.66
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef729",
+    "Month": "2025-09",
+    "State": "West Bengal",
+    "Online Service Count": 89,
+    "Faceless Service Count": 87,
+    "Citizen Service SLA % (within SLA)": 85.88,
+    "Grievance SLA % (within SLA)": 89.38
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef72a",
+    "Month": "2025-10",
+    "State": "West Bengal",
+    "Online Service Count": 47,
+    "Faceless Service Count": 68,
+    "Citizen Service SLA % (within SLA)": 93.5,
+    "Grievance SLA % (within SLA)": 91.79
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef72b",
+    "Month": "2025-11",
+    "State": "West Bengal",
+    "Online Service Count": 120,
+    "Faceless Service Count": 51,
+    "Citizen Service SLA % (within SLA)": 93.32,
+    "Grievance SLA % (within SLA)": 86.18
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef72c",
+    "Month": "2025-12",
+    "State": "West Bengal",
+    "Online Service Count": 100,
+    "Faceless Service Count": 66,
+    "Citizen Service SLA % (within SLA)": 95.48,
+    "Grievance SLA % (within SLA)": 96.88
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef72d",
+    "Month": "2026-01",
+    "State": "West Bengal",
+    "Online Service Count": 97,
+    "Faceless Service Count": 46,
+    "Citizen Service SLA % (within SLA)": 97.26,
+    "Grievance SLA % (within SLA)": 87.34
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef72e",
+    "Month": "2025-04",
+    "State": "Telangana",
+    "Online Service Count": 112,
+    "Faceless Service Count": 59,
+    "Citizen Service SLA % (within SLA)": 95.07,
+    "Grievance SLA % (within SLA)": 88.73
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef72f",
+    "Month": "2025-05",
+    "State": "Telangana",
+    "Online Service Count": 98,
+    "Faceless Service Count": 84,
+    "Citizen Service SLA % (within SLA)": 95.3,
+    "Grievance SLA % (within SLA)": 87.64
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef730",
+    "Month": "2025-06",
+    "State": "Telangana",
+    "Online Service Count": 72,
+    "Faceless Service Count": 44,
+    "Citizen Service SLA % (within SLA)": 90.34,
+    "Grievance SLA % (within SLA)": 91.8
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef731",
+    "Month": "2025-07",
+    "State": "Telangana",
+    "Online Service Count": 60,
+    "Faceless Service Count": 28,
+    "Citizen Service SLA % (within SLA)": 93.36,
+    "Grievance SLA % (within SLA)": 92.02
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef732",
+    "Month": "2025-08",
+    "State": "Telangana",
+    "Online Service Count": 50,
+    "Faceless Service Count": 66,
+    "Citizen Service SLA % (within SLA)": 95.02,
+    "Grievance SLA % (within SLA)": 90.27
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef733",
+    "Month": "2025-09",
+    "State": "Telangana",
+    "Online Service Count": 111,
+    "Faceless Service Count": 43,
+    "Citizen Service SLA % (within SLA)": 97.77,
+    "Grievance SLA % (within SLA)": 85
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef734",
+    "Month": "2025-10",
+    "State": "Telangana",
+    "Online Service Count": 116,
+    "Faceless Service Count": 81,
+    "Citizen Service SLA % (within SLA)": 87.82,
+    "Grievance SLA % (within SLA)": 81.87
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef735",
+    "Month": "2025-11",
+    "State": "Telangana",
+    "Online Service Count": 53,
+    "Faceless Service Count": 29,
+    "Citizen Service SLA % (within SLA)": 90.9,
+    "Grievance SLA % (within SLA)": 85.98
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef736",
+    "Month": "2025-12",
+    "State": "Telangana",
+    "Online Service Count": 62,
+    "Faceless Service Count": 40,
+    "Citizen Service SLA % (within SLA)": 93.36,
+    "Grievance SLA % (within SLA)": 89.9
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef737",
+    "Month": "2026-01",
+    "State": "Telangana",
+    "Online Service Count": 100,
+    "Faceless Service Count": 34,
+    "Citizen Service SLA % (within SLA)": 94.46,
+    "Grievance SLA % (within SLA)": 75.35
+  }
+]

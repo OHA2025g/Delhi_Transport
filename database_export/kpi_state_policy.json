@@ -1,0 +1,1002 @@
+[
+  {
+    "_id": "698ebfff2d2b92cf4e8ef738",
+    "Month": "2025-04",
+    "State": "Maharashtra",
+    "No. of ATS": 10,
+    "No. of ADTT": 10,
+    "No. of RVSF": 5,
+    "Count of Vehicles fitted with VLTD": 263521,
+    "Count of Vehicles fitted with HSRP": 467675
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef739",
+    "Month": "2025-05",
+    "State": "Maharashtra",
+    "No. of ATS": 4,
+    "No. of ADTT": 4,
+    "No. of RVSF": 6,
+    "Count of Vehicles fitted with VLTD": 72444,
+    "Count of Vehicles fitted with HSRP": 246655
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef73a",
+    "Month": "2025-06",
+    "State": "Maharashtra",
+    "No. of ATS": 9,
+    "No. of ADTT": 10,
+    "No. of RVSF": 5,
+    "Count of Vehicles fitted with VLTD": 189887,
+    "Count of Vehicles fitted with HSRP": 308996
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef73b",
+    "Month": "2025-07",
+    "State": "Maharashtra",
+    "No. of ATS": 9,
+    "No. of ADTT": 6,
+    "No. of RVSF": 1,
+    "Count of Vehicles fitted with VLTD": 238734,
+    "Count of Vehicles fitted with HSRP": 288032
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef73c",
+    "Month": "2025-08",
+    "State": "Maharashtra",
+    "No. of ATS": 9,
+    "No. of ADTT": 9,
+    "No. of RVSF": 8,
+    "Count of Vehicles fitted with VLTD": 263580,
+    "Count of Vehicles fitted with HSRP": 268532
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef73d",
+    "Month": "2025-09",
+    "State": "Maharashtra",
+    "No. of ATS": 6,
+    "No. of ADTT": 2,
+    "No. of RVSF": 8,
+    "Count of Vehicles fitted with VLTD": 346559,
+    "Count of Vehicles fitted with HSRP": 524072
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef73e",
+    "Month": "2025-10",
+    "State": "Maharashtra",
+    "No. of ATS": 5,
+    "No. of ADTT": 4,
+    "No. of RVSF": 7,
+    "Count of Vehicles fitted with VLTD": 240592,
+    "Count of Vehicles fitted with HSRP": 446421
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef73f",
+    "Month": "2025-11",
+    "State": "Maharashtra",
+    "No. of ATS": 7,
+    "No. of ADTT": 5,
+    "No. of RVSF": 6,
+    "Count of Vehicles fitted with VLTD": 334544,
+    "Count of Vehicles fitted with HSRP": 253738
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef740",
+    "Month": "2025-12",
+    "State": "Maharashtra",
+    "No. of ATS": 10,
+    "No. of ADTT": 3,
+    "No. of RVSF": 4,
+    "Count of Vehicles fitted with VLTD": 369436,
+    "Count of Vehicles fitted with HSRP": 576316
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef741",
+    "Month": "2026-01",
+    "State": "Maharashtra",
+    "No. of ATS": 12,
+    "No. of ADTT": 4,
+    "No. of RVSF": 7,
+    "Count of Vehicles fitted with VLTD": 377631,
+    "Count of Vehicles fitted with HSRP": 588667
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef742",
+    "Month": "2025-04",
+    "State": "Gujarat",
+    "No. of ATS": 2,
+    "No. of ADTT": 8,
+    "No. of RVSF": 8,
+    "Count of Vehicles fitted with VLTD": 317634,
+    "Count of Vehicles fitted with HSRP": 201250
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef743",
+    "Month": "2025-05",
+    "State": "Gujarat",
+    "No. of ATS": 10,
+    "No. of ADTT": 2,
+    "No. of RVSF": 4,
+    "Count of Vehicles fitted with VLTD": 269180,
+    "Count of Vehicles fitted with HSRP": 317355
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef744",
+    "Month": "2025-06",
+    "State": "Gujarat",
+    "No. of ATS": 9,
+    "No. of ADTT": 3,
+    "No. of RVSF": 5,
+    "Count of Vehicles fitted with VLTD": 275687,
+    "Count of Vehicles fitted with HSRP": 409574
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef745",
+    "Month": "2025-07",
+    "State": "Gujarat",
+    "No. of ATS": 5,
+    "No. of ADTT": 4,
+    "No. of RVSF": 3,
+    "Count of Vehicles fitted with VLTD": 211622,
+    "Count of Vehicles fitted with HSRP": 384700
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef746",
+    "Month": "2025-08",
+    "State": "Gujarat",
+    "No. of ATS": 5,
+    "No. of ADTT": 5,
+    "No. of RVSF": 3,
+    "Count of Vehicles fitted with VLTD": 126600,
+    "Count of Vehicles fitted with HSRP": 421868
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef747",
+    "Month": "2025-09",
+    "State": "Gujarat",
+    "No. of ATS": 10,
+    "No. of ADTT": 3,
+    "No. of RVSF": 7,
+    "Count of Vehicles fitted with VLTD": 249842,
+    "Count of Vehicles fitted with HSRP": 167203
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef748",
+    "Month": "2025-10",
+    "State": "Gujarat",
+    "No. of ATS": 6,
+    "No. of ADTT": 1,
+    "No. of RVSF": 1,
+    "Count of Vehicles fitted with VLTD": 167645,
+    "Count of Vehicles fitted with HSRP": 316320
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef749",
+    "Month": "2025-11",
+    "State": "Gujarat",
+    "No. of ATS": 10,
+    "No. of ADTT": 2,
+    "No. of RVSF": 7,
+    "Count of Vehicles fitted with VLTD": 132083,
+    "Count of Vehicles fitted with HSRP": 151931
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef74a",
+    "Month": "2025-12",
+    "State": "Gujarat",
+    "No. of ATS": 9,
+    "No. of ADTT": 8,
+    "No. of RVSF": 5,
+    "Count of Vehicles fitted with VLTD": 90496,
+    "Count of Vehicles fitted with HSRP": 139979
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef74b",
+    "Month": "2026-01",
+    "State": "Gujarat",
+    "No. of ATS": 6,
+    "No. of ADTT": 5,
+    "No. of RVSF": 8,
+    "Count of Vehicles fitted with VLTD": 150266,
+    "Count of Vehicles fitted with HSRP": 180147
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef74c",
+    "Month": "2025-04",
+    "State": "Delhi",
+    "No. of ATS": 12,
+    "No. of ADTT": 2,
+    "No. of RVSF": 1,
+    "Count of Vehicles fitted with VLTD": 197980,
+    "Count of Vehicles fitted with HSRP": 288562
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef74d",
+    "Month": "2025-05",
+    "State": "Delhi",
+    "No. of ATS": 8,
+    "No. of ADTT": 9,
+    "No. of RVSF": 8,
+    "Count of Vehicles fitted with VLTD": 151373,
+    "Count of Vehicles fitted with HSRP": 590027
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef74e",
+    "Month": "2025-06",
+    "State": "Delhi",
+    "No. of ATS": 8,
+    "No. of ADTT": 1,
+    "No. of RVSF": 8,
+    "Count of Vehicles fitted with VLTD": 98299,
+    "Count of Vehicles fitted with HSRP": 386070
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef74f",
+    "Month": "2025-07",
+    "State": "Delhi",
+    "No. of ATS": 10,
+    "No. of ADTT": 3,
+    "No. of RVSF": 3,
+    "Count of Vehicles fitted with VLTD": 216662,
+    "Count of Vehicles fitted with HSRP": 540122
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef750",
+    "Month": "2025-08",
+    "State": "Delhi",
+    "No. of ATS": 4,
+    "No. of ADTT": 7,
+    "No. of RVSF": 4,
+    "Count of Vehicles fitted with VLTD": 89145,
+    "Count of Vehicles fitted with HSRP": 449656
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef751",
+    "Month": "2025-09",
+    "State": "Delhi",
+    "No. of ATS": 11,
+    "No. of ADTT": 6,
+    "No. of RVSF": 2,
+    "Count of Vehicles fitted with VLTD": 104504,
+    "Count of Vehicles fitted with HSRP": 300218
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef752",
+    "Month": "2025-10",
+    "State": "Delhi",
+    "No. of ATS": 7,
+    "No. of ADTT": 6,
+    "No. of RVSF": 2,
+    "Count of Vehicles fitted with VLTD": 225268,
+    "Count of Vehicles fitted with HSRP": 233441
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef753",
+    "Month": "2025-11",
+    "State": "Delhi",
+    "No. of ATS": 9,
+    "No. of ADTT": 8,
+    "No. of RVSF": 6,
+    "Count of Vehicles fitted with VLTD": 50436,
+    "Count of Vehicles fitted with HSRP": 595862
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef754",
+    "Month": "2025-12",
+    "State": "Delhi",
+    "No. of ATS": 2,
+    "No. of ADTT": 10,
+    "No. of RVSF": 1,
+    "Count of Vehicles fitted with VLTD": 230761,
+    "Count of Vehicles fitted with HSRP": 135104
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef755",
+    "Month": "2026-01",
+    "State": "Delhi",
+    "No. of ATS": 3,
+    "No. of ADTT": 7,
+    "No. of RVSF": 6,
+    "Count of Vehicles fitted with VLTD": 91382,
+    "Count of Vehicles fitted with HSRP": 587866
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef756",
+    "Month": "2025-04",
+    "State": "Karnataka",
+    "No. of ATS": 5,
+    "No. of ADTT": 4,
+    "No. of RVSF": 3,
+    "Count of Vehicles fitted with VLTD": 211423,
+    "Count of Vehicles fitted with HSRP": 172473
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef757",
+    "Month": "2025-05",
+    "State": "Karnataka",
+    "No. of ATS": 6,
+    "No. of ADTT": 3,
+    "No. of RVSF": 1,
+    "Count of Vehicles fitted with VLTD": 179058,
+    "Count of Vehicles fitted with HSRP": 429578
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef758",
+    "Month": "2025-06",
+    "State": "Karnataka",
+    "No. of ATS": 10,
+    "No. of ADTT": 4,
+    "No. of RVSF": 3,
+    "Count of Vehicles fitted with VLTD": 325613,
+    "Count of Vehicles fitted with HSRP": 434218
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef759",
+    "Month": "2025-07",
+    "State": "Karnataka",
+    "No. of ATS": 11,
+    "No. of ADTT": 10,
+    "No. of RVSF": 7,
+    "Count of Vehicles fitted with VLTD": 377770,
+    "Count of Vehicles fitted with HSRP": 296666
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef75a",
+    "Month": "2025-08",
+    "State": "Karnataka",
+    "No. of ATS": 6,
+    "No. of ADTT": 4,
+    "No. of RVSF": 2,
+    "Count of Vehicles fitted with VLTD": 312088,
+    "Count of Vehicles fitted with HSRP": 451515
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef75b",
+    "Month": "2025-09",
+    "State": "Karnataka",
+    "No. of ATS": 10,
+    "No. of ADTT": 2,
+    "No. of RVSF": 4,
+    "Count of Vehicles fitted with VLTD": 127685,
+    "Count of Vehicles fitted with HSRP": 544377
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef75c",
+    "Month": "2025-10",
+    "State": "Karnataka",
+    "No. of ATS": 4,
+    "No. of ADTT": 2,
+    "No. of RVSF": 5,
+    "Count of Vehicles fitted with VLTD": 357674,
+    "Count of Vehicles fitted with HSRP": 556181
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef75d",
+    "Month": "2025-11",
+    "State": "Karnataka",
+    "No. of ATS": 3,
+    "No. of ADTT": 4,
+    "No. of RVSF": 2,
+    "Count of Vehicles fitted with VLTD": 157753,
+    "Count of Vehicles fitted with HSRP": 357597
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef75e",
+    "Month": "2025-12",
+    "State": "Karnataka",
+    "No. of ATS": 5,
+    "No. of ADTT": 1,
+    "No. of RVSF": 5,
+    "Count of Vehicles fitted with VLTD": 68482,
+    "Count of Vehicles fitted with HSRP": 197882
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef75f",
+    "Month": "2026-01",
+    "State": "Karnataka",
+    "No. of ATS": 2,
+    "No. of ADTT": 1,
+    "No. of RVSF": 4,
+    "Count of Vehicles fitted with VLTD": 347750,
+    "Count of Vehicles fitted with HSRP": 482805
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef760",
+    "Month": "2025-04",
+    "State": "Tamil Nadu",
+    "No. of ATS": 3,
+    "No. of ADTT": 1,
+    "No. of RVSF": 3,
+    "Count of Vehicles fitted with VLTD": 278290,
+    "Count of Vehicles fitted with HSRP": 468301
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef761",
+    "Month": "2025-05",
+    "State": "Tamil Nadu",
+    "No. of ATS": 11,
+    "No. of ADTT": 4,
+    "No. of RVSF": 2,
+    "Count of Vehicles fitted with VLTD": 59221,
+    "Count of Vehicles fitted with HSRP": 156369
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef762",
+    "Month": "2025-06",
+    "State": "Tamil Nadu",
+    "No. of ATS": 2,
+    "No. of ADTT": 9,
+    "No. of RVSF": 3,
+    "Count of Vehicles fitted with VLTD": 338094,
+    "Count of Vehicles fitted with HSRP": 367643
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef763",
+    "Month": "2025-07",
+    "State": "Tamil Nadu",
+    "No. of ATS": 7,
+    "No. of ADTT": 5,
+    "No. of RVSF": 7,
+    "Count of Vehicles fitted with VLTD": 65207,
+    "Count of Vehicles fitted with HSRP": 128233
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef764",
+    "Month": "2025-08",
+    "State": "Tamil Nadu",
+    "No. of ATS": 6,
+    "No. of ADTT": 4,
+    "No. of RVSF": 5,
+    "Count of Vehicles fitted with VLTD": 308229,
+    "Count of Vehicles fitted with HSRP": 385524
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef765",
+    "Month": "2025-09",
+    "State": "Tamil Nadu",
+    "No. of ATS": 4,
+    "No. of ADTT": 4,
+    "No. of RVSF": 7,
+    "Count of Vehicles fitted with VLTD": 120513,
+    "Count of Vehicles fitted with HSRP": 342173
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef766",
+    "Month": "2025-10",
+    "State": "Tamil Nadu",
+    "No. of ATS": 7,
+    "No. of ADTT": 8,
+    "No. of RVSF": 6,
+    "Count of Vehicles fitted with VLTD": 212638,
+    "Count of Vehicles fitted with HSRP": 240765
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef767",
+    "Month": "2025-11",
+    "State": "Tamil Nadu",
+    "No. of ATS": 6,
+    "No. of ADTT": 5,
+    "No. of RVSF": 2,
+    "Count of Vehicles fitted with VLTD": 268893,
+    "Count of Vehicles fitted with HSRP": 188357
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef768",
+    "Month": "2025-12",
+    "State": "Tamil Nadu",
+    "No. of ATS": 9,
+    "No. of ADTT": 8,
+    "No. of RVSF": 8,
+    "Count of Vehicles fitted with VLTD": 91618,
+    "Count of Vehicles fitted with HSRP": 475061
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef769",
+    "Month": "2026-01",
+    "State": "Tamil Nadu",
+    "No. of ATS": 2,
+    "No. of ADTT": 4,
+    "No. of RVSF": 2,
+    "Count of Vehicles fitted with VLTD": 106799,
+    "Count of Vehicles fitted with HSRP": 171180
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef76a",
+    "Month": "2025-04",
+    "State": "Uttar Pradesh",
+    "No. of ATS": 2,
+    "No. of ADTT": 9,
+    "No. of RVSF": 1,
+    "Count of Vehicles fitted with VLTD": 189477,
+    "Count of Vehicles fitted with HSRP": 443565
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef76b",
+    "Month": "2025-05",
+    "State": "Uttar Pradesh",
+    "No. of ATS": 12,
+    "No. of ADTT": 9,
+    "No. of RVSF": 2,
+    "Count of Vehicles fitted with VLTD": 395709,
+    "Count of Vehicles fitted with HSRP": 419841
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef76c",
+    "Month": "2025-06",
+    "State": "Uttar Pradesh",
+    "No. of ATS": 3,
+    "No. of ADTT": 5,
+    "No. of RVSF": 8,
+    "Count of Vehicles fitted with VLTD": 187521,
+    "Count of Vehicles fitted with HSRP": 175491
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef76d",
+    "Month": "2025-07",
+    "State": "Uttar Pradesh",
+    "No. of ATS": 11,
+    "No. of ADTT": 10,
+    "No. of RVSF": 8,
+    "Count of Vehicles fitted with VLTD": 384499,
+    "Count of Vehicles fitted with HSRP": 533887
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef76e",
+    "Month": "2025-08",
+    "State": "Uttar Pradesh",
+    "No. of ATS": 6,
+    "No. of ADTT": 2,
+    "No. of RVSF": 5,
+    "Count of Vehicles fitted with VLTD": 127279,
+    "Count of Vehicles fitted with HSRP": 326041
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef76f",
+    "Month": "2025-09",
+    "State": "Uttar Pradesh",
+    "No. of ATS": 9,
+    "No. of ADTT": 10,
+    "No. of RVSF": 3,
+    "Count of Vehicles fitted with VLTD": 138170,
+    "Count of Vehicles fitted with HSRP": 462057
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef770",
+    "Month": "2025-10",
+    "State": "Uttar Pradesh",
+    "No. of ATS": 2,
+    "No. of ADTT": 6,
+    "No. of RVSF": 6,
+    "Count of Vehicles fitted with VLTD": 242818,
+    "Count of Vehicles fitted with HSRP": 279656
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef771",
+    "Month": "2025-11",
+    "State": "Uttar Pradesh",
+    "No. of ATS": 11,
+    "No. of ADTT": 4,
+    "No. of RVSF": 6,
+    "Count of Vehicles fitted with VLTD": 212450,
+    "Count of Vehicles fitted with HSRP": 93820
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef772",
+    "Month": "2025-12",
+    "State": "Uttar Pradesh",
+    "No. of ATS": 7,
+    "No. of ADTT": 1,
+    "No. of RVSF": 8,
+    "Count of Vehicles fitted with VLTD": 260546,
+    "Count of Vehicles fitted with HSRP": 273457
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef773",
+    "Month": "2026-01",
+    "State": "Uttar Pradesh",
+    "No. of ATS": 7,
+    "No. of ADTT": 7,
+    "No. of RVSF": 3,
+    "Count of Vehicles fitted with VLTD": 150938,
+    "Count of Vehicles fitted with HSRP": 297701
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef774",
+    "Month": "2025-04",
+    "State": "Rajasthan",
+    "No. of ATS": 4,
+    "No. of ADTT": 8,
+    "No. of RVSF": 1,
+    "Count of Vehicles fitted with VLTD": 339314,
+    "Count of Vehicles fitted with HSRP": 261234
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef775",
+    "Month": "2025-05",
+    "State": "Rajasthan",
+    "No. of ATS": 8,
+    "No. of ADTT": 2,
+    "No. of RVSF": 4,
+    "Count of Vehicles fitted with VLTD": 314109,
+    "Count of Vehicles fitted with HSRP": 220762
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef776",
+    "Month": "2025-06",
+    "State": "Rajasthan",
+    "No. of ATS": 3,
+    "No. of ADTT": 6,
+    "No. of RVSF": 2,
+    "Count of Vehicles fitted with VLTD": 160162,
+    "Count of Vehicles fitted with HSRP": 314240
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef777",
+    "Month": "2025-07",
+    "State": "Rajasthan",
+    "No. of ATS": 8,
+    "No. of ADTT": 7,
+    "No. of RVSF": 6,
+    "Count of Vehicles fitted with VLTD": 345501,
+    "Count of Vehicles fitted with HSRP": 114361
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef778",
+    "Month": "2025-08",
+    "State": "Rajasthan",
+    "No. of ATS": 5,
+    "No. of ADTT": 1,
+    "No. of RVSF": 1,
+    "Count of Vehicles fitted with VLTD": 124297,
+    "Count of Vehicles fitted with HSRP": 391035
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef779",
+    "Month": "2025-09",
+    "State": "Rajasthan",
+    "No. of ATS": 11,
+    "No. of ADTT": 8,
+    "No. of RVSF": 6,
+    "Count of Vehicles fitted with VLTD": 322358,
+    "Count of Vehicles fitted with HSRP": 169419
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef77a",
+    "Month": "2025-10",
+    "State": "Rajasthan",
+    "No. of ATS": 11,
+    "No. of ADTT": 9,
+    "No. of RVSF": 1,
+    "Count of Vehicles fitted with VLTD": 214485,
+    "Count of Vehicles fitted with HSRP": 511620
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef77b",
+    "Month": "2025-11",
+    "State": "Rajasthan",
+    "No. of ATS": 7,
+    "No. of ADTT": 9,
+    "No. of RVSF": 8,
+    "Count of Vehicles fitted with VLTD": 216133,
+    "Count of Vehicles fitted with HSRP": 110933
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef77c",
+    "Month": "2025-12",
+    "State": "Rajasthan",
+    "No. of ATS": 5,
+    "No. of ADTT": 3,
+    "No. of RVSF": 4,
+    "Count of Vehicles fitted with VLTD": 255020,
+    "Count of Vehicles fitted with HSRP": 321227
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef77d",
+    "Month": "2026-01",
+    "State": "Rajasthan",
+    "No. of ATS": 4,
+    "No. of ADTT": 4,
+    "No. of RVSF": 6,
+    "Count of Vehicles fitted with VLTD": 59444,
+    "Count of Vehicles fitted with HSRP": 191328
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef77e",
+    "Month": "2025-04",
+    "State": "Madhya Pradesh",
+    "No. of ATS": 11,
+    "No. of ADTT": 1,
+    "No. of RVSF": 4,
+    "Count of Vehicles fitted with VLTD": 122445,
+    "Count of Vehicles fitted with HSRP": 134418
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef77f",
+    "Month": "2025-05",
+    "State": "Madhya Pradesh",
+    "No. of ATS": 6,
+    "No. of ADTT": 6,
+    "No. of RVSF": 2,
+    "Count of Vehicles fitted with VLTD": 77227,
+    "Count of Vehicles fitted with HSRP": 150039
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef780",
+    "Month": "2025-06",
+    "State": "Madhya Pradesh",
+    "No. of ATS": 9,
+    "No. of ADTT": 9,
+    "No. of RVSF": 2,
+    "Count of Vehicles fitted with VLTD": 162139,
+    "Count of Vehicles fitted with HSRP": 258784
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef781",
+    "Month": "2025-07",
+    "State": "Madhya Pradesh",
+    "No. of ATS": 5,
+    "No. of ADTT": 3,
+    "No. of RVSF": 1,
+    "Count of Vehicles fitted with VLTD": 233805,
+    "Count of Vehicles fitted with HSRP": 265832
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef782",
+    "Month": "2025-08",
+    "State": "Madhya Pradesh",
+    "No. of ATS": 5,
+    "No. of ADTT": 3,
+    "No. of RVSF": 8,
+    "Count of Vehicles fitted with VLTD": 263670,
+    "Count of Vehicles fitted with HSRP": 297720
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef783",
+    "Month": "2025-09",
+    "State": "Madhya Pradesh",
+    "No. of ATS": 4,
+    "No. of ADTT": 9,
+    "No. of RVSF": 8,
+    "Count of Vehicles fitted with VLTD": 61311,
+    "Count of Vehicles fitted with HSRP": 563427
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef784",
+    "Month": "2025-10",
+    "State": "Madhya Pradesh",
+    "No. of ATS": 9,
+    "No. of ADTT": 1,
+    "No. of RVSF": 7,
+    "Count of Vehicles fitted with VLTD": 87591,
+    "Count of Vehicles fitted with HSRP": 106448
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef785",
+    "Month": "2025-11",
+    "State": "Madhya Pradesh",
+    "No. of ATS": 3,
+    "No. of ADTT": 5,
+    "No. of RVSF": 5,
+    "Count of Vehicles fitted with VLTD": 192564,
+    "Count of Vehicles fitted with HSRP": 143423
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef786",
+    "Month": "2025-12",
+    "State": "Madhya Pradesh",
+    "No. of ATS": 4,
+    "No. of ADTT": 9,
+    "No. of RVSF": 8,
+    "Count of Vehicles fitted with VLTD": 313995,
+    "Count of Vehicles fitted with HSRP": 133775
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef787",
+    "Month": "2026-01",
+    "State": "Madhya Pradesh",
+    "No. of ATS": 11,
+    "No. of ADTT": 7,
+    "No. of RVSF": 5,
+    "Count of Vehicles fitted with VLTD": 100133,
+    "Count of Vehicles fitted with HSRP": 598273
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef788",
+    "Month": "2025-04",
+    "State": "West Bengal",
+    "No. of ATS": 6,
+    "No. of ADTT": 1,
+    "No. of RVSF": 2,
+    "Count of Vehicles fitted with VLTD": 190443,
+    "Count of Vehicles fitted with HSRP": 112410
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef789",
+    "Month": "2025-05",
+    "State": "West Bengal",
+    "No. of ATS": 5,
+    "No. of ADTT": 5,
+    "No. of RVSF": 8,
+    "Count of Vehicles fitted with VLTD": 80231,
+    "Count of Vehicles fitted with HSRP": 379968
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef78a",
+    "Month": "2025-06",
+    "State": "West Bengal",
+    "No. of ATS": 12,
+    "No. of ADTT": 9,
+    "No. of RVSF": 8,
+    "Count of Vehicles fitted with VLTD": 109619,
+    "Count of Vehicles fitted with HSRP": 496699
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef78b",
+    "Month": "2025-07",
+    "State": "West Bengal",
+    "No. of ATS": 12,
+    "No. of ADTT": 4,
+    "No. of RVSF": 4,
+    "Count of Vehicles fitted with VLTD": 235795,
+    "Count of Vehicles fitted with HSRP": 336709
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef78c",
+    "Month": "2025-08",
+    "State": "West Bengal",
+    "No. of ATS": 5,
+    "No. of ADTT": 10,
+    "No. of RVSF": 8,
+    "Count of Vehicles fitted with VLTD": 183256,
+    "Count of Vehicles fitted with HSRP": 498752
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef78d",
+    "Month": "2025-09",
+    "State": "West Bengal",
+    "No. of ATS": 6,
+    "No. of ADTT": 8,
+    "No. of RVSF": 5,
+    "Count of Vehicles fitted with VLTD": 214559,
+    "Count of Vehicles fitted with HSRP": 146587
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef78e",
+    "Month": "2025-10",
+    "State": "West Bengal",
+    "No. of ATS": 9,
+    "No. of ADTT": 4,
+    "No. of RVSF": 2,
+    "Count of Vehicles fitted with VLTD": 117623,
+    "Count of Vehicles fitted with HSRP": 590577
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef78f",
+    "Month": "2025-11",
+    "State": "West Bengal",
+    "No. of ATS": 3,
+    "No. of ADTT": 8,
+    "No. of RVSF": 7,
+    "Count of Vehicles fitted with VLTD": 60868,
+    "Count of Vehicles fitted with HSRP": 386452
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef790",
+    "Month": "2025-12",
+    "State": "West Bengal",
+    "No. of ATS": 8,
+    "No. of ADTT": 4,
+    "No. of RVSF": 6,
+    "Count of Vehicles fitted with VLTD": 193034,
+    "Count of Vehicles fitted with HSRP": 308640
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef791",
+    "Month": "2026-01",
+    "State": "West Bengal",
+    "No. of ATS": 6,
+    "No. of ADTT": 9,
+    "No. of RVSF": 6,
+    "Count of Vehicles fitted with VLTD": 182666,
+    "Count of Vehicles fitted with HSRP": 561921
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef792",
+    "Month": "2025-04",
+    "State": "Telangana",
+    "No. of ATS": 10,
+    "No. of ADTT": 10,
+    "No. of RVSF": 6,
+    "Count of Vehicles fitted with VLTD": 187022,
+    "Count of Vehicles fitted with HSRP": 481930
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef793",
+    "Month": "2025-05",
+    "State": "Telangana",
+    "No. of ATS": 5,
+    "No. of ADTT": 3,
+    "No. of RVSF": 4,
+    "Count of Vehicles fitted with VLTD": 389257,
+    "Count of Vehicles fitted with HSRP": 375326
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef794",
+    "Month": "2025-06",
+    "State": "Telangana",
+    "No. of ATS": 6,
+    "No. of ADTT": 5,
+    "No. of RVSF": 3,
+    "Count of Vehicles fitted with VLTD": 280564,
+    "Count of Vehicles fitted with HSRP": 262221
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef795",
+    "Month": "2025-07",
+    "State": "Telangana",
+    "No. of ATS": 8,
+    "No. of ADTT": 4,
+    "No. of RVSF": 3,
+    "Count of Vehicles fitted with VLTD": 389583,
+    "Count of Vehicles fitted with HSRP": 259780
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef796",
+    "Month": "2025-08",
+    "State": "Telangana",
+    "No. of ATS": 2,
+    "No. of ADTT": 4,
+    "No. of RVSF": 5,
+    "Count of Vehicles fitted with VLTD": 83124,
+    "Count of Vehicles fitted with HSRP": 238956
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef797",
+    "Month": "2025-09",
+    "State": "Telangana",
+    "No. of ATS": 3,
+    "No. of ADTT": 6,
+    "No. of RVSF": 6,
+    "Count of Vehicles fitted with VLTD": 388969,
+    "Count of Vehicles fitted with HSRP": 282330
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef798",
+    "Month": "2025-10",
+    "State": "Telangana",
+    "No. of ATS": 11,
+    "No. of ADTT": 3,
+    "No. of RVSF": 7,
+    "Count of Vehicles fitted with VLTD": 246935,
+    "Count of Vehicles fitted with HSRP": 474250
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef799",
+    "Month": "2025-11",
+    "State": "Telangana",
+    "No. of ATS": 10,
+    "No. of ADTT": 6,
+    "No. of RVSF": 3,
+    "Count of Vehicles fitted with VLTD": 234164,
+    "Count of Vehicles fitted with HSRP": 509931
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef79a",
+    "Month": "2025-12",
+    "State": "Telangana",
+    "No. of ATS": 12,
+    "No. of ADTT": 10,
+    "No. of RVSF": 2,
+    "Count of Vehicles fitted with VLTD": 259088,
+    "Count of Vehicles fitted with HSRP": 134389
+  },
+  {
+    "_id": "698ebfff2d2b92cf4e8ef79b",
+    "Month": "2026-01",
+    "State": "Telangana",
+    "No. of ATS": 9,
+    "No. of ADTT": 10,
+    "No. of RVSF": 1,
+    "Count of Vehicles fitted with VLTD": 279801,
+    "Count of Vehicles fitted with HSRP": 571671
+  }
+]

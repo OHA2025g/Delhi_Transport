@@ -1,0 +1,502 @@
+[
+  {
+    "_id": "698ec0002d2b92cf4e8eff70",
+    "Sr. No.": 2,
+    "RTO Name": "AKLUJ ( MH-45 )",
+    "RTO Code": 45,
+    "Total Applications received": 4989,
+    "Pending applications": 1006,
+    "Pendency": 0.20164361595510122,
+    "Marks": 21.15059344293806
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8eff71",
+    "Sr. No.": 4,
+    "RTO Name": "AMBEJOGAI ( MH-44 )",
+    "RTO Code": 44,
+    "Total Applications received": 4041,
+    "Pending applications": 630,
+    "Pendency": 0.155902004454343,
+    "Marks": 27.356172592888534
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8eff72",
+    "Sr. No.": 40,
+    "RTO Name": "SANGLI ( MH-10 )",
+    "RTO Code": 10,
+    "Total Applications received": 14926,
+    "Pending applications": 2257,
+    "Pendency": 0.1512126490687391,
+    "Marks": 28.204532938851763
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8eff73",
+    "Sr. No.": 25,
+    "RTO Name": "MALEGAON ( MH-41 )",
+    "RTO Code": 41,
+    "Total Applications received": 6423,
+    "Pending applications": 905,
+    "Pendency": 0.1408998910166589,
+    "Marks": 30.26888176177537
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8eff74",
+    "Sr. No.": 23,
+    "RTO Name": "KOLHAPUR ( MH-9 )",
+    "RTO Code": 9,
+    "Total Applications received": 23897,
+    "Pending applications": 3338,
+    "Pendency": 0.13968280537305938,
+    "Marks": 30.53262089088061
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8eff75",
+    "Sr. No.": 8,
+    "RTO Name": "BEED ( MH-23 )",
+    "RTO Code": 23,
+    "Total Applications received": 4026,
+    "Pending applications": 520,
+    "Pendency": 0.12916045702930948,
+    "Marks": 33.02002981038139
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8eff76",
+    "Sr. No.": 28,
+    "RTO Name": "MUMBAI (WEST) ( MH-2 )",
+    "RTO Code": 2,
+    "Total Applications received": 14593,
+    "Pending applications": 1738,
+    "Pendency": 0.11909819776605221,
+    "Marks": 35.809795793954045
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8eff77",
+    "Sr. No.": 33,
+    "RTO Name": "NANDURBAR ( MH-39 )",
+    "RTO Code": 39,
+    "Total Applications received": 2570,
+    "Pending applications": 290,
+    "Pendency": 0.11284046692607004,
+    "Marks": 37.79567966715803
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8eff78",
+    "Sr. No.": 29,
+    "RTO Name": "NAGPUR (EAST) ( MH-49 )",
+    "RTO Code": 49,
+    "Total Applications received": 10885,
+    "Pending applications": 1146,
+    "Pendency": 0.10528249885163068,
+    "Marks": 40.50893726829724
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8eff79",
+    "Sr. No.": 20,
+    "RTO Name": "JALGAON ( MH-19 )",
+    "RTO Code": 19,
+    "Total Applications received": 12171,
+    "Pending applications": 1266,
+    "Pendency": 0.10401774710377126,
+    "Marks": 41.00148542128593
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8eff7a",
+    "Sr. No.": 31,
+    "RTO Name": "NAGPUR (U) ( MH-31 )",
+    "RTO Code": 31,
+    "Total Applications received": 5952,
+    "Pending applications": 600,
+    "Pendency": 0.10080645161290322,
+    "Marks": 42.30763084298842
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8eff7b",
+    "Sr. No.": 15,
+    "RTO Name": "RATNAGIRI ( MH-8 )",
+    "RTO Code": 8,
+    "Total Applications received": 5446,
+    "Pending applications": 534,
+    "Pendency": 0.09805361733382299,
+    "Marks": 43.495408506047426
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8eff7c",
+    "Sr. No.": 46,
+    "RTO Name": "VASAI ( MH-48 )",
+    "RTO Code": 48,
+    "Total Applications received": 16189,
+    "Pending applications": 1544,
+    "Pendency": 0.09537340169250726,
+    "Marks": 44.717731209595115
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8eff7d",
+    "Sr. No.": 44,
+    "RTO Name": "SRIRAMPUR ( MH-17 )",
+    "RTO Code": 17,
+    "Total Applications received": 10166,
+    "Pending applications": 965,
+    "Pendency": 0.0949242573283494,
+    "Marks": 44.92931797904691
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8eff7e",
+    "Sr. No.": 49,
+    "RTO Name": "WASHIM ( MH-37 )",
+    "RTO Code": 37,
+    "Total Applications received": 3698,
+    "Pending applications": 328,
+    "Pendency": 0.08869659275283938,
+    "Marks": 48.08394560673533
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8eff7f",
+    "Sr. No.": 26,
+    "RTO Name": "MUMBAI (CENTRAL) ( MH-1 )",
+    "RTO Code": 1,
+    "Total Applications received": 14969,
+    "Pending applications": 1314,
+    "Pendency": 0.08778141492417663,
+    "Marks": 48.58525173140786
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8eff80",
+    "Sr. No.": 38,
+    "RTO Name": "PEN (RAIGAD) ( MH-6 )",
+    "RTO Code": 6,
+    "Total Applications received": 5406,
+    "Pending applications": 474,
+    "Pendency": 0.0876803551609323,
+    "Marks": 48.64125075226185
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8eff81",
+    "Sr. No.": 50,
+    "RTO Name": "YAWATMAL ( MH-29 )",
+    "RTO Code": 29,
+    "Total Applications received": 8679,
+    "Pending applications": 731,
+    "Pendency": 0.08422629335176864,
+    "Marks": 50.63599467233028
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8eff82",
+    "Sr. No.": 21,
+    "RTO Name": "KALYAN ( MH-5 )",
+    "RTO Code": 5,
+    "Total Applications received": 16955,
+    "Pending applications": 1422,
+    "Pendency": 0.08386906517251548,
+    "Marks": 50.851671383931404
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8eff83",
+    "Sr. No.": 17,
+    "RTO Name": "GADCHIROLI ( MH-33 )",
+    "RTO Code": 33,
+    "Total Applications received": 2356,
+    "Pending applications": 197,
+    "Pendency": 0.08361629881154499,
+    "Marks": 51.00539251375507
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8eff84",
+    "Sr. No.": 39,
+    "RTO Name": "PUNE ( MH-12 )",
+    "RTO Code": 12,
+    "Total Applications received": 43644,
+    "Pending applications": 3619,
+    "Pendency": 0.08292090550820273,
+    "Marks": 51.43313517009762
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8eff85",
+    "Sr. No.": 34,
+    "RTO Name": "NASHIK ( MH-15 )",
+    "RTO Code": 15,
+    "Total Applications received": 20246,
+    "Pending applications": 1662,
+    "Pendency": 0.08209028943988936,
+    "Marks": 51.95355224753161
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8eff86",
+    "Sr. No.": 1,
+    "RTO Name": "AHEMEDNAGAR ( MH-16 )",
+    "RTO Code": 16,
+    "Total Applications received": 10504,
+    "Pending applications": 837,
+    "Pendency": 0.07968392993145468,
+    "Marks": 53.522487471426174
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8eff87",
+    "Sr. No.": 19,
+    "RTO Name": "JALANA ( MH-21 )",
+    "RTO Code": 21,
+    "Total Applications received": 6172,
+    "Pending applications": 478,
+    "Pendency": 0.07744653272845108,
+    "Marks": 55.0687292403927
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8eff88",
+    "Sr. No.": 16,
+    "RTO Name": "DY.R.T.O.BORIVALI ( MH-47 )",
+    "RTO Code": 47,
+    "Total Applications received": 14055,
+    "Pending applications": 1082,
+    "Pendency": 0.07698327997154038,
+    "Marks": 55.40010951737767
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8eff89",
+    "Sr. No.": 11,
+    "RTO Name": "CHANDRAPUR ( MH-34 )",
+    "RTO Code": 34,
+    "Total Applications received": 8212,
+    "Pending applications": 632,
+    "Pendency": 0.07696054554310765,
+    "Marks": 55.41647491364793
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8eff8a",
+    "Sr. No.": 30,
+    "RTO Name": "NAGPUR (RURAL) ( MH-40 )",
+    "RTO Code": 40,
+    "Total Applications received": 17107,
+    "Pending applications": 1279,
+    "Pendency": 0.07476471619804759,
+    "Marks": 57.04404909573718
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8eff8b",
+    "Sr. No.": 45,
+    "RTO Name": "THANE ( MH-4 )",
+    "RTO Code": 4,
+    "Total Applications received": 36046,
+    "Pending applications": 2659,
+    "Pendency": 0.07376685346501692,
+    "Marks": 57.81569825874239
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8eff8c",
+    "Sr. No.": 35,
+    "RTO Name": "OSMANABAD ( MH-25 )",
+    "RTO Code": 25,
+    "Total Applications received": 6338,
+    "Pending applications": 443,
+    "Pendency": 0.0698958662038498,
+    "Marks": 61.017659170169615
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8eff8d",
+    "Sr. No.": 41,
+    "RTO Name": "SATARA ( MH-11 )",
+    "RTO Code": 11,
+    "Total Applications received": 11339,
+    "Pending applications": 792,
+    "Pendency": 0.06984742922656319,
+    "Marks": 61.05997298191666
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8eff8e",
+    "Sr. No.": 36,
+    "RTO Name": "PANVEL ( MH-46 )",
+    "RTO Code": 46,
+    "Total Applications received": 16404,
+    "Pending applications": 1137,
+    "Pendency": 0.06931236283833211,
+    "Marks": 61.531333903273854
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8eff8f",
+    "Sr. No.": 7,
+    "RTO Name": "BARAMATI ( MH-42 )",
+    "RTO Code": 42,
+    "Total Applications received": 5743,
+    "Pending applications": 392,
+    "Pendency": 0.06825700853212607,
+    "Marks": 62.4826993322299
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8eff90",
+    "Sr. No.": 5,
+    "RTO Name": "AMRAWATI ( MH-27 )",
+    "RTO Code": 27,
+    "Total Applications received": 8795,
+    "Pending applications": 592,
+    "Pendency": 0.06731097214326322,
+    "Marks": 63.3608757329043
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8eff91",
+    "Sr. No.": 42,
+    "RTO Name": "SINDHUDURG(KUDAL) ( MH-7 )",
+    "RTO Code": 7,
+    "Total Applications received": 3426,
+    "Pending applications": 225,
+    "Pendency": 0.06567425569176882,
+    "Marks": 64.93993874017846
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8eff92",
+    "Sr. No.": 3,
+    "RTO Name": "AKOLA ( MH-30 )",
+    "RTO Code": 30,
+    "Total Applications received": 4745,
+    "Pending applications": 309,
+    "Pendency": 0.06512118018967335,
+    "Marks": 65.49147495497311
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8eff93",
+    "Sr. No.": 27,
+    "RTO Name": "MUMBAI (EAST) ( MH-3 )",
+    "RTO Code": 3,
+    "Total Applications received": 18669,
+    "Pending applications": 1201,
+    "Pendency": 0.06433124430874712,
+    "Marks": 66.29565753402329
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8eff94",
+    "Sr. No.": 22,
+    "RTO Name": "KARAD ( MH-50 )",
+    "RTO Code": 50,
+    "Total Applications received": 4187,
+    "Pending applications": 265,
+    "Pendency": 0.06329113924050633,
+    "Marks": 67.38513783459848
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8eff95",
+    "Sr. No.": 9,
+    "RTO Name": "BHANDARA ( MH-36 )",
+    "RTO Code": 36,
+    "Total Applications received": 3636,
+    "Pending applications": 230,
+    "Pendency": 0.06325632563256325,
+    "Marks": 67.4222237662631
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8eff96",
+    "Sr. No.": 43,
+    "RTO Name": "SOLAPUR ( MH-13 )",
+    "RTO Code": 13,
+    "Total Applications received": 13649,
+    "Pending applications": 856,
+    "Pendency": 0.06271521723203165,
+    "Marks": 68.0039443322219
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8eff97",
+    "Sr. No.": 37,
+    "RTO Name": "PARBHANI ( MH-22 )",
+    "RTO Code": 22,
+    "Total Applications received": 6116,
+    "Pending applications": 375,
+    "Pendency": 0.06131458469587966,
+    "Marks": 69.55738447196697
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8eff98",
+    "Sr. No.": 32,
+    "RTO Name": "NANDED ( MH-26 )",
+    "RTO Code": 26,
+    "Total Applications received": 10803,
+    "Pending applications": 649,
+    "Pendency": 0.0600759048412478,
+    "Marks": 70.99155897360764
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8eff99",
+    "Sr. No.": 14,
+    "RTO Name": "DY RTO PIMPRI CHINCHWAD ( MH-14 )",
+    "RTO Code": 14,
+    "Total Applications received": 24795,
+    "Pending applications": 1431,
+    "Pendency": 0.05771324863883848,
+    "Marks": 73.89780062666938
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8eff9a",
+    "Sr. No.": 18,
+    "RTO Name": "GONDHIA ( MH-35 )",
+    "RTO Code": 35,
+    "Total Applications received": 4092,
+    "Pending applications": 231,
+    "Pendency": 0.056451612903225805,
+    "Marks": 75.54934079105074
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8eff9b",
+    "Sr. No.": 48,
+    "RTO Name": "WARDHA ( MH-32 )",
+    "RTO Code": 32,
+    "Total Applications received": 3347,
+    "Pending applications": 188,
+    "Pendency": 0.056169704212727815,
+    "Marks": 75.92851344344234
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8eff9c",
+    "Sr. No.": 47,
+    "RTO Name": "VASHI (NEW MUMBAI) ( MH-43 )",
+    "RTO Code": 43,
+    "Total Applications received": 12584,
+    "Pending applications": 705,
+    "Pendency": 0.05602352193261284,
+    "Marks": 76.12663385497686
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8eff9d",
+    "Sr. No.": 6,
+    "RTO Name": "AURANGABAD ( MH-20 )",
+    "RTO Code": 20,
+    "Total Applications received": 17440,
+    "Pending applications": 958,
+    "Pendency": 0.05493119266055046,
+    "Marks": 77.64044315923189
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8eff9e",
+    "Sr. No.": 10,
+    "RTO Name": "BULDHANA ( MH-28 )",
+    "RTO Code": 28,
+    "Total Applications received": 7825,
+    "Pending applications": 416,
+    "Pendency": 0.0531629392971246,
+    "Marks": 80.22284316512493
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8eff9f",
+    "Sr. No.": 13,
+    "RTO Name": "HINGOLI ( MH-38 )",
+    "RTO Code": 38,
+    "Total Applications received": 3746,
+    "Pending applications": 183,
+    "Pendency": 0.04885210891617726,
+    "Marks": 87.30190438140897
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8effa0",
+    "Sr. No.": 24,
+    "RTO Name": "LATUR ( MH-24 )",
+    "RTO Code": 24,
+    "Total Applications received": 8643,
+    "Pending applications": 417,
+    "Pendency": 0.048247136410968415,
+    "Marks": 88.39658596734279
+  },
+  {
+    "_id": "698ec0002d2b92cf4e8effa1",
+    "Sr. No.": 12,
+    "RTO Name": "DHULE ( MH-18 )",
+    "RTO Code": 18,
+    "Total Applications received": 10012,
+    "Pending applications": 427,
+    "Pendency": 0.04264882141430284,
+    "Marks": 100
+  }
+]
