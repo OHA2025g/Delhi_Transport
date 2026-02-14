@@ -4669,7 +4669,13 @@ async def get_rto_derived_kpis(state: Optional[str] = None, rto: Optional[str] =
         rto_perf = await db["kpi_rto_performance"].find_one(query, sort=[("Month", -1)])
         
         if not rto_gen:
-            return {"error": "No data found"}
+            # Return empty structure instead of error to allow frontend to handle gracefully
+            return {
+                "month": month or None,
+                "state": state or None,
+                "rto": rto or None,
+                "derived_kpis": {}
+            }
         
         # Extract values using helper functions to handle field name variations
         revenue = _safe_aggregate_field(
@@ -5866,7 +5872,14 @@ async def get_rto_performance_kpis(
         # Get latest month first
         latest_month_doc = await db["kpi_rto_performance"].find_one({}, sort=[("Month", -1)])
         if not latest_month_doc:
-            return {"error": "No data found"}
+            # Return empty structure instead of error to allow frontend to handle gracefully
+            return {
+                "month": month or None,
+                "state": state or None,
+                "rto": rto or None,
+                "kpis": {},
+                "supporting_metrics": {}
+            }
         
         current_month = latest_month_doc.get("Month")
         
@@ -5891,7 +5904,14 @@ async def get_rto_performance_kpis(
             rto_gen = await db["kpi_rto_general"].find_one(query, sort=[("Month", -1)])
         
         if not rto_perf or not rto_gen:
-            return {"error": "No data found"}
+            # Return empty structure instead of error to allow frontend to handle gracefully
+            return {
+                "month": current_month or month or None,
+                "state": state or None,
+                "rto": rto or None,
+                "kpis": {},
+                "supporting_metrics": {}
+            }
         
         current_month = rto_perf.get("Month")
         
@@ -7215,7 +7235,13 @@ async def get_rank_movement():
         ranking_data = await db["rto_ranking"].find({}).to_list(1000)
         
         if not ranking_data:
-            return {"error": "No RTO ranking data available"}
+            # Return empty structure instead of error to allow frontend to handle gracefully
+            return {
+                "movements": [],
+                "scatter_data": [],
+                "most_improved": None,
+                "largest_decline": None
+            }
         
         movements = []
         for record in ranking_data:
@@ -7313,7 +7339,11 @@ async def get_kpi_drivers():
         ranking_data = await db["rto_ranking"].find({}).to_list(1000)
         
         if not ranking_data:
-            return {"error": "No RTO ranking data available"}
+            # Return empty structure instead of error to allow frontend to handle gracefully
+            return {
+                "correlations": {},
+                "driver_ranking": []
+            }
         
         # Extract all score components and overall marks
         data_points = []
@@ -7389,7 +7419,15 @@ async def get_online_revenue_analysis():
         revenue_data = await db["rto_online_revenue"].find({}).to_list(1000)
         
         if not revenue_data:
-            return {"error": "No online revenue data available"}
+            # Return empty structure instead of error to allow frontend to handle gracefully
+            return {
+                "weighted_online_share": 0,
+                "total_revenue": 0,
+                "online_revenue": 0,
+                "top_revenue_rtos": [],
+                "lowest_online_rtos": [],
+                "online_percentage_distribution": []
+            }
         
         total_revenue_sum = 0
         online_revenue_sum = 0
@@ -7446,7 +7484,13 @@ async def get_sarathi_pendency():
         pendency_data = await db["rto_sarathi_pendency"].find({}).to_list(1000)
         
         if not pendency_data:
-            return {"error": "No Sarathi pendency data available"}
+            # Return empty structure instead of error to allow frontend to handle gracefully
+            return {
+                "weighted_pendency_ratio": 0,
+                "total_applications": 0,
+                "total_pending": 0,
+                "worst_pendency_rtos": []
+            }
         
         total_applications_sum = 0
         pending_sum = 0
@@ -7495,7 +7539,13 @@ async def get_vahan_pendency():
         pendency_data = await db["rto_vahan_pendency"].find({}).to_list(1000)
         
         if not pendency_data:
-            return {"error": "No Vahan pendency data available"}
+            # Return empty structure instead of error to allow frontend to handle gracefully
+            return {
+                "weighted_pendency_ratio": 0,
+                "total_applications": 0,
+                "total_pending": 0,
+                "worst_pendency_rtos": []
+            }
         
         total_applications_sum = 0
         pending_sum = 0
@@ -7601,7 +7651,7 @@ async def get_challan_pendency():
             
             # Fallback to ranking data if manual challan table not available
             ranking_data = await db["rto_ranking"].find({}).to_list(1000)
-            if ranking_data:
+            if ranking_data and len(ranking_data) > 0:
                 rto_details = []
                 for record in ranking_data:
                     rto_code = record.get("RTO") or record.get("Code") or "Unknown"

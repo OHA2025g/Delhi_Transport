@@ -231,12 +231,48 @@ const RTOAnalysis = () => {
       }
     }
 
-    // Count successful loads
-    const successCount = results.filter(r => r.status === 'fulfilled' && r.value?.data && !r.value.data.error).length;
+    // Count successful loads and identify failures
+    const endpointNames = [
+      "Overview", "Top-Bottom", "Rank-Movement", "KPI-Drivers", 
+      "Online-Revenue", "Sarathi-Pendency", "Vahan-Pendency", 
+      "Challan-Pendency", "All-Data", "Advanced RTO Performance", 
+      "RTO Performance", "RTO Derived"
+    ];
+    
+    const successCount = results.filter(r => {
+      if (r.status !== 'fulfilled') return false;
+      const data = r.value?.data;
+      if (!data) return false;
+      // Check if response has error field (backend returns {error: "..."} for some cases)
+      if (data.error) return false;
+      return true;
+    }).length;
+    
     const totalCount = results.length;
+    
+    // Identify failed endpoints for debugging
+    const failedEndpoints = [];
+    results.forEach((r, idx) => {
+      if (r.status !== 'fulfilled') {
+        failedEndpoints.push(endpointNames[idx]);
+      } else {
+        const data = r.value?.data;
+        if (!data || data.error) {
+          failedEndpoints.push(endpointNames[idx]);
+        }
+      }
+    });
 
     if (successCount > 0) {
-      toast.success(`RTO Analysis data loaded (${successCount}/${totalCount} endpoints)`);
+      if (successCount < totalCount) {
+        // Partial success - show warning with details
+        toast.warning(
+          `RTO Analysis: ${successCount}/${totalCount} endpoints loaded. ${failedEndpoints.length > 0 ? `Failed: ${failedEndpoints.slice(0, 3).join(', ')}${failedEndpoints.length > 3 ? '...' : ''}` : ''}`,
+          { duration: 5000 }
+        );
+      } else {
+        toast.success(`RTO Analysis data loaded successfully (${successCount}/${totalCount} endpoints)`);
+      }
     } else {
       toast.error("Failed to load RTO analysis data from all endpoints");
     }
