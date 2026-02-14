@@ -68,41 +68,32 @@ const RTOAnalysis = () => {
           if (process.env.NODE_ENV !== 'production') console.error("Error fetching rank-movement:", err);
           return { data: null, error: err.message };
         }),
-        axios.get(`${API}/rto-analysis/kpi-drivers`).catch(err => {
-          if (process.env.NODE_ENV !== 'production') console.error("Error fetching kpi-drivers:", err);
-          return { data: null, error: err.message };
+        axios.get(`${API}/rto-analysis/kpi-drivers`, { timeout: 30000 }).catch(err => {
+          throw err;
         }),
-        axios.get(`${API}/rto-analysis/online-revenue`).catch(err => {
-          if (process.env.NODE_ENV !== 'production') console.error("Error fetching online-revenue:", err);
-          return { data: null, error: err.message };
+        axios.get(`${API}/rto-analysis/online-revenue`, { timeout: 30000 }).catch(err => {
+          throw err;
         }),
-        axios.get(`${API}/rto-analysis/sarathi-pendency`).catch(err => {
-          if (process.env.NODE_ENV !== 'production') console.error("Error fetching sarathi-pendency:", err);
-          return { data: null, error: err.message };
+        axios.get(`${API}/rto-analysis/sarathi-pendency`, { timeout: 30000 }).catch(err => {
+          throw err;
         }),
-        axios.get(`${API}/rto-analysis/vahan-pendency`).catch(err => {
-          if (process.env.NODE_ENV !== 'production') console.error("Error fetching vahan-pendency:", err);
-          return { data: null, error: err.message };
+        axios.get(`${API}/rto-analysis/vahan-pendency`, { timeout: 30000 }).catch(err => {
+          throw err;
         }),
-        axios.get(`${API}/rto-analysis/challan-pendency`).catch(err => {
-          if (process.env.NODE_ENV !== 'production') console.error("Error fetching challan-pendency:", err);
-          return { data: null, error: err.message };
+        axios.get(`${API}/rto-analysis/challan-pendency`, { timeout: 30000 }).catch(err => {
+          throw err;
         }),
-        axios.get(`${API}/rto-analysis/all-data`).catch(err => {
-          if (process.env.NODE_ENV !== 'production') console.error("Error fetching all-data:", err);
-          return { data: null, error: err.message };
+        axios.get(`${API}/rto-analysis/all-data`, { timeout: 30000 }).catch(err => {
+          throw err;
         }),
-        axios.get(`${API}/kpi/advanced/rto-performance`).catch(err => {
-          if (process.env.NODE_ENV !== 'production') console.error("Error fetching advanced rto-performance:", err);
-          return { data: null, error: err.message };
+        axios.get(`${API}/kpi/advanced/rto-performance`, { timeout: 30000 }).catch(err => {
+          throw err;
         }),
-        axios.get(`${API}/kpi/rto/performance`, { params: { state, month } }).catch(err => {
-          if (process.env.NODE_ENV !== 'production') console.error("Error fetching rto performance:", err);
-          return { data: null, error: err.message };
+        axios.get(`${API}/kpi/rto/performance`, { params: { state, month }, timeout: 30000 }).catch(err => {
+          throw err;
         }),
-        axios.get(`${API}/kpi/rto/derived`, { params: { state, rto: null, month } }).catch(err => {
-          if (process.env.NODE_ENV !== 'production') console.error("Error fetching rto derived:", err);
-          return { data: null, error: err.message };
+        axios.get(`${API}/kpi/rto/derived`, { params: { state, rto: null, month }, timeout: 30000 }).catch(err => {
+          throw err;
         })
     ]);
 
@@ -120,9 +111,21 @@ const RTOAnalysis = () => {
       rtoPerformanceRes,
       rtoPerfRes,
       rtoDerivedRes
-    ] = results.map(result => 
-      result.status === 'fulfilled' ? result.value : { data: null, error: result.reason?.message || 'Unknown error' }
-    );
+    ] = results.map(result => {
+      if (result.status === 'fulfilled') {
+        // Successful axios response
+        return result.value;
+      } else {
+        // Rejected promise - return error info
+        const error = result.reason;
+        return { 
+          data: null, 
+          error: error?.response?.data?.detail || error?.message || 'Unknown error',
+          status: error?.response?.status,
+          isNetworkError: !error?.response
+        };
+      }
+    });
 
     // Set data, handling null/error cases with conditional logging (dev only)
     const isDev = process.env.NODE_ENV !== 'production';
@@ -240,25 +243,64 @@ const RTOAnalysis = () => {
     ];
     
     const successCount = results.filter(r => {
-      if (r.status !== 'fulfilled') return false;
-      const data = r.value?.data;
-      if (!data) return false;
+      if (r.status !== 'fulfilled') {
+        // Promise was rejected - check if it's a network error or actual failure
+        const error = r.reason;
+        // Network errors (CORS, timeout, connection refused) should be considered failures
+        return false;
+      }
+      const response = r.value;
+      // Check if the catch handler returned an error object
+      if (response?.error) {
+        return false;
+      }
+      const data = response?.data;
+      // If data is null/undefined, it's a failure
+      if (!data) {
+        return false;
+      }
       // Check if response has error field (backend returns {error: "..."} for some cases)
-      if (data.error) return false;
+      if (data.error) {
+        return false;
+      }
+      // Success: we have data and no error field
       return true;
     }).length;
     
     const totalCount = results.length;
     
-    // Identify failed endpoints for debugging
+    // Identify failed endpoints for debugging with detailed error info
     const failedEndpoints = [];
+    const failedDetails = [];
     results.forEach((r, idx) => {
+      const endpointName = endpointNames[idx];
       if (r.status !== 'fulfilled') {
-        failedEndpoints.push(endpointNames[idx]);
+        failedEndpoints.push(endpointName);
+        const error = r.reason;
+        if (error?.response) {
+          // HTTP error response
+          failedDetails.push(`${endpointName}: HTTP ${error.response.status} - ${error.response.statusText}`);
+        } else if (error?.message) {
+          // Network error or other error
+          failedDetails.push(`${endpointName}: ${error.message}`);
+        } else {
+          failedDetails.push(`${endpointName}: Request failed`);
+        }
       } else {
-        const data = r.value?.data;
-        if (!data || data.error) {
-          failedEndpoints.push(endpointNames[idx]);
+        const response = r.value;
+        // Check if catch handler returned error
+        if (response?.error) {
+          failedEndpoints.push(endpointName);
+          failedDetails.push(`${endpointName}: ${response.error}`);
+        } else {
+          const data = response?.data;
+          if (!data) {
+            failedEndpoints.push(endpointName);
+            failedDetails.push(`${endpointName}: No data in response`);
+          } else if (data.error) {
+            failedEndpoints.push(endpointName);
+            failedDetails.push(`${endpointName}: ${data.error}`);
+          }
         }
       }
     });
@@ -266,15 +308,19 @@ const RTOAnalysis = () => {
     if (successCount > 0) {
       if (successCount < totalCount) {
         // Partial success - show warning with details
+        // Log detailed errors in console for debugging (even in production)
+        console.warn("RTO Analysis - Failed endpoints:", failedDetails);
         toast.warning(
           `RTO Analysis: ${successCount}/${totalCount} endpoints loaded. ${failedEndpoints.length > 0 ? `Failed: ${failedEndpoints.slice(0, 3).join(', ')}${failedEndpoints.length > 3 ? '...' : ''}` : ''}`,
-          { duration: 5000 }
+          { duration: 8000 }
         );
       } else {
         toast.success(`RTO Analysis data loaded successfully (${successCount}/${totalCount} endpoints)`);
       }
     } else {
-      toast.error("Failed to load RTO analysis data from all endpoints");
+      // All failed - log all errors
+      console.error("RTO Analysis - All endpoints failed:", failedDetails);
+      toast.error(`Failed to load RTO analysis data from all endpoints. Check console for details.`, { duration: 10000 });
     }
 
     setLoading(false);
