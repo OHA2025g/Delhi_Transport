@@ -734,8 +734,228 @@ const ExecutiveDashboard = () => {
           <span className="text-gray-700">Download CSV</span>
         </Button>
       </div>
+
+      {/* Drilldown Dialog for All KPIs */}
+      <Dialog open={drilldownOpen} onOpenChange={setDrilldownOpen}>
+        <DialogContent className="max-w-6xl max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>{drilldownKpi?.title || "KPI Drilldown"}</DialogTitle>
+            <DialogDescription>
+              Drill down by State → District → City → RTO hierarchy
+            </DialogDescription>
+          </DialogHeader>
+
+          {drilldownLoading ? (
+            <div className="flex items-center justify-center py-20">
+              <RefreshCw className="w-8 h-8 animate-spin text-orange-500 mr-3" />
+              <span className="text-gray-600">Loading drilldown data...</span>
+            </div>
+          ) : drilldownData ? (
+            <div className="space-y-6">
+              {/* Breadcrumb Navigation */}
+              <div className="flex items-center space-x-2 text-sm">
+                <button
+                  onClick={() => handleDrilldownNavigation('state', null)}
+                  className="text-orange-600 hover:underline"
+                >
+                  All States
+                </button>
+                {drilldownFilters.state_cd && (
+                  <>
+                    <span>/</span>
+                    <button
+                      onClick={() => handleDrilldownNavigation('district', null)}
+                      className="text-orange-600 hover:underline"
+                    >
+                      {STATE_NAMES[drilldownFilters.state_cd] || drilldownFilters.state_cd}
+                    </button>
+                  </>
+                )}
+                {drilldownFilters.c_district && (
+                  <>
+                    <span>/</span>
+                    <span className="text-gray-600">{drilldownFilters.c_district}</span>
+                  </>
+                )}
+                {drilldownFilters.city && (
+                  <>
+                    <span>/</span>
+                    <span className="text-gray-600">{drilldownFilters.city}</span>
+                  </>
+                )}
+                {drilldownFilters.rto && (
+                  <>
+                    <span>/</span>
+                    <span className="text-gray-600">{drilldownFilters.rto}</span>
+                  </>
+                )}
+              </div>
+
+              {/* Data Tables */}
+              {drilldownData.hierarchy_level === 'states' && drilldownData.data.states.length > 0 && (
+                <div>
+                  <h3 className="text-lg font-semibold mb-4">States</h3>
+                  <div className="overflow-x-auto">
+                    <table className="w-full border-collapse">
+                      <thead>
+                        <tr className="bg-gray-100">
+                          <th className="border p-2 text-left">State</th>
+                          <th className="border p-2 text-right">Value</th>
+                          <th className="border p-2 text-right">Count</th>
+                          <th className="border p-2 text-center">Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {drilldownData.data.states.map((item, idx) => (
+                          <tr key={idx} className="hover:bg-gray-50">
+                            <td className="border p-2">{item.name}</td>
+                            <td className="border p-2 text-right">{typeof item.value === 'number' ? item.value.toLocaleString() : item.value}</td>
+                            <td className="border p-2 text-right">{item.count?.toLocaleString() || '-'}</td>
+                            <td className="border p-2 text-center">
+                              <Button
+                                size="sm"
+                                variant="outline"
+                                onClick={() => handleDrilldownNavigation('state', item.code || item.name)}
+                              >
+                                Drill Down
+                              </Button>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              )}
+
+              {drilldownData.hierarchy_level === 'districts' && drilldownData.data.districts.length > 0 && (
+                <div>
+                  <h3 className="text-lg font-semibold mb-4">Districts</h3>
+                  <div className="overflow-x-auto">
+                    <table className="w-full border-collapse">
+                      <thead>
+                        <tr className="bg-gray-100">
+                          <th className="border p-2 text-left">District</th>
+                          <th className="border p-2 text-right">Value</th>
+                          <th className="border p-2 text-right">Count</th>
+                          <th className="border p-2 text-center">Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {drilldownData.data.districts.map((item, idx) => (
+                          <tr key={idx} className="hover:bg-gray-50">
+                            <td className="border p-2">{item.name}</td>
+                            <td className="border p-2 text-right">{typeof item.value === 'number' ? item.value.toLocaleString() : item.value}</td>
+                            <td className="border p-2 text-right">{item.count?.toLocaleString() || '-'}</td>
+                            <td className="border p-2 text-center">
+                              <Button
+                                size="sm"
+                                variant="outline"
+                                onClick={() => handleDrilldownNavigation('district', item.code || item.name)}
+                              >
+                                Drill Down
+                              </Button>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              )}
+
+              {drilldownData.hierarchy_level === 'cities' && drilldownData.data.cities.length > 0 && (
+                <div>
+                  <h3 className="text-lg font-semibold mb-4">Cities</h3>
+                  <div className="overflow-x-auto">
+                    <table className="w-full border-collapse">
+                      <thead>
+                        <tr className="bg-gray-100">
+                          <th className="border p-2 text-left">City</th>
+                          <th className="border p-2 text-right">Value</th>
+                          <th className="border p-2 text-right">Count</th>
+                          <th className="border p-2 text-center">Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {drilldownData.data.cities.map((item, idx) => (
+                          <tr key={idx} className="hover:bg-gray-50">
+                            <td className="border p-2">{item.name}</td>
+                            <td className="border p-2 text-right">{typeof item.value === 'number' ? item.value.toLocaleString() : item.value}</td>
+                            <td className="border p-2 text-right">{item.count?.toLocaleString() || '-'}</td>
+                            <td className="border p-2 text-center">
+                              <Button
+                                size="sm"
+                                variant="outline"
+                                onClick={() => handleDrilldownNavigation('city', item.code || item.name)}
+                              >
+                                Drill Down
+                              </Button>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              )}
+
+              {drilldownData.hierarchy_level === 'rtos' && drilldownData.data.rtos.length > 0 && (
+                <div>
+                  <h3 className="text-lg font-semibold mb-4">RTOs</h3>
+                  <div className="overflow-x-auto">
+                    <table className="w-full border-collapse">
+                      <thead>
+                        <tr className="bg-gray-100">
+                          <th className="border p-2 text-left">RTO</th>
+                          <th className="border p-2 text-right">Value</th>
+                          <th className="border p-2 text-right">Count</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {drilldownData.data.rtos.map((item, idx) => (
+                          <tr key={idx} className="hover:bg-gray-50">
+                            <td className="border p-2">{item.name}</td>
+                            <td className="border p-2 text-right">{typeof item.value === 'number' ? item.value.toLocaleString() : item.value}</td>
+                            <td className="border p-2 text-right">{item.count?.toLocaleString() || '-'}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              )}
+
+              {(!drilldownData.data.states.length && !drilldownData.data.districts.length && 
+                !drilldownData.data.cities.length && !drilldownData.data.rtos.length) && (
+                <div className="text-center py-10 text-gray-500">
+                  No data available for this drilldown level.
+                </div>
+              )}
+            </div>
+          ) : (
+            <div className="text-center py-10 text-gray-500">
+              No drilldown data available.
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
+
+// State names mapping (should match backend)
+const STATE_NAMES = {
+  "AN": "Andaman and Nicobar Islands", "AP": "Andhra Pradesh", "AR": "Arunachal Pradesh",
+  "AS": "Assam", "BR": "Bihar", "CG": "Chhattisgarh", "CH": "Chandigarh", "DD": "Daman and Diu",
+  "DL": "Delhi", "GA": "Goa", "GJ": "Gujarat", "HP": "Himachal Pradesh", "HR": "Haryana",
+  "JH": "Jharkhand", "JK": "Jammu and Kashmir", "KA": "Karnataka", "KL": "Kerala", "LA": "Ladakh",
+  "MH": "Maharashtra", "MN": "Manipur", "MP": "Madhya Pradesh", "MZ": "Mizoram", "NL": "Nagaland",
+  "OR": "Odisha", "PB": "Punjab", "PY": "Puducherry", "RJ": "Rajasthan", "SK": "Sikkim",
+  "TG": "Telangana", "TN": "Tamil Nadu", "TR": "Tripura", "UP": "Uttar Pradesh", "UT": "Uttarakhand",
+  "WB": "West Bengal"
+};
+
+export default ExecutiveDashboard;
 
 export default ExecutiveDashboard;
