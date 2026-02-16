@@ -4046,20 +4046,31 @@ async def get_executive_summary(state_cd: Optional[str] = None, c_district: Opti
         
         # ================= Additional KPIs from KPI collections =================
         # Get latest month data (shared across all KPI calculations)
-        latest_month_doc = None
-        latest_month = None
+        # Use kpi_state_general for revenue and accidents, kpi_rto_performance for tax defaulter
+        latest_state_month_doc = None
+        latest_rto_month_doc = None
+        latest_state_month = None
+        latest_rto_month = None
+        
         try:
-            latest_month_doc = await db["kpi_state_general"].find_one({}, sort=[("Month", -1)])
-            if latest_month_doc:
-                latest_month = latest_month_doc.get("Month")
+            latest_state_month_doc = await db["kpi_state_general"].find_one({}, sort=[("Month", -1)])
+            if latest_state_month_doc:
+                latest_state_month = latest_state_month_doc.get("Month")
         except Exception as e:
-            logger.warning(f"Error getting latest month: {e}")
+            logger.warning(f"Error getting latest month from kpi_state_general: {e}")
+        
+        try:
+            latest_rto_month_doc = await db["kpi_rto_performance"].find_one({}, sort=[("Month", -1)])
+            if latest_rto_month_doc:
+                latest_rto_month = latest_rto_month_doc.get("Month")
+        except Exception as e:
+            logger.warning(f"Error getting latest month from kpi_rto_performance: {e}")
         
         # Revenue Collected: Sum of Revenue - Total from kpi_state_general
         revenue_collected = 0.0
-        if latest_month:
+        if latest_state_month:
             try:
-                revenue_records = await db["kpi_state_general"].find({"Month": latest_month}).to_list(1000)
+                revenue_records = await db["kpi_state_general"].find({"Month": latest_state_month}).to_list(1000)
                 for record in revenue_records:
                     revenue_val = _get_field_value(record, "Revenue - Total", "Revenue - Total ", "RevenueTotal", "Revenue_Total") or 0
                     revenue_collected += float(revenue_val) if revenue_val else 0
@@ -4067,10 +4078,11 @@ async def get_executive_summary(state_cd: Optional[str] = None, c_district: Opti
                 logger.warning(f"Error calculating revenue_collected: {e}")
         
         # Tax Defaulter Count: Sum of Tax Defaulter - Count from kpi_rto_performance
+        # Use latest month from kpi_rto_performance (may differ from kpi_state_general)
         tax_defaulter_count = 0.0
-        if latest_month:
+        if latest_rto_month:
             try:
-                defaulter_records = await db["kpi_rto_performance"].find({"Month": latest_month}).to_list(1000)
+                defaulter_records = await db["kpi_rto_performance"].find({"Month": latest_rto_month}).to_list(1000)
                 for record in defaulter_records:
                     # The exact field name is "Tax Defaulter - Count" (with dash, no trailing space)
                     defaulter_val = record.get("Tax Defaulter - Count")
@@ -4084,9 +4096,9 @@ async def get_executive_summary(state_cd: Optional[str] = None, c_district: Opti
         
         # Accidents: Sum of Road Accidents from kpi_state_general
         accidents = 0.0
-        if latest_month:
+        if latest_state_month:
             try:
-                accident_records = await db["kpi_state_general"].find({"Month": latest_month}).to_list(1000)
+                accident_records = await db["kpi_state_general"].find({"Month": latest_state_month}).to_list(1000)
                 for record in accident_records:
                     accident_val = _get_field_value(record, "Road Accidents", "Road Accidents ", "RoadAccidents", "Road_Accidents") or 0
                     accidents += float(accident_val) if accident_val else 0
