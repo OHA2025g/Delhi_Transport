@@ -1174,7 +1174,7 @@ const RTOAnalysis = () => {
                 <RefreshCw className="w-8 h-8 animate-spin text-white mr-3" />
                 <span className="text-white">Loading KPI drivers data...</span>
               </div>
-            ) : kpiDrivers ? (
+            ) : kpiDrivers && kpiDrivers.driver_ranking && Array.isArray(kpiDrivers.driver_ranking) && kpiDrivers.driver_ranking.length > 0 ? (
               <>
                 <Card className="bg-gray-800/50 border-gray-700">
                   <CardHeader>
