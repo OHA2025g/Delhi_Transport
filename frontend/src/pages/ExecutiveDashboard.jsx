@@ -31,6 +31,13 @@ const ExecutiveDashboard = () => {
   const [processOpen, setProcessOpen] = useState(false);
   const [processData, setProcessData] = useState(null);
   const [processLoading, setProcessLoading] = useState(false);
+  
+  // Drilldown state for all 8 KPIs
+  const [drilldownOpen, setDrilldownOpen] = useState(false);
+  const [drilldownKpi, setDrilldownKpi] = useState(null);
+  const [drilldownData, setDrilldownData] = useState(null);
+  const [drilldownLoading, setDrilldownLoading] = useState(false);
+  const [drilldownFilters, setDrilldownFilters] = useState({ state_cd: null, c_district: null, city: null, rto: null });
 
   const geoParams = useCallback(() => {
     return Object.fromEntries(
@@ -213,31 +220,90 @@ const ExecutiveDashboard = () => {
   ];
   }, [summary]);
 
+  const fetchDrilldown = useCallback(async (kpiName, filters = {}) => {
+    setDrilldownLoading(true);
+    try {
+      const params = new URLSearchParams();
+      if (filters.state_cd) params.append('state_cd', filters.state_cd);
+      if (filters.c_district) params.append('c_district', filters.c_district);
+      if (filters.city) params.append('city', filters.city);
+      if (filters.rto) params.append('rto', filters.rto);
+      
+      const response = await axios.get(`${API}/dashboard/executive/kpi-drilldown/${kpiName}?${params.toString()}`);
+      setDrilldownData(response.data);
+    } catch (error) {
+      console.error("Error fetching drilldown:", error);
+      toast.error(`Failed to load drilldown data: ${error.message}`);
+    } finally {
+      setDrilldownLoading(false);
+    }
+  }, []);
+
+  const handleKpiClick = useCallback((kpiTitle) => {
+    const kpiMap = {
+      "Total Registrations": "total_registrations",
+      "Revenue Collected": "revenue_collected",
+      "Avg Registration Delay": "avg_registration_delay",
+      "Tax Defaulter Count": "tax_defaulter_count",
+      "Total Tickets": "total_tickets",
+      "Accident": "accidents",
+      "Avg Resolution Time": "avg_resolution_time",
+      "Data Quality Score": "data_quality_score"
+    };
+    
+    const kpiName = kpiMap[kpiTitle];
+    if (kpiName) {
+      if (kpiTitle === "Avg Registration Delay") {
+        setProcessOpen(true);
+      } else {
+        setDrilldownKpi({ name: kpiName, title: kpiTitle });
+        setDrilldownFilters({ state_cd: null, c_district: null, city: null, rto: null });
+        setDrilldownOpen(true);
+        fetchDrilldown(kpiName, {});
+      }
+    }
+  }, [fetchDrilldown]);
+
+  const handleDrilldownNavigation = useCallback((level, value) => {
+    const newFilters = { ...drilldownFilters };
+    if (level === 'state') {
+      newFilters.state_cd = value;
+      newFilters.c_district = null;
+      newFilters.city = null;
+      newFilters.rto = null;
+    } else if (level === 'district') {
+      newFilters.c_district = value;
+      newFilters.city = null;
+      newFilters.rto = null;
+    } else if (level === 'city') {
+      newFilters.city = value;
+      newFilters.rto = null;
+    } else if (level === 'rto') {
+      newFilters.rto = value;
+    }
+    setDrilldownFilters(newFilters);
+    if (drilldownKpi) {
+      fetchDrilldown(drilldownKpi.name, newFilters);
+    }
+  }, [drilldownFilters, drilldownKpi, fetchDrilldown]);
+
   const executiveNarrative = useMemo(() => {
     if (!summary) return { insights: [], recommendations: [], actionItems: [] };
 
     const ai = Array.isArray(summary.ai_insights) ? summary.ai_insights : [];
-    const aiInsights = ai.filter((x) => x?.type !== "recommendation").map((x) => x.message).filter(Boolean);
-    const aiRecs = ai.filter((x) => x?.type === "recommendation").map((x) => x.message).filter(Boolean);
+    // Separate by category
+    const insights = ai.filter((x) => x?.category === "insight" || (!x?.category && x?.type !== "recommendation" && x?.type !== "action")).map((x) => x.message).filter(Boolean);
+    const recommendations = ai.filter((x) => x?.category === "recommendation" || x?.type === "recommendation").map((x) => x.message).filter(Boolean);
+    const actionItems = ai.filter((x) => x?.category === "action_item" || x?.type === "action").map((x) => x.message).filter(Boolean);
 
-    const insights = [
-      `Total registrations: ${(summary.total_registrations || 0).toLocaleString()} (MoM: ${summary.monthly_growth_percent || 0}%).`,
-      `Ticket closure rate: ${summary.ticket_closure_rate || 0}% (avg resolution: ${summary.avg_resolution_time || 0} days).`,
-      `Active registrations: ${summary.active_registrations_percent || 0}%. Data quality score: ${summary.data_quality_score || 0}%.`,
-      ...aiInsights,
-    ].filter(Boolean);
-
-    const recommendations = [
-      ...(aiRecs.length ? aiRecs : []),
-      (summary.avg_registration_delay || 0) > 30 ? "Reduce registration delays by prioritizing long-lag cases and fixing upstream data issues." : null,
-      (summary.compliance_risk_count || 0) > 0 ? "Run targeted compliance drives for expiring/expired registrations (SMS/IVR nudges + RTO queue)." : null,
-    ].filter(Boolean);
-
-    const actionItems = [
-      "Open **Process Efficiency** drilldown and focus on buckets >60 days.",
-      (summary.stale_ticket_percent || 0) > 25 ? "Create a ‘stale ticket’ war-room: reassign >30-day tickets and publish daily closure targets." : null,
-      (summary.compliance_risk_count || 0) > 0 ? "Generate compliance-risk list and schedule automated reminders for expiring cases." : null,
-    ].filter(Boolean);
+    // Add fallback insights if none from AI
+    if (insights.length === 0) {
+      insights.push(
+        `Total registrations: ${(summary.total_registrations || 0).toLocaleString()} (MoM: ${summary.monthly_growth_percent || 0}%).`,
+        `Ticket closure rate: ${summary.ticket_closure_rate || 0}% (avg resolution: ${summary.avg_resolution_time || 0} days).`,
+        `Active registrations: ${summary.active_registrations_percent || 0}%. Data quality score: ${summary.data_quality_score || 0}%.`
+      );
+    }
 
     return { insights, recommendations, actionItems };
   }, [summary]);
@@ -317,16 +383,15 @@ const ExecutiveDashboard = () => {
           <Card 
               className={`kpi-card-enhanced ${kpi.color} hover-lift card-3d magnetic-hover ripple-effect`}
             data-testid={`kpi-card-${index}`}
-            role={kpi.title === "Avg Registration Delay" ? "button" : undefined}
-            tabIndex={kpi.title === "Avg Registration Delay" ? 0 : undefined}
-            onClick={() => {
-              if (kpi.title === "Avg Registration Delay") setProcessOpen(true);
-            }}
+            role="button"
+            tabIndex={0}
+            onClick={() => handleKpiClick(kpi.title)}
             onKeyDown={(e) => {
-              if (kpi.title === "Avg Registration Delay" && (e.key === "Enter" || e.key === " ")) {
-                setProcessOpen(true);
+              if (e.key === "Enter" || e.key === " ") {
+                handleKpiClick(kpi.title);
               }
             }}
+            className="cursor-pointer"
           >
             <CardContent className="p-5">
               <div className="flex items-start justify-between">

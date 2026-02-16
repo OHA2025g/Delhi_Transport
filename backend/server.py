@@ -3819,6 +3819,219 @@ async def detect_vehicle(
         raise HTTPException(status_code=500, detail=str(e))
 
 # ===================== EXECUTIVE DASHBOARD =====================
+
+def _generate_enhanced_insights(
+    total_registrations, monthly_growth_percent, median_vehicle_value, avg_registration_delay,
+    active_registrations_percent, compliance_risk_count, total_tickets, ticket_closure_rate,
+    avg_resolution_time, stale_ticket_percent, data_quality_score, revenue_collected,
+    tax_defaulter_count, accidents, base_insights, expired, expiring_soon, open_tickets,
+    stale, module_counts, cat_counts
+) -> List[Dict[str, Any]]:
+    """Generate comprehensive insights, recommendations, and action items"""
+    enhanced = []
+    
+    # Insights (Observations)
+    if total_registrations > 0:
+        if monthly_growth_percent > 5:
+            enhanced.append({
+                "type": "info",
+                "category": "insight",
+                "message": f"Strong growth: Total registrations increased by {monthly_growth_percent}% month-over-month, indicating healthy vehicle registration activity."
+            })
+        elif monthly_growth_percent < -5:
+            enhanced.append({
+                "type": "warning",
+                "category": "insight",
+                "message": f"Declining registrations: {abs(monthly_growth_percent)}% decrease month-over-month requires attention to identify root causes."
+            })
+    
+    if avg_registration_delay > 30:
+        enhanced.append({
+            "type": "warning",
+            "category": "insight",
+            "message": f"High registration delay: Average delay of {avg_registration_delay} days exceeds target threshold, impacting citizen satisfaction."
+        })
+    elif avg_registration_delay < 15:
+        enhanced.append({
+            "type": "info",
+            "category": "insight",
+            "message": f"Efficient processing: Average registration delay of {avg_registration_delay} days is within acceptable range."
+        })
+    
+    if compliance_risk_count > 0:
+        risk_percent = round((compliance_risk_count / total_registrations * 100) if total_registrations > 0 else 0, 2)
+        enhanced.append({
+            "type": "warning",
+            "category": "insight",
+            "message": f"Compliance risk: {compliance_risk_count:,} registrations ({risk_percent}%) are expired or expiring soon, requiring immediate action."
+        })
+    
+    if revenue_collected > 0:
+        revenue_cr = revenue_collected / 10000000
+        enhanced.append({
+            "type": "info",
+            "category": "insight",
+            "message": f"Revenue performance: ₹{revenue_cr:.2f}Cr collected, indicating strong financial health of the transport department."
+        })
+    
+    if tax_defaulter_count > 0:
+        defaulter_rate = round((tax_defaulter_count / total_registrations * 100) if total_registrations > 0 else 0, 2)
+        enhanced.append({
+            "type": "warning",
+            "category": "insight",
+            "message": f"Tax compliance: {tax_defaulter_count:,} defaulters ({defaulter_rate}%) identified, requiring enforcement action."
+        })
+    
+    if accidents > 0:
+        accident_rate = round((accidents / total_registrations * 1000) if total_registrations > 0 else 0, 2)
+        enhanced.append({
+            "type": "warning",
+            "category": "insight",
+            "message": f"Road safety: {accidents:,} accidents reported ({accident_rate} per 1000 vehicles), highlighting need for safety initiatives."
+        })
+    
+    if ticket_closure_rate < 50:
+        enhanced.append({
+            "type": "warning",
+            "category": "insight",
+            "message": f"Low ticket closure: {ticket_closure_rate}% closure rate is below target, indicating potential service delivery gaps."
+        })
+    elif ticket_closure_rate > 80:
+        enhanced.append({
+            "type": "info",
+            "category": "insight",
+            "message": f"Excellent ticket management: {ticket_closure_rate}% closure rate demonstrates strong service delivery."
+        })
+    
+    if avg_resolution_time > 30:
+        enhanced.append({
+            "type": "warning",
+            "category": "insight",
+            "message": f"Slow resolution: Average resolution time of {avg_resolution_time} days exceeds target, impacting citizen experience."
+        })
+    
+    if data_quality_score < 90:
+        enhanced.append({
+            "type": "warning",
+            "category": "insight",
+            "message": f"Data quality concern: {data_quality_score}% quality score indicates need for data validation and cleanup."
+        })
+    
+    # Recommendations (What should be done)
+    if avg_registration_delay > 25:
+        enhanced.append({
+            "type": "recommendation",
+            "category": "recommendation",
+            "message": f"Optimize registration process: Current delay of {avg_registration_delay} days. Consider digitizing workflows, increasing staff capacity, or streamlining approval processes."
+        })
+    
+    if compliance_risk_count > 100:
+        enhanced.append({
+            "type": "recommendation",
+            "category": "recommendation",
+            "message": f"Launch compliance drive: {compliance_risk_count:,} registrations need attention. Implement automated reminders (SMS/email), create priority queues for expiring cases, and conduct awareness campaigns."
+        })
+    
+    if tax_defaulter_count > 1000:
+        enhanced.append({
+            "type": "recommendation",
+            "category": "recommendation",
+            "message": f"Enhance tax collection: {tax_defaulter_count:,} defaulters identified. Strengthen enforcement mechanisms, offer payment plans, and implement penalty structures."
+        })
+    
+    if accidents > 5000:
+        enhanced.append({
+            "type": "recommendation",
+            "category": "recommendation",
+            "message": f"Road safety initiatives: {accidents:,} accidents require attention. Enhance traffic enforcement, improve road infrastructure, and conduct driver awareness programs."
+        })
+    
+    if ticket_closure_rate < 60:
+        top_modules = _top_n_list(module_counts, 2)
+        top_cats = _top_n_list(cat_counts, 2)
+        focus_areas = []
+        if top_modules:
+            focus_areas.append(f"modules: {', '.join(top_modules)}")
+        if top_cats:
+            focus_areas.append(f"categories: {', '.join(top_cats)}")
+        focus_txt = f" Focus on {', '.join(focus_areas)}." if focus_areas else ""
+        enhanced.append({
+            "type": "recommendation",
+            "category": "recommendation",
+            "message": f"Improve ticket resolution: Current closure rate of {ticket_closure_rate}% needs improvement.{focus_txt} Consider resource reallocation and process optimization."
+        })
+    
+    if stale > 50:
+        enhanced.append({
+            "type": "recommendation",
+            "category": "recommendation",
+            "message": f"Address stale tickets: {stale} tickets older than 30 days require immediate attention. Create a war room, reassign tickets, and set daily closure targets."
+        })
+    
+    if avg_resolution_time > 25:
+        enhanced.append({
+            "type": "recommendation",
+            "category": "recommendation",
+            "message": f"Reduce resolution time: Current average of {avg_resolution_time} days is high. Implement SLA tracking, prioritize urgent tickets, and streamline escalation processes."
+        })
+    
+    if data_quality_score < 95:
+        enhanced.append({
+            "type": "recommendation",
+            "category": "recommendation",
+            "message": f"Improve data quality: Score of {data_quality_score}% needs enhancement. Implement data validation rules, conduct data audits, and establish data governance practices."
+        })
+    
+    # Action Items (Specific steps to take)
+    if compliance_risk_count > 0:
+        enhanced.append({
+            "type": "action",
+            "category": "action_item",
+            "message": f"Generate compliance-risk list: Export {expired:,} expired and {expiring_soon:,} expiring registrations. Schedule automated reminders and create RTO queue for priority processing."
+        })
+    
+    if stale > 0:
+        enhanced.append({
+            "type": "action",
+            "category": "action_item",
+            "message": f"Create stale ticket war room: Review {stale} tickets >30 days old. Reassign to appropriate teams, publish daily closure targets, and track progress weekly."
+        })
+    
+    if avg_registration_delay > 20:
+        enhanced.append({
+            "type": "action",
+            "category": "action_item",
+            "message": f"Open Process Efficiency drilldown: Analyze registration delay distribution. Focus on buckets >60 days, identify bottlenecks, and implement process improvements."
+        })
+    
+    if tax_defaulter_count > 500:
+        enhanced.append({
+            "type": "action",
+            "category": "action_item",
+            "message": f"Run targeted tax collection drive: Identify top defaulting RTOs/districts. Deploy enforcement teams, issue notices, and offer payment facilitation centers."
+        })
+    
+    if accidents > 3000:
+        enhanced.append({
+            "type": "action",
+            "category": "action_item",
+            "message": f"Conduct road safety audit: Analyze accident hotspots by location and time. Deploy traffic police, improve signage, and conduct awareness campaigns in high-risk areas."
+        })
+    
+    if ticket_closure_rate < 70:
+        enhanced.append({
+            "type": "action",
+            "category": "action_item",
+            "message": f"Implement ticket prioritization: Categorize tickets by urgency and impact. Allocate resources to high-priority items, set SLA targets, and track daily progress."
+        })
+    
+    # Merge with base insights and limit to top 10
+    all_insights = base_insights + enhanced
+    priority_map = {"warning": 0, "recommendation": 1, "action": 2, "info": 3}
+    all_insights = sorted(all_insights, key=lambda x: priority_map.get(x.get("type", "info"), 9))[:10]
+    
+    return all_insights
+
 @dashboard_router.get("/executive-summary")
 async def get_executive_summary(state_cd: Optional[str] = None, c_district: Optional[str] = None, city: Optional[str] = None):
     """Get executive summary KPIs"""
@@ -4248,6 +4461,33 @@ async def get_executive_summary(state_cd: Optional[str] = None, c_district: Opti
             except Exception as e:
                 logger.error(f"Error calculating accidents: {e}", exc_info=True)
         
+        # Enhanced AI Insights with Recommendations and Action Items
+        # Get expired and expiring_soon counts for enhanced insights
+        expired = 0
+        expiring_soon = 0
+        try:
+            expired_docs = await db.vahan_data.find(
+                {"regn_upto": {"$exists": True, "$ne": None}},
+                {"_id": 0, "regn_upto": 1}
+            ).limit(10000).to_list(10000)
+            for d in expired_docs:
+                upto = _safe_parse_date(d.get("regn_upto"))
+                if upto:
+                    days_until = (upto - now).days
+                    if days_until < 0:
+                        expired += 1
+                    elif 0 <= days_until <= 30:
+                        expiring_soon += 1
+        except Exception as e:
+            logger.warning(f"Error calculating expired/expiring counts: {e}")
+        
+        enhanced_insights = _generate_enhanced_insights(
+            vahan_count, monthly_growth_percent, final_median_value, avg_registration_delay,
+            active_registrations_percent, compliance_risk_count, ticket_count, ticket_closure_rate,
+            avg_resolution_time, stale_ticket_percent, dq, revenue_collected, tax_defaulter_count,
+            accidents, insights, expired, expiring_soon, open_tickets, stale, module_counts, cat_counts
+        )
+        
         return {
             "total_registrations": vahan_count,
             "monthly_growth_percent": monthly_growth_percent,
@@ -4263,10 +4503,194 @@ async def get_executive_summary(state_cd: Optional[str] = None, c_district: Opti
             "revenue_collected": round(revenue_collected, 2),
             "tax_defaulter_count": round(tax_defaulter_count, 0),
             "accidents": round(accidents, 0),
-            "ai_insights": insights,
+            "ai_insights": enhanced_insights,
         }
     except Exception as e:
         logger.error(f"Error building executive summary: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@dashboard_router.get("/executive/kpi-drilldown/{kpi_name}")
+async def get_kpi_drilldown(
+    kpi_name: str,
+    state_cd: Optional[str] = None,
+    c_district: Optional[str] = None,
+    city: Optional[str] = None,
+    rto: Optional[str] = None
+):
+    """Get drilldown data for any KPI card with State → District → City → RTO hierarchy"""
+    try:
+        # Get latest month for KPI collections
+        latest_state_month = None
+        latest_rto_month = None
+        try:
+            latest_state_doc = await db["kpi_state_general"].find_one({}, sort=[("Month", -1)])
+            if latest_state_doc:
+                latest_state_month = latest_state_doc.get("Month")
+        except:
+            pass
+        
+        try:
+            latest_rto_doc = await db["kpi_rto_performance"].find_one({}, sort=[("Month", -1)])
+            if latest_rto_doc:
+                latest_rto_month = latest_rto_doc.get("Month")
+        except:
+            pass
+        
+        result = {"states": [], "districts": [], "cities": [], "rtos": []}
+        
+        # States level
+        if not state_cd:
+            if kpi_name == "total_registrations":
+                pipeline = [
+                    {"$match": {"Month": latest_state_month} if latest_state_month else {}},
+                    {"$group": {
+                        "_id": "$State",
+                        "value": {"$sum": {"$ifNull": ["$Vehicle Registration", 0]}},
+                        "count": {"$sum": 1}
+                    }},
+                    {"$sort": {"value": -1}},
+                    {"$limit": 50}
+                ]
+                states_data = await db["kpi_state_general"].aggregate(pipeline).to_list(50)
+                result["states"] = [
+                    {"name": STATE_NAMES.get(s["_id"], s["_id"]), "code": s["_id"], "value": int(s["value"]), "count": s["count"]}
+                    for s in states_data if s.get("_id")
+                ]
+            elif kpi_name == "revenue_collected":
+                pipeline = [
+                    {"$match": {"Month": latest_state_month} if latest_state_month else {}},
+                    {"$group": {
+                        "_id": "$State",
+                        "value": {"$sum": {"$ifNull": ["$Revenue - Total", 0]}},
+                        "count": {"$sum": 1}
+                    }},
+                    {"$sort": {"value": -1}},
+                    {"$limit": 50}
+                ]
+                states_data = await db["kpi_state_general"].aggregate(pipeline).to_list(50)
+                result["states"] = [
+                    {"name": STATE_NAMES.get(s["_id"], s["_id"]), "code": s["_id"], "value": round(s["value"], 2), "count": s["count"]}
+                    for s in states_data if s.get("_id")
+                ]
+            elif kpi_name == "tax_defaulter_count":
+                pipeline = [
+                    {"$match": {"Month": latest_rto_month} if latest_rto_month else {}},
+                    {"$group": {
+                        "_id": "$State",
+                        "value": {"$sum": {"$ifNull": ["$Tax Defaulter - Count", 0]}},
+                        "count": {"$sum": 1}
+                    }},
+                    {"$sort": {"value": -1}},
+                    {"$limit": 50}
+                ]
+                states_data = await db["kpi_rto_performance"].aggregate(pipeline).to_list(50)
+                result["states"] = [
+                    {"name": STATE_NAMES.get(s["_id"], s["_id"]), "code": s["_id"], "value": int(s["value"]), "count": s["count"]}
+                    for s in states_data if s.get("_id")
+                ]
+            elif kpi_name == "accidents":
+                pipeline = [
+                    {"$match": {"Month": latest_state_month} if latest_state_month else {}},
+                    {"$group": {
+                        "_id": "$State",
+                        "value": {"$sum": {"$ifNull": ["$Road Accidents", 0]}},
+                        "count": {"$sum": 1}
+                    }},
+                    {"$sort": {"value": -1}},
+                    {"$limit": 50}
+                ]
+                states_data = await db["kpi_state_general"].aggregate(pipeline).to_list(50)
+                result["states"] = [
+                    {"name": STATE_NAMES.get(s["_id"], s["_id"]), "code": s["_id"], "value": int(s["value"]), "count": s["count"]}
+                    for s in states_data if s.get("_id")
+                ]
+            elif kpi_name in ["total_tickets", "avg_resolution_time"]:
+                # For tickets, aggregate by state from tickets data (if available) or use vahan_data state distribution
+                states_data = await db.vahan_data.aggregate([
+                    {"$group": {"_id": "$state_cd", "count": {"$sum": 1}}},
+                    {"$sort": {"count": -1}},
+                    {"$limit": 50}
+                ]).to_list(50)
+                if kpi_name == "total_tickets":
+                    # Count tickets per state (if state info available in tickets)
+                    ticket_states = await db.tickets_data.aggregate([
+                        {"$group": {"_id": "$State", "count": {"$sum": 1}}},
+                        {"$sort": {"count": -1}},
+                        {"$limit": 50}
+                    ]).to_list(50)
+                    result["states"] = [
+                        {"name": STATE_NAMES.get(t["_id"], t["_id"]), "code": t["_id"], "value": t["count"], "count": t["count"]}
+                        for t in ticket_states if t.get("_id")
+                    ]
+                else:
+                    result["states"] = [
+                        {"name": STATE_NAMES.get(s["_id"], s["_id"]), "code": s["_id"], "value": 0, "count": s["count"]}
+                        for s in states_data if s.get("_id")
+                    ]
+            else:
+                # For other KPIs, use vahan_data state distribution
+                states_data = await db.vahan_data.aggregate([
+                    {"$group": {"_id": "$state_cd", "count": {"$sum": 1}}},
+                    {"$sort": {"count": -1}},
+                    {"$limit": 50}
+                ]).to_list(50)
+                result["states"] = [
+                    {"name": STATE_NAMES.get(s["_id"], s["_id"]), "code": s["_id"], "value": s["count"], "count": s["count"]}
+                    for s in states_data if s.get("_id")
+                ]
+        
+        # Districts level (simplified - using vahan_data for now)
+        elif state_cd and not c_district:
+            match = _build_vahan_geo_match(state_cd=state_cd)
+            districts_data = await db.vahan_data.aggregate([
+                {"$match": match},
+                {"$group": {"_id": "$c_district", "count": {"$sum": 1}}},
+                {"$sort": {"count": -1}},
+                {"$limit": 100}
+            ]).to_list(100)
+            result["districts"] = [
+                {"name": f"District {d['_id']}", "code": str(d["_id"]), "value": d["count"], "count": d["count"]}
+                for d in districts_data if d.get("_id")
+            ]
+        
+        # Cities level
+        elif state_cd and c_district and not city:
+            match = _build_vahan_geo_match(state_cd=state_cd, c_district=c_district)
+            cities_data = await db.vahan_data.aggregate([
+                {"$match": match},
+                {"$group": {"_id": "$c_add2", "count": {"$sum": 1}}},
+                {"$sort": {"count": -1}},
+                {"$limit": 200}
+            ]).to_list(200)
+            result["cities"] = [
+                {"name": c["_id"], "code": c["_id"], "value": c["count"], "count": c["count"]}
+                for c in cities_data if c.get("_id")
+            ]
+        
+        # RTOs level
+        elif state_cd and c_district and city and not rto:
+            match = _build_vahan_geo_match(state_cd=state_cd, c_district=c_district, city=city)
+            rtos_data = await db.vahan_data.aggregate([
+                {"$match": match},
+                {"$group": {"_id": "$off_cd", "count": {"$sum": 1}}},
+                {"$sort": {"count": -1}},
+                {"$limit": 100}
+            ]).to_list(100)
+            result["rtos"] = [
+                {"name": r["_id"], "code": r["_id"], "value": r["count"], "count": r["count"]}
+                for r in rtos_data if r.get("_id")
+            ]
+        
+        hierarchy_level = "states" if not state_cd else ("districts" if not c_district else ("cities" if not city else "rtos"))
+        
+        return {
+            "kpi_name": kpi_name,
+            "hierarchy_level": hierarchy_level,
+            "filters": {"state_cd": state_cd, "c_district": c_district, "city": city, "rto": rto},
+            "data": result
+        }
+    except Exception as e:
+        logger.error(f"Error getting KPI drilldown: {e}", exc_info=True)
         raise HTTPException(status_code=500, detail=str(e))
 
 @dashboard_router.get("/heatmap-data")
