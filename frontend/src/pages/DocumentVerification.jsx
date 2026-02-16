@@ -283,225 +283,225 @@ const DocumentVerification = () => {
 
         {/* General Documents Tab */}
         <TabsContent value="general" className="space-y-6">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            {/* Upload Section */}
-            <Card className="bg-white shadow-lg">
-              <CardHeader>
-                <CardTitle className="text-gray-900 flex items-center">
-                  <FileSearch className="w-5 h-5 mr-2 text-violet-500" />
-                  Upload Document
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                {/* Document Type Selection */}
-                <div className="space-y-2">
-                  <Label>Document Type</Label>
-                  <Select value={selectedType} onValueChange={setSelectedType}>
-                    <SelectTrigger data-testid="document-type-select">
-                      <SelectValue placeholder="Select document type" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {DOCUMENT_TYPES.map((type) => (
-                        <SelectItem key={type.value} value={type.value}>
-                          <div className="flex items-center">
-                            <type.icon className="w-4 h-4 mr-2" />
-                            {type.label}
-                          </div>
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* Upload Section */}
+        <Card className="bg-white shadow-lg">
+          <CardHeader>
+            <CardTitle className="text-gray-900 flex items-center">
+              <FileSearch className="w-5 h-5 mr-2 text-violet-500" />
+              Upload Document
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-6">
+            {/* Document Type Selection */}
+            <div className="space-y-2">
+              <Label>Document Type</Label>
+              <Select value={selectedType} onValueChange={setSelectedType}>
+                <SelectTrigger data-testid="document-type-select">
+                  <SelectValue placeholder="Select document type" />
+                </SelectTrigger>
+                <SelectContent>
+                  {DOCUMENT_TYPES.map((type) => (
+                    <SelectItem key={type.value} value={type.value}>
+                      <div className="flex items-center">
+                        <type.icon className="w-4 h-4 mr-2" />
+                        {type.label}
+                      </div>
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
 
-                {/* File Upload Area */}
-                <div
-                  className={`border-2 border-dashed rounded-lg p-8 text-center transition-colors ${
-                    previewUrl ? 'border-violet-300 bg-violet-50' : 'border-gray-200 hover:border-violet-300'
-                  }`}
-                  onDrop={handleDrop}
-                  onDragOver={(e) => e.preventDefault()}
-                  data-testid="upload-area"
-                >
-                  {previewUrl ? (
-                    <div className="space-y-4">
-                      <img 
-                        src={previewUrl} 
-                        alt="Preview" 
-                        className="max-h-48 mx-auto rounded-lg shadow"
-                      />
-                      <p className="text-sm text-gray-500">{selectedFile?.name}</p>
-                      <Button variant="outline" onClick={resetForm}>
-                        Change File
-                      </Button>
-                    </div>
-                  ) : (
-                    <div className="space-y-4">
-                      <div className="w-16 h-16 mx-auto bg-violet-100 rounded-full flex items-center justify-center">
-                        <Upload className="w-8 h-8 text-violet-500" />
-                      </div>
-                      <div>
-                        <p className="text-gray-600">Drag and drop your document here, or</p>
-                        <Button 
-                          variant="link" 
-                          onClick={() => fileInputRef.current?.click()}
-                          className="text-violet-600"
-                        >
-                          browse files
-                        </Button>
-                      </div>
-                      <p className="text-xs text-gray-400">
-                        Supports: JPG, PNG, PDF (max 10MB)
-                      </p>
-                    </div>
-                  )}
-                  <input
-                    ref={fileInputRef}
-                    type="file"
-                    accept="image/*,.pdf"
-                    onChange={handleFileSelect}
-                    className="hidden"
-                    data-testid="file-input"
+            {/* File Upload Area */}
+            <div
+              className={`border-2 border-dashed rounded-lg p-8 text-center transition-colors ${
+                previewUrl ? 'border-violet-300 bg-violet-50' : 'border-gray-200 hover:border-violet-300'
+              }`}
+              onDrop={handleDrop}
+              onDragOver={(e) => e.preventDefault()}
+              data-testid="upload-area"
+            >
+              {previewUrl ? (
+                <div className="space-y-4">
+                  <img 
+                    src={previewUrl} 
+                    alt="Preview" 
+                    className="max-h-48 mx-auto rounded-lg shadow"
                   />
+                  <p className="text-sm text-gray-500">{selectedFile?.name}</p>
+                  <Button variant="outline" onClick={resetForm}>
+                    Change File
+                  </Button>
+                </div>
+              ) : (
+                <div className="space-y-4">
+                  <div className="w-16 h-16 mx-auto bg-violet-100 rounded-full flex items-center justify-center">
+                    <Upload className="w-8 h-8 text-violet-500" />
+                  </div>
+                  <div>
+                    <p className="text-gray-600">Drag and drop your document here, or</p>
+                    <Button 
+                      variant="link" 
+                      onClick={() => fileInputRef.current?.click()}
+                      className="text-violet-600"
+                    >
+                      browse files
+                    </Button>
+                  </div>
+                  <p className="text-xs text-gray-400">
+                    Supports: JPG, PNG, PDF (max 10MB)
+                  </p>
+                </div>
+              )}
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept="image/*,.pdf"
+                onChange={handleFileSelect}
+                className="hidden"
+                data-testid="file-input"
+              />
+            </div>
+
+            {/* Verify Button */}
+            <Button
+              data-testid="verify-btn"
+              onClick={handleVerify}
+              disabled={!selectedFile || !selectedType || isProcessing}
+              className="w-full bg-gradient-to-r from-violet-500 to-pink-500"
+            >
+              {isProcessing ? (
+                <>
+                  <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                  Processing...
+                </>
+              ) : (
+                <>
+                  <FileSearch className="w-4 h-4 mr-2" />
+                  Verify Document
+                </>
+              )}
+            </Button>
+          </CardContent>
+        </Card>
+
+        {/* Results Section */}
+        <Card className="bg-white shadow-lg">
+          <CardHeader>
+            <CardTitle className="text-gray-900 flex items-center">
+              {result ? (
+                result.is_valid ? (
+                  <CheckCircle className="w-5 h-5 mr-2 text-emerald-500" />
+                ) : (
+                  <XCircle className="w-5 h-5 mr-2 text-red-500" />
+                )
+              ) : (
+                <AlertCircle className="w-5 h-5 mr-2 text-gray-400" />
+              )}
+              Verification Results
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            {result ? (
+              <div className="space-y-6" data-testid="ocr-results">
+                {/* Verification Status */}
+                <div className={`p-4 rounded-lg ${
+                  result.is_valid ? 'bg-emerald-50' : 'bg-red-50'
+                }`}>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center space-x-2">
+                      {result.is_valid ? (
+                        <CheckCircle className="w-6 h-6 text-emerald-500" />
+                      ) : (
+                        <XCircle className="w-6 h-6 text-red-500" />
+                      )}
+                      <span className={`font-semibold ${
+                        result.is_valid ? 'text-emerald-700' : 'text-red-700'
+                      }`}>
+                        {result.is_valid ? 'Document Verified' : 'Verification Failed'}
+                      </span>
+                    </div>
+                    <Badge className={
+                      result.is_valid ? 'bg-emerald-100 text-emerald-700' : 'bg-red-100 text-red-700'
+                    }>
+                      {(result.confidence * 100).toFixed(0)}% Confidence
+                    </Badge>
+                  </div>
                 </div>
 
-                {/* Verify Button */}
-                <Button
-                  data-testid="verify-btn"
-                  onClick={handleVerify}
-                  disabled={!selectedFile || !selectedType || isProcessing}
-                  className="w-full bg-gradient-to-r from-violet-500 to-pink-500"
-                >
-                  {isProcessing ? (
-                    <>
-                      <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                      Processing...
-                    </>
-                  ) : (
-                    <>
-                      <FileSearch className="w-4 h-4 mr-2" />
-                      Verify Document
-                    </>
-                  )}
-                </Button>
-              </CardContent>
-            </Card>
-
-            {/* Results Section */}
-            <Card className="bg-white shadow-lg">
-              <CardHeader>
-                <CardTitle className="text-gray-900 flex items-center">
-                  {result ? (
-                    result.is_valid ? (
-                      <CheckCircle className="w-5 h-5 mr-2 text-emerald-500" />
-                    ) : (
-                      <XCircle className="w-5 h-5 mr-2 text-red-500" />
-                    )
-                  ) : (
-                    <AlertCircle className="w-5 h-5 mr-2 text-gray-400" />
-                  )}
-                  Verification Results
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                {result ? (
-                  <div className="space-y-6" data-testid="ocr-results">
-                    {/* Verification Status */}
-                    <div className={`p-4 rounded-lg ${
-                      result.is_valid ? 'bg-emerald-50' : 'bg-red-50'
-                    }`}>
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center space-x-2">
-                          {result.is_valid ? (
-                            <CheckCircle className="w-6 h-6 text-emerald-500" />
-                          ) : (
-                            <XCircle className="w-6 h-6 text-red-500" />
-                          )}
-                          <span className={`font-semibold ${
-                            result.is_valid ? 'text-emerald-700' : 'text-red-700'
-                          }`}>
-                            {result.is_valid ? 'Document Verified' : 'Verification Failed'}
-                          </span>
-                        </div>
-                        <Badge className={
-                          result.is_valid ? 'bg-emerald-100 text-emerald-700' : 'bg-red-100 text-red-700'
-                        }>
-                          {(result.confidence * 100).toFixed(0)}% Confidence
-                        </Badge>
+                {/* Extracted Data */}
+                <div className="space-y-4">
+                  <h4 className="font-semibold text-gray-900">Extracted Information</h4>
+                  <div className="bg-gray-50 rounded-lg p-4 space-y-3">
+                    {Object.entries(result.extracted_data).map(([key, value]) => (
+                      <div key={key} className="flex justify-between items-start">
+                        <span className="text-sm text-gray-500 capitalize">
+                          {key.replace(/_/g, ' ')}
+                        </span>
+                        <span className="text-sm font-medium text-gray-900 text-right max-w-[60%]">
+                          {String(value)}
+                        </span>
                       </div>
-                    </div>
-
-                    {/* Extracted Data */}
-                    <div className="space-y-4">
-                      <h4 className="font-semibold text-gray-900">Extracted Information</h4>
-                      <div className="bg-gray-50 rounded-lg p-4 space-y-3">
-                        {Object.entries(result.extracted_data).map(([key, value]) => (
-                          <div key={key} className="flex justify-between items-start">
-                            <span className="text-sm text-gray-500 capitalize">
-                              {key.replace(/_/g, ' ')}
-                            </span>
-                            <span className="text-sm font-medium text-gray-900 text-right max-w-[60%]">
-                              {String(value)}
-                            </span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* Validation Errors */}
-                    {result.validation_errors?.length > 0 && (
-                      <div className="space-y-2">
-                        <h4 className="font-semibold text-red-600">Validation Issues</h4>
-                        <ul className="list-disc list-inside text-sm text-red-600 space-y-1">
-                          {result.validation_errors.map((error, index) => (
-                            <li key={index}>{error}</li>
-                          ))}
-                        </ul>
-                      </div>
-                    )}
-
-                    {/* Actions */}
-                    <div className="flex space-x-3">
-                      <Button variant="outline" className="flex-1">
-                        Download Report
-                      </Button>
-                      <Button 
-                        onClick={resetForm}
-                        className="flex-1 bg-gradient-to-r from-violet-500 to-pink-500"
-                      >
-                        Verify Another
-                      </Button>
-                    </div>
+                    ))}
                   </div>
-                ) : (
-                  <div className="text-center py-12 text-gray-400">
-                    <FileSearch className="w-16 h-16 mx-auto mb-4 opacity-50" />
-                    <p>Upload a document and click verify to see results</p>
+                </div>
+
+                {/* Validation Errors */}
+                {result.validation_errors?.length > 0 && (
+                  <div className="space-y-2">
+                    <h4 className="font-semibold text-red-600">Validation Issues</h4>
+                    <ul className="list-disc list-inside text-sm text-red-600 space-y-1">
+                      {result.validation_errors.map((error, index) => (
+                        <li key={index}>{error}</li>
+                      ))}
+                    </ul>
                   </div>
                 )}
-              </CardContent>
-            </Card>
-          </div>
 
-          {/* Document Types Info */}
-          <Card className="bg-white shadow-lg">
-            <CardHeader>
-              <CardTitle className="text-gray-900">Supported Documents</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
-                {DOCUMENT_TYPES.map((type) => (
-                  <div 
-                    key={type.value}
-                    className="p-4 bg-gray-50 rounded-lg text-center hover:bg-violet-50 transition-colors cursor-pointer"
-                    onClick={() => setSelectedType(type.value)}
+                {/* Actions */}
+                <div className="flex space-x-3">
+                  <Button variant="outline" className="flex-1">
+                    Download Report
+                  </Button>
+                  <Button 
+                    onClick={resetForm}
+                    className="flex-1 bg-gradient-to-r from-violet-500 to-pink-500"
                   >
-                    <type.icon className="w-8 h-8 mx-auto mb-2 text-violet-500" />
-                    <p className="text-sm font-medium text-gray-700">{type.label}</p>
-                  </div>
-                ))}
+                    Verify Another
+                  </Button>
+                </div>
               </div>
-            </CardContent>
-          </Card>
+            ) : (
+              <div className="text-center py-12 text-gray-400">
+                <FileSearch className="w-16 h-16 mx-auto mb-4 opacity-50" />
+                <p>Upload a document and click verify to see results</p>
+              </div>
+            )}
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Document Types Info */}
+      <Card className="bg-white shadow-lg">
+        <CardHeader>
+          <CardTitle className="text-gray-900">Supported Documents</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+            {DOCUMENT_TYPES.map((type) => (
+              <div 
+                key={type.value}
+                className="p-4 bg-gray-50 rounded-lg text-center hover:bg-violet-50 transition-colors cursor-pointer"
+                onClick={() => setSelectedType(type.value)}
+              >
+                <type.icon className="w-8 h-8 mx-auto mb-2 text-violet-500" />
+                <p className="text-sm font-medium text-gray-700">{type.label}</p>
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
         </TabsContent>
 
         {/* Aadhaar Verification Tab */}
