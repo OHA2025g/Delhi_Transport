@@ -957,5 +957,3 @@ const STATE_NAMES = {
 };
 
 export default ExecutiveDashboard;
-
-export default ExecutiveDashboard;
