@@ -2,13 +2,27 @@
 # Multi-stage Dockerfile for Delhi Vehicle Portal Backend
 # Includes: FastAPI, MongoDB, OCR (Tesseract), and all dependencies
 # 
-# New KPI Features Included:
-# - revenue_collected: Aggregated revenue from kpi_state_general
-# - tax_defaulter_count: Aggregated from kpi_rto_performance
-# - accidents: Aggregated road accidents from kpi_state_general
+# ✅ NEW KPI FEATURES INCLUDED (Executive Dashboard):
+# - revenue_collected: Aggregated from kpi_state_general collection
+#   * Field: "Revenue - Total"
+#   * Sums all records for latest month
+#   * Returns: Float (rounded to 2 decimals)
 # 
-# Executive Dashboard API Endpoints:
-# - /api/dashboard/executive-summary (includes all new KPI fields)
+# - tax_defaulter_count: Aggregated from kpi_rto_performance collection
+#   * Field: "Tax Defaulter - Count"
+#   * Sums all RTO records for latest month
+#   * Returns: Integer (rounded to 0 decimals)
+# 
+# - accidents: Aggregated from kpi_state_general collection
+#   * Field: "Road Accidents"
+#   * Sums all records for latest month
+#   * Returns: Integer (rounded to 0 decimals)
+# 
+# Executive Dashboard API Endpoint:
+# - GET /api/dashboard/executive-summary
+#   * Returns all KPI fields including the three new ones above
+#   * Handles state/district/city filtering
+#   * Includes AI insights and data quality metrics
 # ============================================
 
 # Stage 1: Builder stage - Install Python dependencies
@@ -84,21 +98,14 @@ RUN mkdir -p ./backend/models \
 
 # Copy application code
 # Main server file (includes new KPI fields: revenue_collected, tax_defaulter_count, accidents)
+# Location: backend/server.py lines 4047-4126
 COPY backend/server.py ./backend/
 
 # Core modules (config, database, middleware)
 COPY backend/core/ ./backend/core/
 
-# Utils modules (helpers)
+# Utils modules (helpers, field value extractors)
 COPY backend/utils/ ./backend/utils/
-
-# Models directory
-# COPY backend/models/ ./backend/models/
-
-# API and Services directories
-# These directories are created above as empty directories
-# They will remain empty unless files are added to them in the future
-# No need to copy them as they're currently empty
 
 # Copy data files (Excel files for initial data loading)
 COPY data/excel/Vahan1.xlsx ./data/excel/Vahan1.xlsx
@@ -106,7 +113,7 @@ COPY data/excel/Tickets.xlsx ./data/excel/Tickets.xlsx
 COPY data/excel/transport_extra_kpi_mock_data_FY2025_26.xlsx ./data/excel/transport_extra_kpi_mock_data_FY2025_26.xlsx
 COPY data/excel/Parivahan_Dashboard_extra_KPI.xlsx ./data/excel/Parivahan_Dashboard_extra_KPI.xlsx
 
-# Copy RTO Analysis Excel file (handle spaces in filename)
+# Copy RTO Analysis Excel processing modules
 COPY backend/excel/ ./backend/excel/
 
 # Set environment variables
