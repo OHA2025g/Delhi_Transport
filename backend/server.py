@@ -3728,7 +3728,25 @@ async def get_executive_summary(state_cd: Optional[str] = None, c_district: Opti
         match = _build_vahan_geo_match(state_cd=state_cd, c_district=c_district, city=city)
 
         # ================= VAHAN KPIs (data-driven) =================
-        vahan_count = await db.vahan_data.count_documents(match)
+        # Use Vehicle Registration from kpi_state_general for consistency with KPI Dashboard
+        # This ensures the same count (507,299) is shown everywhere
+        vahan_count = 0
+        try:
+            # Get latest month from kpi_state_general
+            latest_state_month_doc = await db["kpi_state_general"].find_one({}, sort=[("Month", -1)])
+            if latest_state_month_doc:
+                latest_state_month = latest_state_month_doc.get("Month")
+                # Get all records for latest month
+                state_gen_records = await db["kpi_state_general"].find({"Month": latest_state_month}).to_list(1000)
+                # Aggregate Vehicle Registration field (same as KPI Dashboard)
+                vahan_count = int(_aggregate_kpi_field(
+                    state_gen_records, "Vehicle Registration", "Vehicle Registration ", "VehicleRegistration", "Vehicle_Registration"
+                ))
+                logger.info(f"Vehicle Registration from kpi_state_general: {vahan_count:,} (month: {latest_state_month})")
+        except Exception as e:
+            logger.warning(f"Error getting vehicle registration from kpi_state_general, falling back to vahan_data count: {e}")
+            # Fallback to vahan_data count if kpi_state_general fails
+            vahan_count = await db.vahan_data.count_documents(match)
 
         # Median vehicle value from sale_amt
         value_result = await db.vahan_data.aggregate(
