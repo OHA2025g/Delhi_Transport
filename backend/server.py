@@ -4083,16 +4083,18 @@ async def get_executive_summary(state_cd: Optional[str] = None, c_district: Opti
         if latest_rto_month:
             try:
                 defaulter_records = await db["kpi_rto_performance"].find({"Month": latest_rto_month}).to_list(1000)
+                logger.info(f"Tax Defaulter: Found {len(defaulter_records)} records for month {latest_rto_month}")
                 for record in defaulter_records:
                     # The exact field name is "Tax Defaulter - Count" (with dash, no trailing space)
                     defaulter_val = record.get("Tax Defaulter - Count")
                     if defaulter_val is not None:
                         try:
                             tax_defaulter_count += float(defaulter_val)
-                        except (ValueError, TypeError):
-                            pass
+                        except (ValueError, TypeError) as ve:
+                            logger.warning(f"Error converting defaulter value {defaulter_val}: {ve}")
+                logger.info(f"Tax Defaulter: Total count = {tax_defaulter_count}")
             except Exception as e:
-                logger.warning(f"Error calculating tax_defaulter_count: {e}")
+                logger.error(f"Error calculating tax_defaulter_count: {e}", exc_info=True)
         
         # Accidents: Sum of Road Accidents from kpi_state_general
         accidents = 0.0
