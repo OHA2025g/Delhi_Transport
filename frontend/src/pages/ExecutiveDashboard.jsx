@@ -381,7 +381,7 @@ const ExecutiveDashboard = () => {
         {kpiCards.map((kpi, index) => (
           <ScrollReveal key={index} delay={index * 100} direction="up">
           <Card 
-              className={`kpi-card-enhanced ${kpi.color} hover-lift card-3d magnetic-hover ripple-effect`}
+              className={`kpi-card-enhanced ${kpi.color} hover-lift card-3d magnetic-hover ripple-effect cursor-pointer`}
             data-testid={`kpi-card-${index}`}
             role="button"
             tabIndex={0}
@@ -391,7 +391,6 @@ const ExecutiveDashboard = () => {
                 handleKpiClick(kpi.title);
               }
             }}
-            className="cursor-pointer"
           >
             <CardContent className="p-5">
               <div className="flex items-start justify-between">
