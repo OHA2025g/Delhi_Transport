@@ -1,0 +1,1 @@
+{"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_"}],"uuid":"01847040d6234614b805d378da870e17","collectionName":"kpi_rto_performance","type":"collection"}

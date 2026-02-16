@@ -1,0 +1,1 @@
+{"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_"}],"uuid":"94e5cc66f1d640b78137d5b2580d8c0b","collectionName":"kpi_fleet_vehicles","type":"collection"}

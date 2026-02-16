@@ -6,7 +6,7 @@ import { Progress } from "@/components/ui/progress";
 import { 
   TrendingUp, TrendingDown, Car, FileText, Users, AlertTriangle, 
   Clock, CheckCircle, BarChart3, RefreshCw, Download, Settings,
-  Lightbulb, AlertCircle, Info
+  Lightbulb, AlertCircle, Info, DollarSign, Shield
 } from "lucide-react";
 import { 
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
@@ -99,20 +99,20 @@ const ExecutiveDashboard = () => {
       color: "primary"
     },
     {
-      title: "Median Vehicle Value",
+      title: "Revenue Collected",
       value: (() => {
-        const medianValue = summary.median_vehicle_value;
-        if (!medianValue || medianValue <= 0) return "N/A";
-        // Ensure it's a number
-        const numValue = typeof medianValue === 'string' ? parseFloat(medianValue) : Number(medianValue);
-        if (isNaN(numValue) || numValue <= 0) return "N/A";
-        const displayValue = (numValue / 100000).toFixed(1);
-        console.log("[ExecutiveDashboard] Display calculation - raw:", medianValue, "numValue:", numValue, "displayValue:", displayValue);
-        return `₹${displayValue}L`;
+        const revenue = summary.revenue_collected || 0;
+        if (revenue >= 10000000) {
+          return `₹${(revenue / 10000000).toFixed(2)}Cr`;
+        } else if (revenue >= 100000) {
+          return `₹${(revenue / 100000).toFixed(2)}L`;
+        } else {
+          return `₹${revenue.toLocaleString()}`;
+        }
       })(),
-      change: 5.2,
+      change: 8.5,
       trend: "up",
-      icon: TrendingUp,
+      icon: DollarSign,
       color: "secondary"
     },
     {
@@ -124,11 +124,11 @@ const ExecutiveDashboard = () => {
       color: "accent"
     },
     {
-      title: "Active Registrations",
-      value: `${summary.active_registrations_percent}%`,
-      change: 1.4,
-      trend: "up",
-      icon: CheckCircle,
+      title: "Tax Defaulter Count",
+      value: summary.tax_defaulter_count?.toLocaleString() || "0",
+      change: -3.2,
+      trend: "down",
+      icon: Shield,
       color: "info"
     },
     {
@@ -140,11 +140,11 @@ const ExecutiveDashboard = () => {
       color: "warning"
     },
     {
-      title: "Ticket Closure Rate",
-      value: `${summary.ticket_closure_rate}%`,
-      change: 3.8,
-      trend: "up",
-      icon: CheckCircle,
+      title: "Accident",
+      value: summary.accidents?.toLocaleString() || "0",
+      change: -5.1,
+      trend: "down",
+      icon: AlertTriangle,
       color: "primary"
     },
     {
