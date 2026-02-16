@@ -60,7 +60,14 @@ export default function GeoFilterBar() {
     axios
       .get(`${API}/dashboard/geo/states`)
       .then((res) => {
-        if (!cancelled) setStates(res.data.states || []);
+        if (!cancelled) {
+          // Handle both old format (array of strings) and new format (array of objects)
+          const statesData = res.data.states || [];
+          const formattedStates = statesData.map(s => 
+            typeof s === 'string' ? { code: s, name: s } : s
+          );
+          setStates(formattedStates);
+        }
       })
       .catch(() => {
         if (!cancelled) setStates([]);
@@ -78,7 +85,14 @@ export default function GeoFilterBar() {
     axios
       .get(`${API}/dashboard/geo/districts`, { params: { state_cd } })
       .then((res) => {
-        if (!cancelled) setDistricts(res.data.districts || []);
+        if (!cancelled) {
+          // Handle both old format (array of strings) and new format (array of objects)
+          const districtsData = res.data.districts || [];
+          const formattedDistricts = districtsData.map(d => 
+            typeof d === 'string' ? { code: d, name: d } : d
+          );
+          setDistricts(formattedDistricts);
+        }
       })
       .catch(() => {
         if (!cancelled) setDistricts([]);
@@ -95,7 +109,14 @@ export default function GeoFilterBar() {
     axios
       .get(`${API}/dashboard/geo/cities`, { params: { state_cd, c_district } })
       .then((res) => {
-        if (!cancelled) setCities(res.data.cities || []);
+        if (!cancelled) {
+          // Handle both old format (array of strings) and new format (array of objects)
+          const citiesData = res.data.cities || [];
+          const formattedCities = citiesData.map(c => 
+            typeof c === 'string' ? { code: c, name: c } : c
+          );
+          setCities(formattedCities);
+        }
       })
       .catch(() => {
         if (!cancelled) setCities([]);
@@ -123,11 +144,15 @@ export default function GeoFilterBar() {
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value={ALL}>All</SelectItem>
-                  {states.map((s) => (
-                    <SelectItem key={s} value={s}>
-                      {s}
-                    </SelectItem>
-                  ))}
+                  {states.map((s) => {
+                    const code = typeof s === 'string' ? s : s.code;
+                    const name = typeof s === 'string' ? s : s.name;
+                    return (
+                      <SelectItem key={code} value={code}>
+                        {name}
+                      </SelectItem>
+                    );
+                  })}
                 </SelectContent>
               </Select>
             </div>
@@ -144,11 +169,15 @@ export default function GeoFilterBar() {
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value={ALL}>All</SelectItem>
-                  {districts.map((d) => (
-                    <SelectItem key={d} value={d}>
-                      {d}
-                    </SelectItem>
-                  ))}
+                  {districts.map((d) => {
+                    const code = typeof d === 'string' ? d : d.code;
+                    const name = typeof d === 'string' ? d : d.name;
+                    return (
+                      <SelectItem key={code} value={code}>
+                        {name}
+                      </SelectItem>
+                    );
+                  })}
                 </SelectContent>
               </Select>
             </div>
@@ -165,11 +194,15 @@ export default function GeoFilterBar() {
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value={ALL}>All</SelectItem>
-                  {cities.map((c) => (
-                    <SelectItem key={c} value={c}>
-                      {c}
-                    </SelectItem>
-                  ))}
+                  {cities.map((c) => {
+                    const code = typeof c === 'string' ? c : c.code;
+                    const name = typeof c === 'string' ? c : c.name;
+                    return (
+                      <SelectItem key={code} value={code}>
+                        {name}
+                      </SelectItem>
+                    );
+                  })}
                 </SelectContent>
               </Select>
             </div>

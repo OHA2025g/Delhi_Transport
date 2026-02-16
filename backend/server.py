@@ -905,42 +905,136 @@ def _build_vahan_geo_match(
     return match
 
 # ===================== DASHBOARD ENDPOINTS =====================
+# State code to name mapping
+STATE_NAMES = {
+    "AN": "Andaman and Nicobar Islands",
+    "AP": "Andhra Pradesh",
+    "AR": "Arunachal Pradesh",
+    "AS": "Assam",
+    "BR": "Bihar",
+    "CG": "Chhattisgarh",
+    "CH": "Chandigarh",
+    "DD": "Daman and Diu",
+    "DL": "Delhi",
+    "GA": "Goa",
+    "GJ": "Gujarat",
+    "HP": "Himachal Pradesh",
+    "HR": "Haryana",
+    "JH": "Jharkhand",
+    "JK": "Jammu and Kashmir",
+    "KA": "Karnataka",
+    "KL": "Kerala",
+    "LA": "Ladakh",
+    "MH": "Maharashtra",
+    "MN": "Manipur",
+    "MP": "Madhya Pradesh",
+    "MZ": "Mizoram",
+    "NL": "Nagaland",
+    "OR": "Odisha",
+    "PB": "Punjab",
+    "PY": "Puducherry",
+    "RJ": "Rajasthan",
+    "SK": "Sikkim",
+    "TG": "Telangana",
+    "TN": "Tamil Nadu",
+    "TR": "Tripura",
+    "UP": "Uttar Pradesh",
+    "UT": "Uttarakhand",
+    "WB": "West Bengal"
+}
+
 @dashboard_router.get("/geo/states")
 async def get_geo_states():
-    """Distinct states for geo filters."""
-    states = await db.vahan_data.distinct("state_cd")
-    states = sorted([s for s in states if s])
+    """Distinct states for geo filters. Returns list of objects with code and name."""
+    state_codes = await db.vahan_data.distinct("state_cd")
+    state_codes = sorted([s for s in state_codes if s])
+    
+    # Return objects with code and name
+    states = [
+        {
+            "code": code,
+            "name": STATE_NAMES.get(code, code)  # Fallback to code if name not found
+        }
+        for code in state_codes
+    ]
     return {"states": states}
 
 @dashboard_router.get("/geo/districts")
 async def get_geo_districts(state_cd: Optional[str] = None):
-    """Distinct districts (c_district) for a given state (optional)."""
+    """Distinct districts (c_district) for a given state (optional). Returns list of objects with code and name."""
     match = _build_vahan_geo_match(state_cd=state_cd)
-    vals = await db.vahan_data.distinct("c_district", match)
-    cleaned = []
-    for v in vals:
-        if v is None:
+    # Get both district code and name (p_district might have names)
+    pipeline = [
+        {"$match": match} if match else {"$match": {}},
+        {"$group": {
+            "_id": "$c_district",
+            "names": {"$addToSet": "$p_district"}
+        }},
+        {"$match": {"_id": {"$ne": None}}}
+    ]
+    results = await db.vahan_data.aggregate(pipeline).to_list(1000)
+    
+    districts = []
+    for r in results:
+        code = r.get("_id")
+        if code is None:
             continue
-        s = str(v).strip()
-        if not s or s.lower() == "nan":
+        
+        # Normalize code
+        code_str = str(code).strip()
+        if not code_str or code_str.lower() == "nan":
             continue
-        # normalize "569.0" -> "569"
         try:
-            if s.endswith(".0"):
-                s = str(int(float(s)))
+            if code_str.endswith(".0"):
+                code_str = str(int(float(code_str)))
         except Exception:
             pass
-        cleaned.append(s)
-    cleaned = sorted(list(dict.fromkeys(cleaned)))
-    return {"districts": cleaned}
+        
+        # Get name from p_district or use code as name
+        names = [n for n in r.get("names", []) if n and str(n).strip() and str(n).lower() != "nan" and str(n) != code_str]
+        name = names[0] if names else f"District {code_str}"
+        
+        districts.append({
+            "code": code_str,
+            "name": str(name).strip()
+        })
+    
+    # Remove duplicates and sort by name
+    seen = set()
+    unique_districts = []
+    for d in districts:
+        if d["code"] not in seen:
+            seen.add(d["code"])
+            unique_districts.append(d)
+    
+    unique_districts = sorted(unique_districts, key=lambda x: x["name"])
+    return {"districts": unique_districts}
 
 @dashboard_router.get("/geo/cities")
 async def get_geo_cities(state_cd: Optional[str] = None, c_district: Optional[str] = None):
-    """Distinct cities/localities for a given state + district (optional). Uses c_add2 as city/locality."""
+    """Distinct cities/localities for a given state + district (optional). Uses c_add2 as city/locality. Returns list of objects with code and name."""
     match = _build_vahan_geo_match(state_cd=state_cd, c_district=c_district)
     vals = await db.vahan_data.distinct("c_add2", match)
-    cleaned = sorted([str(v).strip() for v in vals if v and str(v).strip().lower() != "nan"])
-    return {"cities": cleaned}
+    
+    # Return objects with code and name (c_add2 is the name itself)
+    cities = [
+        {
+            "code": str(v).strip(),
+            "name": str(v).strip()
+        }
+        for v in vals if v and str(v).strip().lower() != "nan"
+    ]
+    
+    # Remove duplicates and sort by name
+    seen = set()
+    unique_cities = []
+    for c in cities:
+        if c["code"] not in seen:
+            seen.add(c["code"])
+            unique_cities.append(c)
+    
+    unique_cities = sorted(unique_cities, key=lambda x: x["name"])
+    return {"cities": unique_cities}
 
 @dashboard_router.get("/vahan/kpis", response_model=VahanKPIs)
 async def get_vahan_kpis(state_cd: Optional[str] = None, c_district: Optional[str] = None, city: Optional[str] = None):
