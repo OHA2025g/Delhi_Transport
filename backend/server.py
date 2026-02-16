@@ -4071,11 +4071,17 @@ async def get_executive_summary(state_cd: Optional[str] = None, c_district: Opti
         if latest_state_month:
             try:
                 revenue_records = await db["kpi_state_general"].find({"Month": latest_state_month}).to_list(1000)
+                logger.info(f"Revenue: Found {len(revenue_records)} records for month {latest_state_month}")
                 for record in revenue_records:
-                    revenue_val = _get_field_value(record, "Revenue - Total", "Revenue - Total ", "RevenueTotal", "Revenue_Total") or 0
-                    revenue_collected += float(revenue_val) if revenue_val else 0
+                    revenue_val = _get_field_value(record, "Revenue - Total", "Revenue - Total ", "RevenueTotal", "Revenue_Total")
+                    if revenue_val is not None:
+                        try:
+                            revenue_collected += float(revenue_val)
+                        except (ValueError, TypeError) as ve:
+                            logger.warning(f"Error converting revenue value {revenue_val}: {ve}")
+                logger.info(f"Revenue: Total collected = {revenue_collected:,.2f}")
             except Exception as e:
-                logger.warning(f"Error calculating revenue_collected: {e}")
+                logger.error(f"Error calculating revenue_collected: {e}", exc_info=True)
         
         # Tax Defaulter Count: Sum of Tax Defaulter - Count from kpi_rto_performance
         # Use latest month from kpi_rto_performance (may differ from kpi_state_general)
@@ -4101,11 +4107,17 @@ async def get_executive_summary(state_cd: Optional[str] = None, c_district: Opti
         if latest_state_month:
             try:
                 accident_records = await db["kpi_state_general"].find({"Month": latest_state_month}).to_list(1000)
+                logger.info(f"Accidents: Found {len(accident_records)} records for month {latest_state_month}")
                 for record in accident_records:
-                    accident_val = _get_field_value(record, "Road Accidents", "Road Accidents ", "RoadAccidents", "Road_Accidents") or 0
-                    accidents += float(accident_val) if accident_val else 0
+                    accident_val = _get_field_value(record, "Road Accidents", "Road Accidents ", "RoadAccidents", "Road_Accidents")
+                    if accident_val is not None:
+                        try:
+                            accidents += float(accident_val)
+                        except (ValueError, TypeError) as ve:
+                            logger.warning(f"Error converting accident value {accident_val}: {ve}")
+                logger.info(f"Accidents: Total = {accidents:,.0f}")
             except Exception as e:
-                logger.warning(f"Error calculating accidents: {e}")
+                logger.error(f"Error calculating accidents: {e}", exc_info=True)
         
         return {
             "total_registrations": vahan_count,
