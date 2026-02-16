@@ -1,0 +1,55 @@
+# Dockerfile for Automated Deployment
+# This Dockerfile creates a container that can automatically deploy the application
+# Usage: docker build -f Dockerfile.deploy -t delhi-transport-deploy .
+#        docker run --rm -v /var/run/docker.sock:/var/run/docker.sock delhi-transport-deploy
+
+FROM docker:latest
+
+# Install required tools
+RUN apk add --no-cache \
+    git \
+    bash \
+    curl \
+    python3 \
+    py3-pip \
+    openssh-client
+
+# Install Python dependencies for verification
+RUN pip3 install --no-cache-dir requests
+
+# Set working directory
+WORKDIR /app
+
+# Copy deployment script
+COPY deploy-production.sh /app/deploy-production.sh
+RUN chmod +x /app/deploy-production.sh
+
+# Copy docker-compose file (if needed for reference)
+COPY docker-compose.yml /app/docker-compose.yml
+
+# Set environment variables
+ENV DOCKER_HOST=unix:///var/run/docker.sock
+
+# Create entrypoint script
+RUN echo '#!/bin/sh' > /app/entrypoint.sh && \
+    echo 'set -e' >> /app/entrypoint.sh && \
+    echo 'echo "=========================================="' >> /app/entrypoint.sh && \
+    echo 'echo "Automated Deployment Container"' >> /app/entrypoint.sh && \
+    echo 'echo "=========================================="' >> /app/entrypoint.sh && \
+    echo 'echo ""' >> /app/entrypoint.sh && \
+    echo 'if [ ! -d "/workspace" ]; then' >> /app/entrypoint.sh && \
+    echo '  echo "Error: /workspace directory not mounted"' >> /app/entrypoint.sh && \
+    echo '  echo "Usage: docker run -v \$(pwd):/workspace -v /var/run/docker.sock:/var/run/docker.sock delhi-transport-deploy"' >> /app/entrypoint.sh && \
+    echo '  exit 1' >> /app/entrypoint.sh && \
+    echo 'fi' >> /app/entrypoint.sh && \
+    echo 'cd /workspace' >> /app/entrypoint.sh && \
+    echo 'if [ -f "deploy-production.sh" ]; then' >> /app/entrypoint.sh && \
+    echo '  ./deploy-production.sh' >> /app/entrypoint.sh && \
+    echo 'else' >> /app/entrypoint.sh && \
+    echo '  echo "Running automated deployment steps..."' >> /app/entrypoint.sh && \
+    echo '  /app/deploy-production.sh' >> /app/entrypoint.sh && \
+    echo 'fi' >> /app/entrypoint.sh && \
+    chmod +x /app/entrypoint.sh
+
+ENTRYPOINT ["/app/entrypoint.sh"]
+

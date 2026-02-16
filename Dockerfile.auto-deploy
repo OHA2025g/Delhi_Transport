@@ -1,0 +1,178 @@
+# Automated Deployment Dockerfile
+# This creates a self-contained deployment image that handles everything
+# 
+# Build: docker build -f Dockerfile.auto-deploy -t auto-deploy .
+# Run:   docker run --rm -v $(pwd):/workspace -v /var/run/docker.sock:/var/run/docker.sock auto-deploy
+
+FROM docker:latest
+
+LABEL maintainer="Delhi Transport Portal"
+LABEL description="Automated deployment container for Delhi Transport Portal"
+
+# Install dependencies
+RUN apk add --no-cache \
+    git \
+    bash \
+    curl \
+    python3 \
+    py3-pip \
+    openssh-client \
+    docker-compose
+
+# Install Python packages for API verification
+RUN pip3 install --no-cache-dir requests
+
+# Create app directory
+WORKDIR /app
+
+# Copy deployment script
+COPY deploy-production.sh /app/deploy-production.sh
+RUN chmod +x /app/deploy-production.sh
+
+# Create automated deployment script
+RUN cat > /app/auto-deploy.sh << 'SCRIPT'
+#!/bin/bash
+set -e
+
+echo "=========================================="
+echo "Automated Deployment - Delhi Transport Portal"
+echo "=========================================="
+echo ""
+
+# Colors
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
+NC='\033[0m'
+
+# Check if workspace is mounted
+if [ ! -d "/workspace" ]; then
+    echo -e "${RED}Error: /workspace directory not mounted${NC}"
+    echo "Usage: docker run -v \$(pwd):/workspace -v /var/run/docker.sock:/var/run/docker.sock auto-deploy"
+    exit 1
+fi
+
+cd /workspace
+
+# Step 1: Pull latest code
+echo -e "${YELLOW}Step 1: Pulling latest code from main branch...${NC}"
+if [ -d ".git" ]; then
+    git pull origin main || echo -e "${YELLOW}Warning: Git pull failed, continuing with existing code${NC}"
+else
+    echo -e "${YELLOW}Warning: Not a git repository, skipping pull${NC}"
+fi
+
+# Step 2: Ensure script is executable
+if [ -f "deploy-production.sh" ]; then
+    chmod +x deploy-production.sh
+    echo -e "${GREEN}✅ Deployment script found${NC}"
+else
+    echo -e "${YELLOW}Warning: deploy-production.sh not found, using internal script${NC}"
+fi
+
+# Step 3: Rebuild backend
+echo ""
+echo -e "${YELLOW}Step 2: Rebuilding backend Docker image...${NC}"
+docker compose build --no-cache backend
+if [ $? -eq 0 ]; then
+    echo -e "${GREEN}✅ Backend image rebuilt successfully${NC}"
+else
+    echo -e "${RED}❌ Failed to rebuild backend image${NC}"
+    exit 1
+fi
+
+# Step 4: Rebuild frontend
+echo ""
+echo -e "${YELLOW}Step 3: Rebuilding frontend Docker image...${NC}"
+docker compose build --no-cache frontend
+if [ $? -eq 0 ]; then
+    echo -e "${GREEN}✅ Frontend image rebuilt successfully${NC}"
+else
+    echo -e "${RED}❌ Failed to rebuild frontend image${NC}"
+    exit 1
+fi
+
+# Step 5: Restart containers
+echo ""
+echo -e "${YELLOW}Step 4: Restarting containers...${NC}"
+docker compose up -d
+if [ $? -eq 0 ]; then
+    echo -e "${GREEN}✅ Containers restarted successfully${NC}"
+else
+    echo -e "${RED}❌ Failed to restart containers${NC}"
+    exit 1
+fi
+
+# Step 6: Wait for services
+echo ""
+echo -e "${YELLOW}Step 5: Waiting for services to be healthy...${NC}"
+sleep 15
+
+# Step 7: Verify deployment
+echo ""
+echo -e "${YELLOW}Step 6: Verifying deployment...${NC}"
+
+# Check backend health
+BACKEND_HEALTH=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:8003/health 2>/dev/null || echo "000")
+if [ "$BACKEND_HEALTH" = "200" ]; then
+    echo -e "${GREEN}✅ Backend is healthy${NC}"
+else
+    echo -e "${YELLOW}⚠️  Backend health check returned: $BACKEND_HEALTH${NC}"
+fi
+
+# Check API response
+echo ""
+echo -e "${YELLOW}Checking for new KPI fields in API response...${NC}"
+API_RESPONSE=$(curl -s http://localhost:8003/api/dashboard/executive-summary 2>/dev/null || echo "{}")
+
+if echo "$API_RESPONSE" | grep -q "revenue_collected"; then
+    echo -e "${GREEN}✅ revenue_collected field present${NC}"
+else
+    echo -e "${RED}❌ revenue_collected field missing${NC}"
+fi
+
+if echo "$API_RESPONSE" | grep -q "tax_defaulter_count"; then
+    echo -e "${GREEN}✅ tax_defaulter_count field present${NC}"
+else
+    echo -e "${RED}❌ tax_defaulter_count field missing${NC}"
+fi
+
+if echo "$API_RESPONSE" | grep -q "accidents"; then
+    echo -e "${GREEN}✅ accidents field present${NC}"
+else
+    echo -e "${RED}❌ accidents field missing${NC}"
+fi
+
+# Display KPI values
+echo ""
+echo -e "${BLUE}New KPI Values:${NC}"
+echo "$API_RESPONSE" | python3 -c "
+import sys, json
+try:
+    data = json.load(sys.stdin)
+    revenue = data.get('revenue_collected', 0)
+    defaulter = data.get('tax_defaulter_count', 0)
+    accidents = data.get('accidents', 0)
+    print(f'  Revenue Collected: ₹{revenue:,.2f}')
+    print(f'  Tax Defaulter Count: {defaulter:,.0f}')
+    print(f'  Accidents: {accidents:,.0f}')
+except Exception as e:
+    print(f'  Could not parse API response: {e}')
+"
+
+# Check container status
+echo ""
+echo -e "${YELLOW}Container Status:${NC}"
+docker compose ps
+
+echo ""
+echo "=========================================="
+echo -e "${GREEN}Deployment Complete!${NC}"
+echo "=========================================="
+SCRIPT
+
+RUN chmod +x /app/auto-deploy.sh
+
+ENTRYPOINT ["/app/auto-deploy.sh"]
+

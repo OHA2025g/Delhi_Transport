@@ -1,0 +1,28 @@
+# Docker Compose for Automated Deployment
+# This compose file automates the entire deployment process
+# Usage: docker compose -f docker-compose.deploy.yml up
+
+version: '3.8'
+
+services:
+  deploy:
+    build:
+      context: .
+      dockerfile: Dockerfile.deploy
+    image: delhi-transport-deploy:latest
+    container_name: delhi_transport_deploy
+    volumes:
+      # Mount the project directory
+      - .:/workspace
+      # Mount Docker socket to allow container to control host Docker
+      - /var/run/docker.sock:/var/run/docker.sock
+      # Mount docker-compose.yml if needed
+      - ./docker-compose.yml:/workspace/docker-compose.yml:ro
+    environment:
+      - DOCKER_HOST=unix:///var/run/docker.sock
+      - COMPOSE_PROJECT_NAME=delhi_vehicle_portal
+    network_mode: host
+    restart: "no"
+    stdin_open: true
+    tty: true
+
