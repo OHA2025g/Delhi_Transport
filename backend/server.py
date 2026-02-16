@@ -73,13 +73,18 @@ load_dotenv(ROOT_DIR / '.env')
 
 # MongoDB connection
 mongo_url = os.environ.get('MONGO_URL', 'mongodb://localhost:27017')
-_mongo_timeouts_ms = int(os.environ.get("MONGO_TIMEOUT_MS", "2000"))
-# Fail fast when MongoDB isn't reachable (common in local/demo runs)
+# Increased timeout for remote MongoDB connections (was 2000ms, now 10000ms)
+_mongo_timeouts_ms = int(os.environ.get("MONGO_TIMEOUT_MS", "10000"))
+# Increased timeout for better reliability with remote MongoDB
 client = AsyncIOMotorClient(
     mongo_url,
     serverSelectionTimeoutMS=_mongo_timeouts_ms,
     connectTimeoutMS=_mongo_timeouts_ms,
     socketTimeoutMS=_mongo_timeouts_ms,
+    # Additional options for better connection reliability
+    maxPoolSize=50,
+    minPoolSize=10,
+    maxIdleTimeMS=45000,
 )
 db = client[os.environ.get('DB_NAME', 'citizen_assistance')]
 
