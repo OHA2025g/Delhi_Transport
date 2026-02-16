@@ -1,4 +1,13 @@
 # Frontend Dockerfile - Simple multi-stage build (CRA/CRACO) + Nginx
+# 
+# New KPI Cards Included:
+# - Revenue Collected: Displays revenue_collected from API
+# - Tax Defaulter Count: Displays tax_defaulter_count from API
+# - Accident: Displays accidents from API
+# 
+# Executive Dashboard Components:
+# - ExecutiveDashboard.jsx (includes all new KPI cards)
+# 
 # Stage 1: Build
 FROM node:20-alpine AS builder
 

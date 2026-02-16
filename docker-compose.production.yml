@@ -1,0 +1,84 @@
+# ============================================
+# Production Docker Compose Configuration
+# Includes all new KPI features:
+# - Revenue Collected
+# - Tax Defaulter Count
+# - Accidents
+# ============================================
+
+version: '3.8'
+
+services:
+  # Backend API (FastAPI)
+  # Includes new KPI endpoints with revenue_collected, tax_defaulter_count, accidents
+  backend:
+    build:
+      context: .
+      dockerfile: ./backend/Dockerfile
+    container_name: delhi_vehicle_backend
+    restart: unless-stopped
+    ports:
+      - "8003:8000"
+    environment:
+      - MONGO_URL=mongodb://mongo:1146976700ffa55c4d27@31.97.207.166:27018/?tls=false
+      - DB_NAME=citizen_assistance
+      - RATE_LIMIT_ENABLED=false
+      - RATE_LIMIT_RPM=100
+      - PYTHONUNBUFFERED=1
+      - CORS_ORIGINS=https://delhitransport.demo.agrayianailabs.com,http://localhost:3003,http://127.0.0.1:3003
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks:
+      - delhi_vehicle_network
+    # Verify new KPI fields are available
+    # API: GET /api/dashboard/executive-summary
+    # Returns: revenue_collected, tax_defaulter_count, accidents
+
+  # Frontend (React + Nginx)
+  # Includes new KPI cards: Revenue Collected, Tax Defaulter Count, Accident
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: delhi_vehicle_frontend
+    restart: unless-stopped
+    ports:
+      - "3003:80"
+    depends_on:
+      - backend
+    # Production uses relative /api path (proxied by nginx)
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost/health"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 10s
+    networks:
+      - delhi_vehicle_network
+    # Verify new KPI cards are displayed
+    # Dashboard: /dashboard
+    # Cards: Revenue Collected, Tax Defaulter Count, Accident
+
+networks:
+  delhi_vehicle_network:
+    driver: bridge
+
+# ============================================
+# Deployment Verification Checklist:
+# ============================================
+# 1. Backend API returns new KPI fields:
+#    curl http://localhost:8003/api/dashboard/executive-summary | \
+#      grep -E "(revenue_collected|tax_defaulter_count|accidents)"
+#
+# 2. Frontend displays new KPI cards:
+#    Open: http://localhost:3003/dashboard
+#    Verify: Revenue Collected, Tax Defaulter Count, Accident cards visible
+#
+# 3. All services healthy:
+#    docker compose ps
+# ============================================
+

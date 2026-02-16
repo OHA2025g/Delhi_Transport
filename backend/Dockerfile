@@ -1,6 +1,14 @@
 # ============================================
 # Multi-stage Dockerfile for Delhi Vehicle Portal Backend
 # Includes: FastAPI, MongoDB, OCR (Tesseract), and all dependencies
+# 
+# New KPI Features Included:
+# - revenue_collected: Aggregated revenue from kpi_state_general
+# - tax_defaulter_count: Aggregated from kpi_rto_performance
+# - accidents: Aggregated road accidents from kpi_state_general
+# 
+# Executive Dashboard API Endpoints:
+# - /api/dashboard/executive-summary (includes all new KPI fields)
 # ============================================
 
 # Stage 1: Builder stage - Install Python dependencies
@@ -75,7 +83,7 @@ RUN mkdir -p ./backend/models \
     ./logs
 
 # Copy application code
-# Main server file
+# Main server file (includes new KPI fields: revenue_collected, tax_defaulter_count, accidents)
 COPY backend/server.py ./backend/
 
 # Core modules (config, database, middleware)
