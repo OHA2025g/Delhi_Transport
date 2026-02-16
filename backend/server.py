@@ -4045,43 +4045,48 @@ async def get_executive_summary(state_cd: Optional[str] = None, c_district: Opti
         final_median_value = round(median_vehicle_value, 2) if median_vehicle_value > 0 else 0.0
         
         # ================= Additional KPIs from KPI collections =================
-        # Revenue Collected: Sum of Revenue - Total from kpi_state_general
-        revenue_collected = 0.0
+        # Get latest month data (shared across all KPI calculations)
+        latest_month_doc = None
+        latest_month = None
         try:
-            # Get latest month data
             latest_month_doc = await db["kpi_state_general"].find_one({}, sort=[("Month", -1)])
             if latest_month_doc:
                 latest_month = latest_month_doc.get("Month")
+        except Exception as e:
+            logger.warning(f"Error getting latest month: {e}")
+        
+        # Revenue Collected: Sum of Revenue - Total from kpi_state_general
+        revenue_collected = 0.0
+        if latest_month:
+            try:
                 revenue_records = await db["kpi_state_general"].find({"Month": latest_month}).to_list(1000)
                 for record in revenue_records:
                     revenue_val = _get_field_value(record, "Revenue - Total", "Revenue - Total ", "RevenueTotal", "Revenue_Total") or 0
                     revenue_collected += float(revenue_val) if revenue_val else 0
-        except Exception as e:
-            logger.warning(f"Error calculating revenue_collected: {e}")
+            except Exception as e:
+                logger.warning(f"Error calculating revenue_collected: {e}")
         
-        # Tax Defaulter Count: Sum of Tax Defaulter Count from kpi_state_general
+        # Tax Defaulter Count: Sum of Tax Defaulter - Count from kpi_rto_performance
         tax_defaulter_count = 0.0
-        try:
-            if latest_month_doc:
-                latest_month = latest_month_doc.get("Month")
-                defaulter_records = await db["kpi_state_general"].find({"Month": latest_month}).to_list(1000)
+        if latest_month:
+            try:
+                defaulter_records = await db["kpi_rto_performance"].find({"Month": latest_month}).to_list(1000)
                 for record in defaulter_records:
-                    defaulter_val = _get_field_value(record, "Tax Defaulter Count", "Tax Defaulter Count ", "TaxDefaulterCount", "Tax_Defaulter_Count") or 0
+                    defaulter_val = _get_field_value(record, "Tax Defaulter - Count", "Tax Defaulter - Count ", "Tax Defaulter Count", "Tax Defaulter Count ", "TaxDefaulterCount", "Tax_Defaulter_Count") or 0
                     tax_defaulter_count += float(defaulter_val) if defaulter_val else 0
-        except Exception as e:
-            logger.warning(f"Error calculating tax_defaulter_count: {e}")
+            except Exception as e:
+                logger.warning(f"Error calculating tax_defaulter_count: {e}")
         
         # Accidents: Sum of Road Accidents from kpi_state_general
         accidents = 0.0
-        try:
-            if latest_month_doc:
-                latest_month = latest_month_doc.get("Month")
+        if latest_month:
+            try:
                 accident_records = await db["kpi_state_general"].find({"Month": latest_month}).to_list(1000)
                 for record in accident_records:
                     accident_val = _get_field_value(record, "Road Accidents", "Road Accidents ", "RoadAccidents", "Road_Accidents") or 0
                     accidents += float(accident_val) if accident_val else 0
-        except Exception as e:
-            logger.warning(f"Error calculating accidents: {e}")
+            except Exception as e:
+                logger.warning(f"Error calculating accidents: {e}")
         
         return {
             "total_registrations": vahan_count,
