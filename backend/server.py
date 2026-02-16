@@ -3744,9 +3744,14 @@ async def get_executive_summary(state_cd: Optional[str] = None, c_district: Opti
                 ))
                 logger.info(f"Vehicle Registration from kpi_state_general: {vahan_count:,} (month: {latest_state_month})")
         except Exception as e:
-            logger.warning(f"Error getting vehicle registration from kpi_state_general, falling back to vahan_data count: {e}")
+            logger.error(f"Error getting vehicle registration from kpi_state_general, falling back to vahan_data count: {e}", exc_info=True)
             # Fallback to vahan_data count if kpi_state_general fails
-            vahan_count = await db.vahan_data.count_documents(match)
+            try:
+                vahan_count = await db.vahan_data.count_documents(match)
+                logger.warning(f"Using fallback vahan_data count: {vahan_count}")
+            except Exception as fallback_error:
+                logger.error(f"Fallback also failed: {fallback_error}", exc_info=True)
+                vahan_count = 0
 
         # Median vehicle value from sale_amt
         value_result = await db.vahan_data.aggregate(
