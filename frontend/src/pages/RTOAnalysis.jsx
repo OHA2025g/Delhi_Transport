@@ -160,10 +160,23 @@ const RTOAnalysis = () => {
     if (kpiDriversRes?.data) {
       if (kpiDriversRes.data.error) {
         if (isDev) console.warn("KPI-Drivers endpoint returned error:", kpiDriversRes.data.error);
+        // Don't set data if there's an error
       } else {
-        setKpiDrivers(kpiDriversRes.data);
-        if (isDev) console.log("KPI-Drivers data loaded");
+        // Check if data has the expected structure
+        const data = kpiDriversRes.data;
+        if (data.driver_ranking || data.correlations) {
+          setKpiDrivers(data);
+          if (isDev) console.log("KPI-Drivers data loaded:", data);
+        } else {
+          console.warn("KPI-Drivers data missing expected fields:", Object.keys(data));
+        }
       }
+    } else if (kpiDriversRes?.error) {
+      // Network error or other error
+      console.error("KPI-Drivers request failed:", kpiDriversRes.error);
+    } else {
+      // No data and no error - might be a rejected promise
+      console.warn("KPI-Drivers: No data received");
     }
     
     if (onlineRevenueRes?.data) {
