@@ -3729,6 +3729,22 @@ async def detect_vehicle(
 async def get_executive_summary(state_cd: Optional[str] = None, c_district: Optional[str] = None, city: Optional[str] = None):
     """Get executive summary KPIs"""
     try:
+        # Test MongoDB connection first with increased timeout
+        try:
+            await asyncio.wait_for(client.admin.command('ping'), timeout=5.0)
+        except asyncio.TimeoutError:
+            logger.error("MongoDB connection timeout - server may be slow or unreachable")
+            raise HTTPException(
+                status_code=503,
+                detail="Database connection timeout. Please try again in a moment."
+            )
+        except Exception as conn_error:
+            logger.error(f"MongoDB connection failed: {conn_error}")
+            raise HTTPException(
+                status_code=503,
+                detail=f"Database connection failed. Please try again in a moment. Error: {str(conn_error)[:100]}"
+            )
+        
         now = datetime.now()
         match = _build_vahan_geo_match(state_cd=state_cd, c_district=c_district, city=city)
 
