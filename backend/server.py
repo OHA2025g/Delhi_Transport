@@ -4072,8 +4072,13 @@ async def get_executive_summary(state_cd: Optional[str] = None, c_district: Opti
             try:
                 defaulter_records = await db["kpi_rto_performance"].find({"Month": latest_month}).to_list(1000)
                 for record in defaulter_records:
-                    defaulter_val = _get_field_value(record, "Tax Defaulter - Count", "Tax Defaulter - Count ", "Tax Defaulter Count", "Tax Defaulter Count ", "TaxDefaulterCount", "Tax_Defaulter_Count") or 0
-                    tax_defaulter_count += float(defaulter_val) if defaulter_val else 0
+                    # The exact field name is "Tax Defaulter - Count" (with dash, no trailing space)
+                    defaulter_val = record.get("Tax Defaulter - Count")
+                    if defaulter_val is not None:
+                        try:
+                            tax_defaulter_count += float(defaulter_val)
+                        except (ValueError, TypeError):
+                            pass
             except Exception as e:
                 logger.warning(f"Error calculating tax_defaulter_count: {e}")
         
