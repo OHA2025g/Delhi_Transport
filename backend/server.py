@@ -4066,7 +4066,7 @@ async def get_executive_summary(state_cd: Optional[str] = None, c_district: Opti
             logger.error(f"Error getting vehicle registration from kpi_state_general, falling back to vahan_data count: {e}", exc_info=True)
             # Fallback to vahan_data count if kpi_state_general fails
             try:
-                vahan_count = await db.vahan_data.count_documents(match)
+        vahan_count = await db.vahan_data.count_documents(match)
                 logger.warning(f"Using fallback vahan_data count: {vahan_count}")
             except Exception as fallback_error:
                 logger.error(f"Fallback also failed: {fallback_error}", exc_info=True)
@@ -4552,10 +4552,28 @@ async def get_kpi_drilldown(
                     {"$limit": 50}
                 ]
                 states_data = await db["kpi_state_general"].aggregate(pipeline).to_list(50)
-                result["states"] = [
-                    {"name": STATE_NAMES.get(s["_id"], s["_id"]), "code": s["_id"], "value": int(s["value"]), "count": s["count"]}
-                    for s in states_data if s.get("_id")
-                ]
+                result["states"] = []
+                for s in states_data:
+                    if not s.get("_id"):
+                        continue
+                    state_id = s["_id"]
+                    # Try to find state code from name, or use as-is
+                    state_code = None
+                    for code, name in STATE_NAMES.items():
+                        if name == state_id or code == state_id:
+                            state_code = code
+                            state_name = name
+                            break
+                    if not state_code:
+                        # If not found, check if it's already a code
+                        state_code = state_id if state_id in STATE_NAMES else state_id
+                        state_name = STATE_NAMES.get(state_code, state_id)
+                    result["states"].append({
+                        "name": state_name,
+                        "code": state_code,
+                        "value": int(s["value"]),
+                        "count": s["count"]
+                    })
             elif kpi_name == "revenue_collected":
                 pipeline = [
                     {"$match": {"Month": latest_state_month} if latest_state_month else {}},
@@ -4568,10 +4586,27 @@ async def get_kpi_drilldown(
                     {"$limit": 50}
                 ]
                 states_data = await db["kpi_state_general"].aggregate(pipeline).to_list(50)
-                result["states"] = [
-                    {"name": STATE_NAMES.get(s["_id"], s["_id"]), "code": s["_id"], "value": round(s["value"], 2), "count": s["count"]}
-                    for s in states_data if s.get("_id")
-                ]
+                result["states"] = []
+                for s in states_data:
+                    if not s.get("_id"):
+                        continue
+                    state_id = s["_id"]
+                    # Try to find state code from name, or use as-is
+                    state_code = None
+                    for code, name in STATE_NAMES.items():
+                        if name == state_id or code == state_id:
+                            state_code = code
+                            state_name = name
+                            break
+                    if not state_code:
+                        state_code = state_id if state_id in STATE_NAMES else state_id
+                        state_name = STATE_NAMES.get(state_code, state_id)
+                    result["states"].append({
+                        "name": state_name,
+                        "code": state_code,
+                        "value": round(s["value"], 2),
+                        "count": s["count"]
+                    })
             elif kpi_name == "tax_defaulter_count":
                 pipeline = [
                     {"$match": {"Month": latest_rto_month} if latest_rto_month else {}},
@@ -4584,10 +4619,27 @@ async def get_kpi_drilldown(
                     {"$limit": 50}
                 ]
                 states_data = await db["kpi_rto_performance"].aggregate(pipeline).to_list(50)
-                result["states"] = [
-                    {"name": STATE_NAMES.get(s["_id"], s["_id"]), "code": s["_id"], "value": int(s["value"]), "count": s["count"]}
-                    for s in states_data if s.get("_id")
-                ]
+                result["states"] = []
+                for s in states_data:
+                    if not s.get("_id"):
+                        continue
+                    state_id = s["_id"]
+                    # Try to find state code from name, or use as-is
+                    state_code = None
+                    for code, name in STATE_NAMES.items():
+                        if name == state_id or code == state_id:
+                            state_code = code
+                            state_name = name
+                            break
+                    if not state_code:
+                        state_code = state_id if state_id in STATE_NAMES else state_id
+                        state_name = STATE_NAMES.get(state_code, state_id)
+                    result["states"].append({
+                        "name": state_name,
+                        "code": state_code,
+                        "value": int(s["value"]),
+                        "count": s["count"]
+                    })
             elif kpi_name == "accidents":
                 pipeline = [
                     {"$match": {"Month": latest_state_month} if latest_state_month else {}},
@@ -4600,10 +4652,28 @@ async def get_kpi_drilldown(
                     {"$limit": 50}
                 ]
                 states_data = await db["kpi_state_general"].aggregate(pipeline).to_list(50)
-                result["states"] = [
-                    {"name": STATE_NAMES.get(s["_id"], s["_id"]), "code": s["_id"], "value": int(s["value"]), "count": s["count"]}
-                    for s in states_data if s.get("_id")
-                ]
+                result["states"] = []
+                for s in states_data:
+                    if not s.get("_id"):
+                        continue
+                    state_id = s["_id"]
+                    # Try to find state code from name, or use as-is
+                    state_code = None
+                    for code, name in STATE_NAMES.items():
+                        if name == state_id or code == state_id:
+                            state_code = code
+                            state_name = name
+                            break
+                    if not state_code:
+                        # If not found, check if it's already a code
+                        state_code = state_id if state_id in STATE_NAMES else state_id
+                        state_name = STATE_NAMES.get(state_code, state_id)
+                    result["states"].append({
+                        "name": state_name,
+                        "code": state_code,
+                        "value": int(s["value"]),
+                        "count": s["count"]
+                    })
             elif kpi_name in ["total_tickets", "avg_resolution_time"]:
                 # For tickets, aggregate by state from tickets data (if available) or use vahan_data state distribution
                 states_data = await db.vahan_data.aggregate([

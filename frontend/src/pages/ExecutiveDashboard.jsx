@@ -764,7 +764,7 @@ const ExecutiveDashboard = () => {
                   <>
                     <span>/</span>
                     <button
-                      onClick={() => handleDrilldownNavigation('district', null)}
+                      onClick={() => handleDrilldownNavigation('state', null)}
                       className="text-orange-600 hover:underline"
                     >
                       {STATE_NAMES[drilldownFilters.state_cd] || drilldownFilters.state_cd}
