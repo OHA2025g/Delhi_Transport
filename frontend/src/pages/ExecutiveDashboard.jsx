@@ -856,16 +856,16 @@ const ExecutiveDashboard = () => {
                       </thead>
                       <tbody>
                         {drilldownData.data.states.map((item, idx) => (
-                          <tr key={idx} className="hover:bg-gray-50">
-                            <td style={{ color: '#111827' }} className="border p-2">{item.name}</td>
-                            <td style={{ color: '#111827' }} className="border p-2 text-right">{typeof item.value === 'number' ? item.value.toLocaleString() : item.value}</td>
-                            <td style={{ color: '#111827' }} className="border p-2 text-right">{item.count?.toLocaleString() || '-'}</td>
-                            <td className="border p-2 text-center">
+                          <tr key={idx} style={{ backgroundColor: '#ffffff' }} className="hover:bg-gray-50">
+                            <td style={{ color: '#111827', backgroundColor: '#ffffff' }} className="border p-2">{item.name}</td>
+                            <td style={{ color: '#111827', backgroundColor: '#ffffff' }} className="border p-2 text-right">{typeof item.value === 'number' ? item.value.toLocaleString() : item.value}</td>
+                            <td style={{ color: '#111827', backgroundColor: '#ffffff' }} className="border p-2 text-right">{item.count?.toLocaleString() || '-'}</td>
+                            <td style={{ backgroundColor: '#ffffff' }} className="border p-2 text-center">
                               <Button
                                 size="sm"
                                 variant="outline"
                                 onClick={() => handleDrilldownNavigation('state', item.code || item.name)}
-                                style={{ color: '#111827', borderColor: '#D1D5DB' }}
+                                style={{ color: '#111827', borderColor: '#D1D5DB', backgroundColor: '#ffffff' }}
                                 className="hover:bg-gray-100"
                               >
                                 Drill Down
@@ -894,16 +894,16 @@ const ExecutiveDashboard = () => {
                       </thead>
                       <tbody>
                         {drilldownData.data.districts.map((item, idx) => (
-                          <tr key={idx} className="hover:bg-gray-50">
-                            <td style={{ color: '#111827' }} className="border p-2">{item.name}</td>
-                            <td style={{ color: '#111827' }} className="border p-2 text-right">{typeof item.value === 'number' ? item.value.toLocaleString() : item.value}</td>
-                            <td style={{ color: '#111827' }} className="border p-2 text-right">{item.count?.toLocaleString() || '-'}</td>
-                            <td className="border p-2 text-center">
+                          <tr key={idx} style={{ backgroundColor: '#ffffff' }} className="hover:bg-gray-50">
+                            <td style={{ color: '#111827', backgroundColor: '#ffffff' }} className="border p-2">{item.name}</td>
+                            <td style={{ color: '#111827', backgroundColor: '#ffffff' }} className="border p-2 text-right">{typeof item.value === 'number' ? item.value.toLocaleString() : item.value}</td>
+                            <td style={{ color: '#111827', backgroundColor: '#ffffff' }} className="border p-2 text-right">{item.count?.toLocaleString() || '-'}</td>
+                            <td style={{ backgroundColor: '#ffffff' }} className="border p-2 text-center">
                               <Button
                                 size="sm"
                                 variant="outline"
                                 onClick={() => handleDrilldownNavigation('district', item.code || item.name)}
-                                style={{ color: '#111827', borderColor: '#D1D5DB' }}
+                                style={{ color: '#111827', borderColor: '#D1D5DB', backgroundColor: '#ffffff' }}
                                 className="hover:bg-gray-100"
                               >
                                 Drill Down
@@ -932,16 +932,16 @@ const ExecutiveDashboard = () => {
                       </thead>
                       <tbody>
                         {drilldownData.data.cities.map((item, idx) => (
-                          <tr key={idx} className="hover:bg-gray-50">
-                            <td style={{ color: '#111827' }} className="border p-2">{item.name}</td>
-                            <td style={{ color: '#111827' }} className="border p-2 text-right">{typeof item.value === 'number' ? item.value.toLocaleString() : item.value}</td>
-                            <td style={{ color: '#111827' }} className="border p-2 text-right">{item.count?.toLocaleString() || '-'}</td>
-                            <td className="border p-2 text-center">
+                          <tr key={idx} style={{ backgroundColor: '#ffffff' }} className="hover:bg-gray-50">
+                            <td style={{ color: '#111827', backgroundColor: '#ffffff' }} className="border p-2">{item.name}</td>
+                            <td style={{ color: '#111827', backgroundColor: '#ffffff' }} className="border p-2 text-right">{typeof item.value === 'number' ? item.value.toLocaleString() : item.value}</td>
+                            <td style={{ color: '#111827', backgroundColor: '#ffffff' }} className="border p-2 text-right">{item.count?.toLocaleString() || '-'}</td>
+                            <td style={{ backgroundColor: '#ffffff' }} className="border p-2 text-center">
                               <Button
                                 size="sm"
                                 variant="outline"
                                 onClick={() => handleDrilldownNavigation('city', item.code || item.name)}
-                                style={{ color: '#111827', borderColor: '#D1D5DB' }}
+                                style={{ color: '#111827', borderColor: '#D1D5DB', backgroundColor: '#ffffff' }}
                                 className="hover:bg-gray-100"
                               >
                                 Drill Down
@@ -969,10 +969,10 @@ const ExecutiveDashboard = () => {
                       </thead>
                       <tbody>
                         {drilldownData.data.rtos.map((item, idx) => (
-                          <tr key={idx} className="hover:bg-gray-50">
-                            <td style={{ color: '#111827' }} className="border p-2">{item.name}</td>
-                            <td style={{ color: '#111827' }} className="border p-2 text-right">{typeof item.value === 'number' ? item.value.toLocaleString() : item.value}</td>
-                            <td style={{ color: '#111827' }} className="border p-2 text-right">{item.count?.toLocaleString() || '-'}</td>
+                          <tr key={idx} style={{ backgroundColor: '#ffffff' }} className="hover:bg-gray-50">
+                            <td style={{ color: '#111827', backgroundColor: '#ffffff' }} className="border p-2">{item.name}</td>
+                            <td style={{ color: '#111827', backgroundColor: '#ffffff' }} className="border p-2 text-right">{typeof item.value === 'number' ? item.value.toLocaleString() : item.value}</td>
+                            <td style={{ color: '#111827', backgroundColor: '#ffffff' }} className="border p-2 text-right">{item.count?.toLocaleString() || '-'}</td>
                           </tr>
                         ))}
                       </tbody>
