@@ -843,29 +843,30 @@ const ExecutiveDashboard = () => {
               {/* Data Tables */}
               {drilldownData.hierarchy_level === 'states' && drilldownData.data.states.length > 0 && (
                 <div>
-                  <h3 className="text-lg font-semibold mb-4 text-gray-900">States</h3>
+                  <h3 style={{ color: '#111827' }} className="text-lg font-semibold mb-4">States</h3>
                   <div className="overflow-x-auto">
-                    <table className="w-full border-collapse">
+                    <table className="w-full border-collapse" style={{ color: '#111827' }}>
                       <thead>
-                        <tr className="bg-gray-100">
-                          <th className="border p-2 text-left text-gray-900 font-semibold">State</th>
-                          <th className="border p-2 text-right text-gray-900 font-semibold">Value</th>
-                          <th className="border p-2 text-right text-gray-900 font-semibold">Count</th>
-                          <th className="border p-2 text-center text-gray-900 font-semibold">Action</th>
+                        <tr style={{ backgroundColor: '#F3F4F6' }}>
+                          <th style={{ color: '#111827' }} className="border p-2 text-left font-semibold">State</th>
+                          <th style={{ color: '#111827' }} className="border p-2 text-right font-semibold">Value</th>
+                          <th style={{ color: '#111827' }} className="border p-2 text-right font-semibold">Count</th>
+                          <th style={{ color: '#111827' }} className="border p-2 text-center font-semibold">Action</th>
                         </tr>
                       </thead>
                       <tbody>
                         {drilldownData.data.states.map((item, idx) => (
                           <tr key={idx} className="hover:bg-gray-50">
-                            <td className="border p-2 text-gray-900">{item.name}</td>
-                            <td className="border p-2 text-right text-gray-900">{typeof item.value === 'number' ? item.value.toLocaleString() : item.value}</td>
-                            <td className="border p-2 text-right text-gray-900">{item.count?.toLocaleString() || '-'}</td>
+                            <td style={{ color: '#111827' }} className="border p-2">{item.name}</td>
+                            <td style={{ color: '#111827' }} className="border p-2 text-right">{typeof item.value === 'number' ? item.value.toLocaleString() : item.value}</td>
+                            <td style={{ color: '#111827' }} className="border p-2 text-right">{item.count?.toLocaleString() || '-'}</td>
                             <td className="border p-2 text-center">
                               <Button
                                 size="sm"
                                 variant="outline"
                                 onClick={() => handleDrilldownNavigation('state', item.code || item.name)}
-                                className="text-gray-900 border-gray-300 hover:bg-gray-100"
+                                style={{ color: '#111827', borderColor: '#D1D5DB' }}
+                                className="hover:bg-gray-100"
                               >
                                 Drill Down
                               </Button>
