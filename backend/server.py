@@ -4063,12 +4063,34 @@ def _generate_enhanced_insights(
             "message": f"Maintain data quality: Current data quality score is {data_quality_score}%. Continue data validation processes and address any data gaps identified in the system."
         })
     
-    # Merge with base insights and limit to top 10
+    # Merge with base insights
     all_insights = base_insights + enhanced
     priority_map = {"warning": 0, "recommendation": 1, "action": 2, "info": 3}
-    all_insights = sorted(all_insights, key=lambda x: priority_map.get(x.get("type", "info"), 9))[:10]
     
-    return all_insights
+    # Sort by priority
+    all_insights = sorted(all_insights, key=lambda x: priority_map.get(x.get("type", "info"), 9))
+    
+    # Ensure we have at least 2 action items - prioritize them
+    action_items = [x for x in all_insights if x.get("type") == "action" or x.get("category") == "action_item"]
+    other_insights = [x for x in all_insights if x.get("type") != "action" and x.get("category") != "action_item"]
+    
+    # Take top 2 action items and top 8 other insights
+    final_insights = action_items[:2] + other_insights[:8]
+    
+    # If we still don't have action items, add the fallback ones
+    if len([x for x in final_insights if x.get("type") == "action" or x.get("category") == "action_item"]) == 0:
+        final_insights.append({
+            "type": "action",
+            "category": "action_item",
+            "message": f"Review dashboard metrics: Monitor {total_registrations:,} total registrations and {ticket_count:,} tickets. Schedule weekly review meeting to track KPIs and identify improvement opportunities."
+        })
+        final_insights.append({
+            "type": "action",
+            "category": "action_item",
+            "message": f"Maintain data quality: Current data quality score is {data_quality_score}%. Continue data validation processes and address any data gaps identified in the system."
+        })
+    
+    return final_insights
 
 @dashboard_router.get("/executive-summary")
 async def get_executive_summary(state_cd: Optional[str] = None, c_district: Optional[str] = None, city: Optional[str] = None):
