@@ -337,10 +337,21 @@ const ExecutiveDashboard = () => {
     if (!summary) return { insights: [], recommendations: [], actionItems: [] };
 
     const ai = Array.isArray(summary.ai_insights) ? summary.ai_insights : [];
+    console.log("[ExecutiveNarrative] Total AI insights:", ai.length);
+    console.log("[ExecutiveNarrative] AI insights:", JSON.stringify(ai, null, 2));
+    
     // Separate by category
     const insights = ai.filter((x) => x?.category === "insight" || (!x?.category && x?.type !== "recommendation" && x?.type !== "action")).map((x) => x.message).filter(Boolean);
     const recommendations = ai.filter((x) => x?.category === "recommendation" || x?.type === "recommendation").map((x) => x.message).filter(Boolean);
-    const actionItems = ai.filter((x) => x?.category === "action_item" || x?.type === "action").map((x) => x.message).filter(Boolean);
+    const actionItems = ai.filter((x) => {
+      const isAction = x?.category === "action_item" || x?.type === "action";
+      if (isAction) {
+        console.log("[ExecutiveNarrative] Found action item:", x);
+      }
+      return isAction;
+    }).map((x) => x.message).filter(Boolean);
+
+    console.log("[ExecutiveNarrative] Filtered - Insights:", insights.length, "Recommendations:", recommendations.length, "ActionItems:", actionItems.length);
 
     // Add fallback insights if none from AI
     if (insights.length === 0) {
@@ -348,6 +359,15 @@ const ExecutiveDashboard = () => {
         `Total registrations: ${(summary.total_registrations || 0).toLocaleString()} (MoM: ${summary.monthly_growth_percent || 0}%).`,
         `Ticket closure rate: ${summary.ticket_closure_rate || 0}% (avg resolution: ${summary.avg_resolution_time || 0} days).`,
         `Active registrations: ${summary.active_registrations_percent || 0}%. Data quality score: ${summary.data_quality_score || 0}%.`
+      );
+    }
+
+    // Add fallback action items if none from AI
+    if (actionItems.length === 0) {
+      console.log("[ExecutiveNarrative] No action items found, adding fallbacks");
+      actionItems.push(
+        `Review dashboard metrics: Monitor ${(summary.total_registrations || 0).toLocaleString()} total registrations and ${(summary.total_tickets || 0).toLocaleString()} tickets. Schedule weekly review meeting to track KPIs.`,
+        `Maintain data quality: Current data quality score is ${summary.data_quality_score || 0}%. Continue data validation processes and address any data gaps.`
       );
     }
 
