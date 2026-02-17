@@ -221,6 +221,7 @@ const ExecutiveDashboard = () => {
   }, [summary]);
 
   const fetchDrilldown = useCallback(async (kpiName, filters = {}) => {
+    console.log("[Drilldown] Fetching data for:", kpiName, "with filters:", filters);
     setDrilldownLoading(true);
     try {
       const params = new URLSearchParams();
@@ -229,17 +230,22 @@ const ExecutiveDashboard = () => {
       if (filters.city) params.append('city', filters.city);
       if (filters.rto) params.append('rto', filters.rto);
       
-      const response = await axios.get(`${API}/dashboard/executive/kpi-drilldown/${kpiName}?${params.toString()}`);
+      const url = `${API}/dashboard/executive/kpi-drilldown/${kpiName}${params.toString() ? '?' + params.toString() : ''}`;
+      console.log("[Drilldown] API URL:", url);
+      const response = await axios.get(url);
+      console.log("[Drilldown] Response received:", response.data);
       setDrilldownData(response.data);
     } catch (error) {
-      console.error("Error fetching drilldown:", error);
-      toast.error(`Failed to load drilldown data: ${error.message}`);
+      console.error("[Drilldown] Error fetching drilldown:", error);
+      console.error("[Drilldown] Error details:", error.response?.data || error.message);
+      toast.error(`Failed to load drilldown data: ${error.response?.data?.detail || error.message}`);
     } finally {
       setDrilldownLoading(false);
     }
   }, []);
 
   const handleKpiClick = useCallback((kpiTitle) => {
+    console.log("[Drilldown] KPI clicked:", kpiTitle);
     const kpiMap = {
       "Total Registrations": "total_registrations",
       "Revenue Collected": "revenue_collected",
@@ -252,35 +258,63 @@ const ExecutiveDashboard = () => {
     };
     
     const kpiName = kpiMap[kpiTitle];
+    console.log("[Drilldown] Mapped KPI name:", kpiName);
     if (kpiName) {
       if (kpiTitle === "Avg Registration Delay") {
+        console.log("[Drilldown] Opening process efficiency dialog");
         setProcessOpen(true);
       } else {
+        console.log("[Drilldown] Opening drilldown for:", kpiName);
         setDrilldownKpi({ name: kpiName, title: kpiTitle });
         setDrilldownFilters({ state_cd: null, c_district: null, city: null, rto: null });
         setDrilldownOpen(true);
         fetchDrilldown(kpiName, {});
       }
+    } else {
+      console.warn("[Drilldown] No mapping found for KPI:", kpiTitle);
     }
   }, [fetchDrilldown]);
 
   const handleDrilldownNavigation = useCallback((level, value) => {
+    console.log("[Drilldown] Navigation:", level, value);
     const newFilters = { ...drilldownFilters };
     if (level === 'state') {
-      newFilters.state_cd = value;
-      newFilters.c_district = null;
-      newFilters.city = null;
-      newFilters.rto = null;
+      if (value === null) {
+        // Reset to states level
+        newFilters.state_cd = null;
+        newFilters.c_district = null;
+        newFilters.city = null;
+        newFilters.rto = null;
+      } else {
+        newFilters.state_cd = value;
+        newFilters.c_district = null;
+        newFilters.city = null;
+        newFilters.rto = null;
+      }
     } else if (level === 'district') {
-      newFilters.c_district = value;
-      newFilters.city = null;
-      newFilters.rto = null;
+      if (value === null) {
+        // Go back to state level
+        newFilters.c_district = null;
+        newFilters.city = null;
+        newFilters.rto = null;
+      } else {
+        newFilters.c_district = value;
+        newFilters.city = null;
+        newFilters.rto = null;
+      }
     } else if (level === 'city') {
-      newFilters.city = value;
-      newFilters.rto = null;
+      if (value === null) {
+        // Go back to district level
+        newFilters.city = null;
+        newFilters.rto = null;
+      } else {
+        newFilters.city = value;
+        newFilters.rto = null;
+      }
     } else if (level === 'rto') {
       newFilters.rto = value;
     }
+    console.log("[Drilldown] New filters:", newFilters);
     setDrilldownFilters(newFilters);
     if (drilldownKpi) {
       fetchDrilldown(drilldownKpi.name, newFilters);
