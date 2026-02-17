@@ -4078,7 +4078,12 @@ def _generate_enhanced_insights(
     final_insights = action_items[:2] + other_insights[:8]
     
     # If we still don't have action items, add the fallback ones
-    if len([x for x in final_insights if x.get("type") == "action" or x.get("category") == "action_item"]) == 0:
+    action_items_in_final = [x for x in final_insights if x.get("type") == "action" or x.get("category") == "action_item"]
+    if len(action_items_in_final) == 0:
+        logger.info("No action items in final insights, adding fallback action items")
+        # Remove last 2 items if we have 10, to make room for action items
+        if len(final_insights) >= 10:
+            final_insights = final_insights[:8]
         final_insights.append({
             "type": "action",
             "category": "action_item",
@@ -4089,6 +4094,10 @@ def _generate_enhanced_insights(
             "category": "action_item",
             "message": f"Maintain data quality: Current data quality score is {data_quality_score}%. Continue data validation processes and address any data gaps identified in the system."
         })
+    
+    # Log final action items count
+    final_action_count = len([x for x in final_insights if x.get("type") == "action" or x.get("category") == "action_item"])
+    logger.info(f"Final insights count: {len(final_insights)}, Action items count: {final_action_count}")
     
     return final_insights
 
