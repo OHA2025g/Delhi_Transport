@@ -783,18 +783,18 @@ const ExecutiveDashboard = () => {
 
       {/* Drilldown Dialog for All KPIs */}
       <Dialog open={drilldownOpen} onOpenChange={setDrilldownOpen}>
-        <DialogContent className="max-w-6xl max-h-[90vh] overflow-y-auto bg-white">
+        <DialogContent className="max-w-6xl max-h-[90vh] overflow-y-auto !bg-white dark:!bg-white">
           <DialogHeader>
-            <DialogTitle className="text-gray-900">{drilldownKpi?.title || "KPI Drilldown"}</DialogTitle>
-            <DialogDescription className="text-gray-600">
+            <DialogTitle className="!text-gray-900 dark:!text-gray-900">{drilldownKpi?.title || "KPI Drilldown"}</DialogTitle>
+            <DialogDescription className="!text-gray-600 dark:!text-gray-600">
               Drill down by State → District → City → RTO hierarchy
             </DialogDescription>
           </DialogHeader>
 
-          {drilldownLoading ? (
+              {drilldownLoading ? (
             <div className="flex items-center justify-center py-20">
               <RefreshCw className="w-8 h-8 animate-spin text-orange-500 mr-3" />
-              <span className="text-gray-600">Loading drilldown data...</span>
+              <span className="text-gray-900 dark:text-gray-900">Loading drilldown data...</span>
             </div>
           ) : drilldownData ? (
             <div className="space-y-6">
@@ -819,20 +819,20 @@ const ExecutiveDashboard = () => {
                 )}
                 {drilldownFilters.c_district && (
                   <>
-                    <span className="text-gray-400">/</span>
-                    <span className="text-gray-700">{drilldownFilters.c_district}</span>
+                    <span className="text-gray-400 dark:text-gray-400">/</span>
+                    <span className="!text-gray-700 dark:!text-gray-700">{drilldownFilters.c_district}</span>
                   </>
                 )}
                 {drilldownFilters.city && (
                   <>
-                    <span className="text-gray-400">/</span>
-                    <span className="text-gray-700">{drilldownFilters.city}</span>
+                    <span className="text-gray-400 dark:text-gray-400">/</span>
+                    <span className="!text-gray-700 dark:!text-gray-700">{drilldownFilters.city}</span>
                   </>
                 )}
                 {drilldownFilters.rto && (
                   <>
-                    <span className="text-gray-400">/</span>
-                    <span className="text-gray-700">{drilldownFilters.rto}</span>
+                    <span className="text-gray-400 dark:text-gray-400">/</span>
+                    <span className="!text-gray-700 dark:!text-gray-700">{drilldownFilters.rto}</span>
                   </>
                 )}
               </div>
@@ -877,29 +877,29 @@ const ExecutiveDashboard = () => {
 
               {drilldownData.hierarchy_level === 'districts' && drilldownData.data.districts.length > 0 && (
                 <div>
-                  <h3 className="text-lg font-semibold mb-4 text-gray-900">Districts</h3>
+                  <h3 className="text-lg font-semibold mb-4 !text-gray-900 dark:!text-gray-900">Districts</h3>
                   <div className="overflow-x-auto">
                     <table className="w-full border-collapse">
                       <thead>
-                        <tr className="bg-gray-100">
-                          <th className="border p-2 text-left text-gray-900 font-semibold">District</th>
-                          <th className="border p-2 text-right text-gray-900 font-semibold">Value</th>
-                          <th className="border p-2 text-right text-gray-900 font-semibold">Count</th>
-                          <th className="border p-2 text-center text-gray-900 font-semibold">Action</th>
+                        <tr className="bg-gray-100 dark:bg-gray-100">
+                          <th className="border p-2 text-left !text-gray-900 dark:!text-gray-900 font-semibold">District</th>
+                          <th className="border p-2 text-right !text-gray-900 dark:!text-gray-900 font-semibold">Value</th>
+                          <th className="border p-2 text-right !text-gray-900 dark:!text-gray-900 font-semibold">Count</th>
+                          <th className="border p-2 text-center !text-gray-900 dark:!text-gray-900 font-semibold">Action</th>
                         </tr>
                       </thead>
                       <tbody>
                         {drilldownData.data.districts.map((item, idx) => (
-                          <tr key={idx} className="hover:bg-gray-50">
-                            <td className="border p-2 text-gray-900">{item.name}</td>
-                            <td className="border p-2 text-right text-gray-900">{typeof item.value === 'number' ? item.value.toLocaleString() : item.value}</td>
-                            <td className="border p-2 text-right text-gray-900">{item.count?.toLocaleString() || '-'}</td>
+                          <tr key={idx} className="hover:bg-gray-50 dark:hover:bg-gray-50">
+                            <td className="border p-2 !text-gray-900 dark:!text-gray-900">{item.name}</td>
+                            <td className="border p-2 text-right !text-gray-900 dark:!text-gray-900">{typeof item.value === 'number' ? item.value.toLocaleString() : item.value}</td>
+                            <td className="border p-2 text-right !text-gray-900 dark:!text-gray-900">{item.count?.toLocaleString() || '-'}</td>
                             <td className="border p-2 text-center">
                               <Button
                                 size="sm"
                                 variant="outline"
                                 onClick={() => handleDrilldownNavigation('district', item.code || item.name)}
-                                className="text-gray-900 border-gray-300 hover:bg-gray-100"
+                                className="!text-gray-900 dark:!text-gray-900 border-gray-300 hover:bg-gray-100"
                               >
                                 Drill Down
                               </Button>
@@ -914,29 +914,29 @@ const ExecutiveDashboard = () => {
 
               {drilldownData.hierarchy_level === 'cities' && drilldownData.data.cities.length > 0 && (
                 <div>
-                  <h3 className="text-lg font-semibold mb-4 text-gray-900">Cities</h3>
+                  <h3 className="text-lg font-semibold mb-4 !text-gray-900 dark:!text-gray-900">Cities</h3>
                   <div className="overflow-x-auto">
                     <table className="w-full border-collapse">
                       <thead>
-                        <tr className="bg-gray-100">
-                          <th className="border p-2 text-left text-gray-900 font-semibold">City</th>
-                          <th className="border p-2 text-right text-gray-900 font-semibold">Value</th>
-                          <th className="border p-2 text-right text-gray-900 font-semibold">Count</th>
-                          <th className="border p-2 text-center text-gray-900 font-semibold">Action</th>
+                        <tr className="bg-gray-100 dark:bg-gray-100">
+                          <th className="border p-2 text-left !text-gray-900 dark:!text-gray-900 font-semibold">City</th>
+                          <th className="border p-2 text-right !text-gray-900 dark:!text-gray-900 font-semibold">Value</th>
+                          <th className="border p-2 text-right !text-gray-900 dark:!text-gray-900 font-semibold">Count</th>
+                          <th className="border p-2 text-center !text-gray-900 dark:!text-gray-900 font-semibold">Action</th>
                         </tr>
                       </thead>
                       <tbody>
                         {drilldownData.data.cities.map((item, idx) => (
-                          <tr key={idx} className="hover:bg-gray-50">
-                            <td className="border p-2 text-gray-900">{item.name}</td>
-                            <td className="border p-2 text-right text-gray-900">{typeof item.value === 'number' ? item.value.toLocaleString() : item.value}</td>
-                            <td className="border p-2 text-right text-gray-900">{item.count?.toLocaleString() || '-'}</td>
+                          <tr key={idx} className="hover:bg-gray-50 dark:hover:bg-gray-50">
+                            <td className="border p-2 !text-gray-900 dark:!text-gray-900">{item.name}</td>
+                            <td className="border p-2 text-right !text-gray-900 dark:!text-gray-900">{typeof item.value === 'number' ? item.value.toLocaleString() : item.value}</td>
+                            <td className="border p-2 text-right !text-gray-900 dark:!text-gray-900">{item.count?.toLocaleString() || '-'}</td>
                             <td className="border p-2 text-center">
                               <Button
                                 size="sm"
                                 variant="outline"
                                 onClick={() => handleDrilldownNavigation('city', item.code || item.name)}
-                                className="text-gray-900 border-gray-300 hover:bg-gray-100"
+                                className="!text-gray-900 dark:!text-gray-900 border-gray-300 hover:bg-gray-100"
                               >
                                 Drill Down
                               </Button>
@@ -951,22 +951,22 @@ const ExecutiveDashboard = () => {
 
               {drilldownData.hierarchy_level === 'rtos' && drilldownData.data.rtos.length > 0 && (
                 <div>
-                  <h3 className="text-lg font-semibold mb-4 text-gray-900">RTOs</h3>
+                  <h3 className="text-lg font-semibold mb-4 !text-gray-900 dark:!text-gray-900">RTOs</h3>
                   <div className="overflow-x-auto">
                     <table className="w-full border-collapse">
                       <thead>
-                        <tr className="bg-gray-100">
-                          <th className="border p-2 text-left text-gray-900 font-semibold">RTO</th>
-                          <th className="border p-2 text-right text-gray-900 font-semibold">Value</th>
-                          <th className="border p-2 text-right text-gray-900 font-semibold">Count</th>
+                        <tr className="bg-gray-100 dark:bg-gray-100">
+                          <th className="border p-2 text-left !text-gray-900 dark:!text-gray-900 font-semibold">RTO</th>
+                          <th className="border p-2 text-right !text-gray-900 dark:!text-gray-900 font-semibold">Value</th>
+                          <th className="border p-2 text-right !text-gray-900 dark:!text-gray-900 font-semibold">Count</th>
                         </tr>
                       </thead>
                       <tbody>
                         {drilldownData.data.rtos.map((item, idx) => (
-                          <tr key={idx} className="hover:bg-gray-50">
-                            <td className="border p-2 text-gray-900">{item.name}</td>
-                            <td className="border p-2 text-right text-gray-900">{typeof item.value === 'number' ? item.value.toLocaleString() : item.value}</td>
-                            <td className="border p-2 text-right text-gray-900">{item.count?.toLocaleString() || '-'}</td>
+                          <tr key={idx} className="hover:bg-gray-50 dark:hover:bg-gray-50">
+                            <td className="border p-2 !text-gray-900 dark:!text-gray-900">{item.name}</td>
+                            <td className="border p-2 text-right !text-gray-900 dark:!text-gray-900">{typeof item.value === 'number' ? item.value.toLocaleString() : item.value}</td>
+                            <td className="border p-2 text-right !text-gray-900 dark:!text-gray-900">{item.count?.toLocaleString() || '-'}</td>
                           </tr>
                         ))}
                       </tbody>
@@ -977,13 +977,13 @@ const ExecutiveDashboard = () => {
 
               {(!drilldownData.data.states.length && !drilldownData.data.districts.length && 
                 !drilldownData.data.cities.length && !drilldownData.data.rtos.length) && (
-                <div className="text-center py-10 text-gray-500">
+                <div className="text-center py-10 text-gray-900 dark:text-gray-900">
                   No data available for this drilldown level.
                 </div>
               )}
             </div>
           ) : (
-            <div className="text-center py-10 text-gray-500">
+            <div className="text-center py-10 text-gray-900 dark:text-gray-900">
               No drilldown data available.
             </div>
           )}
