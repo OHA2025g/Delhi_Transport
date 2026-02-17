@@ -943,6 +943,23 @@ STATE_NAMES = {
     "WB": "West Bengal"
 }
 
+# Reverse mapping: state name to code
+STATE_NAME_TO_CODE = {name: code for code, name in STATE_NAMES.items()}
+
+def _get_state_code(state_id: str) -> tuple[str, str]:
+    """Convert state ID (name or code) to (code, name) tuple"""
+    if not state_id:
+        return None, None
+    # If it's already a code
+    if state_id in STATE_NAMES:
+        return state_id, STATE_NAMES[state_id]
+    # If it's a name, find the code
+    if state_id in STATE_NAME_TO_CODE:
+        code = STATE_NAME_TO_CODE[state_id]
+        return code, state_id
+    # If not found, return as-is
+    return state_id, state_id
+
 @dashboard_router.get("/geo/states")
 async def get_geo_states():
     """Distinct states for geo filters. Returns list of objects with code and name."""
@@ -3983,12 +4000,15 @@ def _generate_enhanced_insights(
         })
     
     # Action Items (Specific steps to take)
+    action_items_generated = 0
+    
     if compliance_risk_count > 0:
         enhanced.append({
             "type": "action",
             "category": "action_item",
             "message": f"Generate compliance-risk list: Export {expired:,} expired and {expiring_soon:,} expiring registrations. Schedule automated reminders and create RTO queue for priority processing."
         })
+        action_items_generated += 1
     
     if stale > 0:
         enhanced.append({
@@ -3996,33 +4016,51 @@ def _generate_enhanced_insights(
             "category": "action_item",
             "message": f"Create stale ticket war room: Review {stale} tickets >30 days old. Reassign to appropriate teams, publish daily closure targets, and track progress weekly."
         })
+        action_items_generated += 1
     
-    if avg_registration_delay > 20:
+    if avg_registration_delay > 15:  # Lowered threshold from 20 to 15
         enhanced.append({
             "type": "action",
             "category": "action_item",
             "message": f"Open Process Efficiency drilldown: Analyze registration delay distribution. Focus on buckets >60 days, identify bottlenecks, and implement process improvements."
         })
+        action_items_generated += 1
     
-    if tax_defaulter_count > 500:
+    if tax_defaulter_count > 100:  # Lowered threshold from 500 to 100
         enhanced.append({
             "type": "action",
             "category": "action_item",
             "message": f"Run targeted tax collection drive: Identify top defaulting RTOs/districts. Deploy enforcement teams, issue notices, and offer payment facilitation centers."
         })
+        action_items_generated += 1
     
-    if accidents > 3000:
+    if accidents > 100:  # Lowered threshold from 3000 to 100
         enhanced.append({
             "type": "action",
             "category": "action_item",
             "message": f"Conduct road safety audit: Analyze accident hotspots by location and time. Deploy traffic police, improve signage, and conduct awareness campaigns in high-risk areas."
         })
+        action_items_generated += 1
     
-    if ticket_closure_rate < 70:
+    if ticket_closure_rate < 80:  # Lowered threshold from 70 to 80
         enhanced.append({
             "type": "action",
             "category": "action_item",
             "message": f"Implement ticket prioritization: Categorize tickets by urgency and impact. Allocate resources to high-priority items, set SLA targets, and track daily progress."
+        })
+        action_items_generated += 1
+    
+    # Always add at least one default action item if none generated
+    if action_items_generated == 0:
+        enhanced.append({
+            "type": "action",
+            "category": "action_item",
+            "message": f"Review dashboard metrics: Monitor {total_registrations:,} total registrations and {ticket_count:,} tickets. Schedule weekly review meeting to track KPIs and identify improvement opportunities."
+        })
+        enhanced.append({
+            "type": "action",
+            "category": "action_item",
+            "message": f"Maintain data quality: Current data quality score is {data_quality_score}%. Continue data validation processes and address any data gaps identified in the system."
         })
     
     # Merge with base insights and limit to top 10
@@ -4556,18 +4594,8 @@ async def get_kpi_drilldown(
                 for s in states_data:
                     if not s.get("_id"):
                         continue
-                    state_id = s["_id"]
-                    # Try to find state code from name, or use as-is
-                    state_code = None
-                    for code, name in STATE_NAMES.items():
-                        if name == state_id or code == state_id:
-                            state_code = code
-                            state_name = name
-                            break
-                    if not state_code:
-                        # If not found, check if it's already a code
-                        state_code = state_id if state_id in STATE_NAMES else state_id
-                        state_name = STATE_NAMES.get(state_code, state_id)
+                    state_id = str(s["_id"]).strip()
+                    state_code, state_name = _get_state_code(state_id)
                     result["states"].append({
                         "name": state_name,
                         "code": state_code,
@@ -4590,17 +4618,8 @@ async def get_kpi_drilldown(
                 for s in states_data:
                     if not s.get("_id"):
                         continue
-                    state_id = s["_id"]
-                    # Try to find state code from name, or use as-is
-                    state_code = None
-                    for code, name in STATE_NAMES.items():
-                        if name == state_id or code == state_id:
-                            state_code = code
-                            state_name = name
-                            break
-                    if not state_code:
-                        state_code = state_id if state_id in STATE_NAMES else state_id
-                        state_name = STATE_NAMES.get(state_code, state_id)
+                    state_id = str(s["_id"]).strip()
+                    state_code, state_name = _get_state_code(state_id)
                     result["states"].append({
                         "name": state_name,
                         "code": state_code,
@@ -4623,17 +4642,8 @@ async def get_kpi_drilldown(
                 for s in states_data:
                     if not s.get("_id"):
                         continue
-                    state_id = s["_id"]
-                    # Try to find state code from name, or use as-is
-                    state_code = None
-                    for code, name in STATE_NAMES.items():
-                        if name == state_id or code == state_id:
-                            state_code = code
-                            state_name = name
-                            break
-                    if not state_code:
-                        state_code = state_id if state_id in STATE_NAMES else state_id
-                        state_name = STATE_NAMES.get(state_code, state_id)
+                    state_id = str(s["_id"]).strip()
+                    state_code, state_name = _get_state_code(state_id)
                     result["states"].append({
                         "name": state_name,
                         "code": state_code,
@@ -4656,18 +4666,8 @@ async def get_kpi_drilldown(
                 for s in states_data:
                     if not s.get("_id"):
                         continue
-                    state_id = s["_id"]
-                    # Try to find state code from name, or use as-is
-                    state_code = None
-                    for code, name in STATE_NAMES.items():
-                        if name == state_id or code == state_id:
-                            state_code = code
-                            state_name = name
-                            break
-                    if not state_code:
-                        # If not found, check if it's already a code
-                        state_code = state_id if state_id in STATE_NAMES else state_id
-                        state_name = STATE_NAMES.get(state_code, state_id)
+                    state_id = str(s["_id"]).strip()
+                    state_code, state_name = _get_state_code(state_id)
                     result["states"].append({
                         "name": state_name,
                         "code": state_code,
@@ -4688,10 +4688,18 @@ async def get_kpi_drilldown(
                         {"$sort": {"count": -1}},
                         {"$limit": 50}
                     ]).to_list(50)
-                    result["states"] = [
-                        {"name": STATE_NAMES.get(t["_id"], t["_id"]), "code": t["_id"], "value": t["count"], "count": t["count"]}
-                        for t in ticket_states if t.get("_id")
-                    ]
+                    result["states"] = []
+                    for t in ticket_states:
+                        if not t.get("_id"):
+                            continue
+                        state_id = str(t["_id"]).strip()
+                        state_code, state_name = _get_state_code(state_id)
+                        result["states"].append({
+                            "name": state_name,
+                            "code": state_code,
+                            "value": t["count"],
+                            "count": t["count"]
+                        })
                 else:
                     result["states"] = [
                         {"name": STATE_NAMES.get(s["_id"], s["_id"]), "code": s["_id"], "value": 0, "count": s["count"]}
@@ -4739,7 +4747,9 @@ async def get_kpi_drilldown(
         
         # RTOs level
         elif state_cd and c_district and city and not rto:
-            match = _build_vahan_geo_match(state_cd=state_cd, c_district=c_district, city=city)
+            # Convert state name to code if needed
+            actual_state_code, _ = _get_state_code(state_cd)
+            match = _build_vahan_geo_match(state_cd=actual_state_code, c_district=c_district, city=city)
             rtos_data = await db.vahan_data.aggregate([
                 {"$match": match},
                 {"$group": {"_id": "$off_cd", "count": {"$sum": 1}}},
