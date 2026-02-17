@@ -23,6 +23,18 @@ import ScrollReveal from "@/components/ScrollReveal";
 
 const COLORS = ['#F97316', '#3B82F6', '#0D9488', '#EA580C', '#10B981'];
 
+// State names mapping (should match backend)
+const STATE_NAMES = {
+  "AN": "Andaman and Nicobar Islands", "AP": "Andhra Pradesh", "AR": "Arunachal Pradesh",
+  "AS": "Assam", "BR": "Bihar", "CG": "Chhattisgarh", "CH": "Chandigarh", "DD": "Daman and Diu",
+  "DL": "Delhi", "GA": "Goa", "GJ": "Gujarat", "HP": "Himachal Pradesh", "HR": "Haryana",
+  "JH": "Jharkhand", "JK": "Jammu and Kashmir", "KA": "Karnataka", "KL": "Kerala", "LA": "Ladakh",
+  "MH": "Maharashtra", "MN": "Manipur", "MP": "Madhya Pradesh", "MZ": "Mizoram", "NL": "Nagaland",
+  "OR": "Odisha", "PB": "Punjab", "PY": "Puducherry", "RJ": "Rajasthan", "SK": "Sikkim",
+  "TG": "Telangana", "TN": "Tamil Nadu", "TR": "Tripura", "UP": "Uttar Pradesh", "UT": "Uttarakhand",
+  "WB": "West Bengal"
+};
+
 const ExecutiveDashboard = () => {
   const [searchParams] = useSearchParams();
   const [summary, setSummary] = useState(null);
@@ -976,18 +988,6 @@ const ExecutiveDashboard = () => {
       </Dialog>
     </div>
   );
-};
-
-// State names mapping (should match backend)
-const STATE_NAMES = {
-  "AN": "Andaman and Nicobar Islands", "AP": "Andhra Pradesh", "AR": "Arunachal Pradesh",
-  "AS": "Assam", "BR": "Bihar", "CG": "Chhattisgarh", "CH": "Chandigarh", "DD": "Daman and Diu",
-  "DL": "Delhi", "GA": "Goa", "GJ": "Gujarat", "HP": "Himachal Pradesh", "HR": "Haryana",
-  "JH": "Jharkhand", "JK": "Jammu and Kashmir", "KA": "Karnataka", "KL": "Kerala", "LA": "Ladakh",
-  "MH": "Maharashtra", "MN": "Manipur", "MP": "Madhya Pradesh", "MZ": "Mizoram", "NL": "Nagaland",
-  "OR": "Odisha", "PB": "Punjab", "PY": "Puducherry", "RJ": "Rajasthan", "SK": "Sikkim",
-  "TG": "Telangana", "TN": "Tamil Nadu", "TR": "Tripura", "UP": "Uttar Pradesh", "UT": "Uttarakhand",
-  "WB": "West Bengal"
 };
 
 export default ExecutiveDashboard;
