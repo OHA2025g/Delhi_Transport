@@ -4,6 +4,7 @@ Master Test Runner
 Runs all test suites and generates comprehensive report
 """
 
+from pathlib import Path
 import subprocess
 import sys
 import time
@@ -59,6 +60,8 @@ def main():
     print(f"{Colors.BLUE}Started: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}{Colors.RESET}")
     print(f"{Colors.BLUE}{'='*60}{Colors.RESET}\n")
     
+    tests_dir = Path(__file__).resolve().parent
+
     tests = [
         ("test_smoke.py", "Smoke/Sanity Testing"),
         ("test_unit_comprehensive.py", "Unit Testing"),
@@ -74,7 +77,8 @@ def main():
     
     results = {}
     for test_file, test_name in tests:
-        success = run_test(test_file, test_name)
+        test_path = str((tests_dir / test_file).resolve())
+        success = run_test(test_path, test_name)
         results[test_name] = success
         time.sleep(1)  # Brief pause between tests
     

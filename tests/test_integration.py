@@ -4,12 +4,13 @@ Integration Testing Script
 Tests frontend-backend integration, API calls, and end-to-end workflows
 """
 
+import os
 import requests
 import json
 import time
 
-BASE_URL = "http://localhost:8000/api"
-FRONTEND_URL = "http://localhost:3000"
+BASE_URL = os.getenv("BASE_URL", "http://localhost:8003/api")
+FRONTEND_URL = os.getenv("FRONTEND_URL", "http://localhost:3003")
 
 class Colors:
     GREEN = '\033[92m'

@@ -4,12 +4,13 @@ Performance Testing (Load/Stress Testing)
 Measures how the service behaves under expected and peak traffic
 """
 
+import os
 import requests
 import time
 import statistics
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
-BASE_URL = "http://localhost:8000/api"
+BASE_URL = os.getenv("BASE_URL", "http://localhost:8003/api")
 
 class Colors:
     GREEN = '\033[92m'

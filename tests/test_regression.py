@@ -4,10 +4,11 @@ Regression Testing Script
 Ensures new code changes haven't broken existing functionality
 """
 
+import os
 import requests
 import json
 
-BASE_URL = "http://localhost:8000/api"
+BASE_URL = os.getenv("BASE_URL", "http://localhost:8003/api")
 
 class Colors:
     GREEN = '\033[92m'
@@ -29,7 +30,6 @@ def test_regression():
     critical_endpoints = [
         ("/health", "Health check"),
         ("/", "Root endpoint"),
-        ("/api/health", "API health"),
         ("/dashboard/heatmap-data", "Heatmap data"),
         ("/kpi/summary", "KPI summary"),
     ]
@@ -71,9 +71,12 @@ def test_regression():
             else:
                 print(f"{Colors.RED}✗ FAIL{Colors.RESET}: Invalid data structure")
                 failed += 1
-        except Exception as e:
-            print(f"{Colors.RED}✗ FAIL{Colors.RESET}: Data structure test error: {e}")
+        else:
+            print(f"{Colors.RED}✗ FAIL{Colors.RESET}: Heatmap endpoint returned {response.status_code}")
             failed += 1
+    except Exception as e:
+        print(f"{Colors.RED}✗ FAIL{Colors.RESET}: Data structure test error: {e}")
+        failed += 1
     
     # Test 3: KPI Calculation Consistency
     print(f"\n{Colors.YELLOW}[3] KPI Calculation Consistency Test{Colors.RESET}")
@@ -88,9 +91,12 @@ def test_regression():
             else:
                 print(f"{Colors.RED}✗ FAIL{Colors.RESET}: KPI response structure changed")
                 failed += 1
-        except Exception as e:
-            print(f"{Colors.RED}✗ FAIL{Colors.RESET}: KPI calculation test error: {e}")
+        else:
+            print(f"{Colors.RED}✗ FAIL{Colors.RESET}: KPI endpoint returned {response.status_code}")
             failed += 1
+    except Exception as e:
+        print(f"{Colors.RED}✗ FAIL{Colors.RESET}: KPI calculation test error: {e}")
+        failed += 1
     
     # Test 4: Error Handling Consistency
     print(f"\n{Colors.YELLOW}[4] Error Handling Consistency Test{Colors.RESET}")

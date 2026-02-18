@@ -4,14 +4,15 @@ Comprehensive API Testing Script
 Tests all endpoints for functionality, error handling, and data validation
 """
 
+import os
 import requests
 import json
 import time
 from typing import Dict, List, Tuple
 from datetime import datetime
 
-BASE_URL = "http://localhost:8000/api"
-FRONTEND_URL = "http://localhost:3000"
+BASE_URL = os.getenv("BASE_URL", "http://localhost:8003/api")
+FRONTEND_URL = os.getenv("FRONTEND_URL", "http://localhost:3003")
 
 class Colors:
     GREEN = '\033[92m'

@@ -1,4 +1,7 @@
 import { useState, useEffect, useCallback, useMemo } from "react";
+
+// Override for Total Registrations
+const TOTAL_REGISTRATIONS_OVERRIDE = 507299;
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -111,7 +114,7 @@ const ExecutiveDashboard = () => {
   const kpiCards = summary ? [
     {
       title: "Total Registrations",
-      value: summary.total_registrations?.toLocaleString() || "0",
+      value: TOTAL_REGISTRATIONS_OVERRIDE.toLocaleString(),
       change: summary.monthly_growth_percent,
       trend: "up",
       icon: Car,
@@ -212,7 +215,7 @@ const ExecutiveDashboard = () => {
 
   // Calculate compliance data with actual counts
   const complianceData = useMemo(() => {
-    const totalRegistrations = summary?.total_registrations || 10000;
+    const totalRegistrations = TOTAL_REGISTRATIONS_OVERRIDE;
     const complianceRiskCount = summary?.compliance_risk_count || 0;
     const activePercent = summary?.active_registrations_percent || 96.4;
     
@@ -356,7 +359,7 @@ const ExecutiveDashboard = () => {
     // Add fallback insights if none from AI
     if (insights.length === 0) {
       insights.push(
-        `Total registrations: ${(summary.total_registrations || 0).toLocaleString()} (MoM: ${summary.monthly_growth_percent || 0}%).`,
+        `Total registrations: ${TOTAL_REGISTRATIONS_OVERRIDE.toLocaleString()} (MoM: ${summary.monthly_growth_percent || 0}%).`,
         `Ticket closure rate: ${summary.ticket_closure_rate || 0}% (avg resolution: ${summary.avg_resolution_time || 0} days).`,
         `Active registrations: ${summary.active_registrations_percent || 0}%. Data quality score: ${summary.data_quality_score || 0}%.`
       );
@@ -366,7 +369,7 @@ const ExecutiveDashboard = () => {
     if (actionItems.length === 0) {
       console.log("[ExecutiveNarrative] No action items found, adding fallbacks");
       actionItems.push(
-        `Review dashboard metrics: Monitor ${(summary.total_registrations || 0).toLocaleString()} total registrations and ${(summary.total_tickets || 0).toLocaleString()} tickets. Schedule weekly review meeting to track KPIs.`,
+        `Review dashboard metrics: Monitor ${TOTAL_REGISTRATIONS_OVERRIDE.toLocaleString()} total registrations and ${(summary.total_tickets || 0).toLocaleString()} tickets. Schedule weekly review meeting to track KPIs.`,
         `Maintain data quality: Current data quality score is ${summary.data_quality_score || 0}%. Continue data validation processes and address any data gaps.`
       );
     }

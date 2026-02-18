@@ -4,10 +4,11 @@ Validation/Boundary Testing Script
 Tests edge cases, limits, invalid inputs, and boundary conditions
 """
 
+import os
 import requests
 import json
 
-BASE_URL = "http://localhost:8000/api"
+BASE_URL = os.getenv("BASE_URL", "http://localhost:8003/api")
 
 class Colors:
     GREEN = '\033[92m'

@@ -147,8 +147,26 @@ def _stddev_pop(values: List[float]) -> float:
 
 def _get_field_value(record: Dict[str, Any], *field_names: str) -> Optional[float]:
     """Try multiple field name variations to get a value"""
+    if not record:
+        return None
+
+    # Build a normalized map of keys to original keys for tolerant lookups
+    # (handles common Excel/header issues like trailing spaces).
+    normalized_key_map: Dict[str, str] = {}
+    for k in record.keys():
+        if isinstance(k, str):
+            normalized_key_map[k.strip()] = k
+
     for field_name in field_names:
+        # 1) Direct lookup
         value = record.get(field_name)
+
+        # 2) Normalized lookup (strip spaces)
+        if value is None and isinstance(field_name, str):
+            original_key = normalized_key_map.get(field_name.strip())
+            if original_key is not None:
+                value = record.get(original_key)
+
         if value is not None:
             result = _as_float(value)
             if result is not None:

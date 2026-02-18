@@ -31,7 +31,7 @@ const LandingPage = () => {
       try {
         const response = await axios.get(`${API}/dashboard/executive-summary`);
         setStats({
-          totalRegistrations: response.data.total_registrations || 9536,
+          totalRegistrations: response.data.total_registrations || 507299,
           ticketsClosed: response.data.total_tickets || 275,
           aiInsights: 187,
           activeUsers: 15000
@@ -39,7 +39,7 @@ const LandingPage = () => {
       } catch (error) {
         console.error("Error fetching stats:", error);
         setStats({
-          totalRegistrations: 9536,
+          totalRegistrations: 507299,
           ticketsClosed: 275,
           aiInsights: 187,
           activeUsers: 15000

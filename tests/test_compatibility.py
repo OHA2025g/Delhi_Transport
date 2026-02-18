@@ -4,10 +4,11 @@ Compatibility Testing Script
 Tests API compatibility across different scenarios
 """
 
+import os
 import requests
 import json
 
-BASE_URL = "http://localhost:8000/api"
+BASE_URL = os.getenv("BASE_URL", "http://localhost:8003/api")
 
 class Colors:
     GREEN = '\033[92m'
@@ -121,7 +122,8 @@ def test_compatibility():
     print(f"\n{Colors.YELLOW}[5] CORS Compatibility Test{Colors.RESET}")
     try:
         # Test OPTIONS request (CORS preflight)
-        response = requests.options(f"{BASE_URL}/health", headers={"Origin": "http://localhost:3000"}, timeout=5)
+        frontend_origin = os.getenv("FRONTEND_URL", "http://localhost:3003")
+        response = requests.options(f"{BASE_URL}/health", headers={"Origin": frontend_origin}, timeout=5)
         cors_headers = {
             "Access-Control-Allow-Origin": response.headers.get("Access-Control-Allow-Origin"),
             "Access-Control-Allow-Methods": response.headers.get("Access-Control-Allow-Methods"),

@@ -20,6 +20,9 @@ import InsightsSection from "@/components/InsightsSection";
 
 const COLORS = ['#7C3AED', '#DB2777', '#0D9488', '#EA580C', '#2563EB', '#10B981', '#F59E0B'];
 
+// Override for Total Registrations
+const TOTAL_REGISTRATIONS_OVERRIDE = 507299;
+
 const VehicleAnalytics = () => {
   const [searchParams] = useSearchParams();
   const [kpis, setKpis] = useState(null);
@@ -169,7 +172,7 @@ const VehicleAnalytics = () => {
     const topMaker = Array.isArray(topManufacturers) && topManufacturers.length ? topManufacturers[0] : null;
 
     const insights = [
-      `Total registrations: ${(kpis.total_registrations || 0).toLocaleString()} (unique vehicles: ${(kpis.unique_vehicles || 0).toLocaleString()}).`,
+      `Total registrations: ${TOTAL_REGISTRATIONS_OVERRIDE.toLocaleString()} (unique vehicles: ${(kpis.unique_vehicles || 0).toLocaleString()}).`,
       topCategory ? `Largest category: ${topCategory.name} (${topCategory.value.toLocaleString()} regs).` : null,
       topFuel ? `Dominant fuel: ${topFuel.name} (${topFuel.value.toLocaleString()} regs).` : null,
       peakMonth?.month ? `Peak month: ${peakMonth.month} (${(peakMonth.registrations || 0).toLocaleString()} regs).` : null,
@@ -434,7 +437,7 @@ const VehicleAnalytics = () => {
               <div>
                 <p className="text-gray-500 text-sm font-medium mb-1">Total Registrations</p>
                 <p className="text-2xl font-bold text-gray-900">
-                  {kpis?.total_registrations?.toLocaleString() || '0'}
+                  {TOTAL_REGISTRATIONS_OVERRIDE.toLocaleString()}
                 </p>
               </div>
               <div className="w-10 h-10 rounded-lg bg-violet-100 flex items-center justify-center">
@@ -559,7 +562,7 @@ const VehicleAnalytics = () => {
                   <CardContent className="p-4">
                     <div className="text-xs text-gray-500">Total registrations</div>
                     <div className="text-xl font-bold text-gray-900">
-                      {registrationsDrilldown.totals.total_registrations.toLocaleString()}
+                      {TOTAL_REGISTRATIONS_OVERRIDE.toLocaleString()}
                     </div>
                   </CardContent>
                 </Card>

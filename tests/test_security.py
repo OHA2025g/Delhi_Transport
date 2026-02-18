@@ -4,10 +4,11 @@ Security Testing Script
 Tests authentication, authorization, CORS, input validation, SQL injection prevention
 """
 
+import os
 import requests
 import json
 
-BASE_URL = "http://localhost:8000/api"
+BASE_URL = os.getenv("BASE_URL", "http://localhost:8003/api")
 
 class Colors:
     GREEN = '\033[92m'
@@ -28,7 +29,8 @@ def test_security():
     # Test 1: CORS Headers
     print(f"{Colors.YELLOW}[1] CORS Headers Test{Colors.RESET}")
     try:
-        response = requests.options(f"{BASE_URL}/health", headers={"Origin": "http://localhost:3000"})
+        frontend_origin = os.getenv("FRONTEND_URL", "http://localhost:3003")
+        response = requests.options(f"{BASE_URL}/health", headers={"Origin": frontend_origin})
         cors_headers = {
             "Access-Control-Allow-Origin": response.headers.get("Access-Control-Allow-Origin"),
             "Access-Control-Allow-Methods": response.headers.get("Access-Control-Allow-Methods"),

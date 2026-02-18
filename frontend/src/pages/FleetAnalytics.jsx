@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -44,6 +44,7 @@ const FleetAnalytics = () => {
   const [drillDownLoading, setDrillDownLoading] = useState(false);
   const [drillDownTitle, setDrillDownTitle] = useState("");
   const [drillDownDescription, setDrillDownDescription] = useState("");
+  const [drillDownType, setDrillDownType] = useState(null);
   const [drillDownInsights, setDrillDownInsights] = useState(null);
   const [drillDownError, setDrillDownError] = useState(null);
 
@@ -133,6 +134,7 @@ const FleetAnalytics = () => {
     setDrillDownOpen(true);
     setDrillDownTitle(title);
     setDrillDownDescription(description);
+    setDrillDownType(type);
     setDrillDownLoading(true);
     setDrillDownData(null);
     setDrillDownError(null);
@@ -177,6 +179,57 @@ const FleetAnalytics = () => {
       setDrillDownLoading(false);
     }
   }, [selectedMonth, searchParams, fleetKPIData]);
+
+  const aggregatedTrendData = useMemo(() => {
+    const trend = drillDownData?.trend_data;
+    if (!Array.isArray(trend) || trend.length === 0) return [];
+
+    // API returns per-state rows per month; aggregate to month totals for charts.
+    const byMonth = new Map();
+    for (const row of trend) {
+      const month = row?.month || row?.Month;
+      if (!month) continue;
+      const prev = byMonth.get(month) || {
+        month,
+        vehicles_owned: 0,
+        tax_due_count: 0,
+        insurance_due_count: 0,
+        pucc_due_count: 0,
+        fitness_due_count: 0,
+        drivers_count: 0,
+      };
+      prev.vehicles_owned += Number(row?.vehicles_owned || row?.["Vehicle Owned"] || 0);
+      prev.tax_due_count += Number(row?.tax_due_count || row?.["Tax Due - Count"] || 0);
+      prev.insurance_due_count += Number(row?.insurance_due_count || row?.["Insurance Due - Count"] || 0);
+      prev.pucc_due_count += Number(row?.pucc_due_count || row?.["PUCC Due - Count"] || 0);
+      prev.fitness_due_count += Number(row?.fitness_due_count || row?.["Fitness Due - Count"] || 0);
+      prev.drivers_count += Number(row?.drivers_count || row?.["Driver Count"] || 0);
+      byMonth.set(month, prev);
+    }
+
+    return Array.from(byMonth.values()).sort((a, b) => String(a.month).localeCompare(String(b.month)));
+  }, [drillDownData]);
+
+  const trendSeries = useMemo(() => {
+    // Pick series based on drilldown type/title; default to vehicles_owned when unsure.
+    if (!drillDownType) return [{ key: "vehicles_owned", name: "Vehicles", color: "#F97316" }];
+
+    if (drillDownType === "fleet_compliance") {
+      return [
+        { key: "vehicles_owned", name: "Vehicles", color: "#F97316" },
+        { key: "tax_due_count", name: "Tax Due", color: "#3B82F6" },
+        { key: "insurance_due_count", name: "Insurance Due", color: "#10B981" },
+        { key: "pucc_due_count", name: "PUCC Due", color: "#F59E0B" },
+        { key: "fitness_due_count", name: "Fitness Due", color: "#8B5CF6" },
+      ];
+    }
+
+    if (drillDownType === "fleet_vehicles") {
+      return [{ key: "vehicles_owned", name: "Vehicles", color: "#F97316" }];
+    }
+
+    return [{ key: "vehicles_owned", name: "Vehicles", color: "#F97316" }];
+  }, [drillDownType]);
 
   const KPICard = ({ title, value, unit = "", icon: Icon, status, description, drillDownType, drillDownParams = {}, trendData, maxValue, showProgress = false }) => {
     const statusInfo = status ? getKPIStatus(value) : null;
@@ -591,7 +644,7 @@ const FleetAnalytics = () => {
               )}
 
               {/* Trend Chart */}
-              {drillDownData.trend_data && drillDownData.trend_data.length > 0 && (
+              {aggregatedTrendData.length > 0 && (
                 <Card className="bg-gray-800 border-gray-700">
                   <CardHeader>
                     <CardTitle className="text-white">Trend Analysis</CardTitle>
@@ -599,12 +652,14 @@ const FleetAnalytics = () => {
                   <CardContent>
                     <div className="h-80">
                       <ResponsiveContainer width="100%" height="100%">
-                        <AreaChart data={drillDownData.trend_data}>
+                        <AreaChart data={aggregatedTrendData}>
                           <defs>
-                            <linearGradient id="colorValue" x1="0" y1="0" x2="0" y2="1">
-                              <stop offset="5%" stopColor="#3B82F6" stopOpacity={0.3}/>
-                              <stop offset="95%" stopColor="#3B82F6" stopOpacity={0}/>
-                            </linearGradient>
+                            {trendSeries.map((s) => (
+                              <linearGradient key={s.key} id={`color-${s.key}`} x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="5%" stopColor={s.color} stopOpacity={0.3} />
+                                <stop offset="95%" stopColor={s.color} stopOpacity={0} />
+                              </linearGradient>
+                            ))}
                           </defs>
                           <CartesianGrid strokeDasharray="3 3" stroke="#4B5563" />
                           <XAxis dataKey="month" stroke="#9CA3AF" />
@@ -615,9 +670,17 @@ const FleetAnalytics = () => {
                             itemStyle={{ color: '#F3F4F6' }}
                           />
                           <Legend wrapperStyle={{ color: '#F3F4F6' }} />
-                          {drillDownData.trend_data[0]?.value !== undefined && (
-                            <Area type="monotone" dataKey="value" stroke="#3B82F6" fill="url(#colorValue)" name="Value" />
-                          )}
+                          {trendSeries.map((s) => (
+                            <Area
+                              key={s.key}
+                              type="monotone"
+                              dataKey={s.key}
+                              stroke={s.color}
+                              fill={`url(#color-${s.key})`}
+                              name={s.name}
+                              strokeWidth={2}
+                            />
+                          ))}
                         </AreaChart>
                       </ResponsiveContainer>
                     </div>

@@ -4,10 +4,11 @@ Smoke/Sanity Testing
 Quick, shallow tests to ensure the service is stable enough for deeper testing
 """
 
+import os
 import requests
 
-BASE_URL = "http://localhost:8000/api"
-FRONTEND_URL = "http://localhost:3000"
+BASE_URL = os.getenv("BASE_URL", "http://localhost:8003/api")
+FRONTEND_URL = os.getenv("FRONTEND_URL", "http://localhost:3003")
 
 class Colors:
     GREEN = '\033[92m'
