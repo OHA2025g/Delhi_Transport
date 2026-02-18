@@ -29,7 +29,7 @@ fi
 # Step 2: Rebuild backend Docker image
 echo ""
 echo -e "${YELLOW}Step 2: Rebuilding backend Docker image...${NC}"
-docker compose build --no-cache backend
+docker compose -f docker-compose.production.yml build --no-cache backend
 if [ $? -eq 0 ]; then
     echo -e "${GREEN}✅ Backend image rebuilt successfully${NC}"
 else
@@ -40,7 +40,7 @@ fi
 # Step 3: Rebuild frontend Docker image (optional, but recommended)
 echo ""
 echo -e "${YELLOW}Step 3: Rebuilding frontend Docker image...${NC}"
-docker compose build --no-cache frontend
+docker compose -f docker-compose.production.yml build --no-cache frontend
 if [ $? -eq 0 ]; then
     echo -e "${GREEN}✅ Frontend image rebuilt successfully${NC}"
 else
@@ -51,7 +51,7 @@ fi
 # Step 4: Restart containers
 echo ""
 echo -e "${YELLOW}Step 4: Restarting containers...${NC}"
-docker compose up -d
+docker compose -f docker-compose.production.yml up -d
 if [ $? -eq 0 ]; then
     echo -e "${GREEN}✅ Containers restarted successfully${NC}"
 else
