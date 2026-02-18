@@ -943,7 +943,9 @@ STATE_NAMES = {
     "KA": "Karnataka",
     "KL": "Kerala",
     "LA": "Ladakh",
+    "LD": "Ladakh",  # Alternative code for Ladakh
     "MH": "Maharashtra",
+    "ML": "Meghalaya",
     "MN": "Manipur",
     "MP": "Madhya Pradesh",
     "MZ": "Mizoram",
@@ -957,6 +959,7 @@ STATE_NAMES = {
     "TN": "Tamil Nadu",
     "TR": "Tripura",
     "UP": "Uttar Pradesh",
+    "UK": "Uttarakhand",  # Alternative code for Uttarakhand
     "UT": "Uttarakhand",
     "WB": "West Bengal"
 }
@@ -992,7 +995,18 @@ async def get_geo_states():
         }
         for code in state_codes
     ]
-    return {"states": states}
+    
+    # Remove duplicates by state name (e.g., LA and LD both map to Ladakh)
+    # Keep the first occurrence of each state name
+    seen_names = set()
+    unique_states = []
+    for state in states:
+        state_name = state["name"]
+        if state_name not in seen_names:
+            seen_names.add(state_name)
+            unique_states.append(state)
+    
+    return {"states": unique_states}
 
 @dashboard_router.get("/geo/districts")
 async def get_geo_districts(state_cd: Optional[str] = None):
@@ -1003,11 +1017,30 @@ async def get_geo_districts(state_cd: Optional[str] = None):
         {"$match": match} if match else {"$match": {}},
         {"$group": {
             "_id": "$c_district",
-            "names": {"$addToSet": "$p_district"}
+            "names": {"$addToSet": "$p_district"},
+            "sample_doc": {"$first": "$$ROOT"}
         }},
         {"$match": {"_id": {"$ne": None}}}
     ]
     results = await db.vahan_data.aggregate(pipeline).to_list(1000)
+    
+    def _is_valid_name(name_str):
+        """Check if a string looks like a valid district name (not just a number or code)"""
+        if not name_str or not isinstance(name_str, str):
+            return False
+        name_str = name_str.strip()
+        if not name_str or name_str.lower() == "nan":
+            return False
+        # If it's purely numeric or looks like a code, it's not a valid name
+        if name_str.replace(".", "").replace("-", "").isdigit():
+            return False
+        # If it starts with "District" followed by a number, it's not a valid name
+        if name_str.lower().startswith("district") and len(name_str.split()) == 2:
+            return False
+        # If it's too short (less than 3 chars), likely not a name
+        if len(name_str) < 3:
+            return False
+        return True
     
     districts = []
     for r in results:
@@ -1025,13 +1058,25 @@ async def get_geo_districts(state_cd: Optional[str] = None):
         except Exception:
             pass
         
-        # Get name from p_district or use code as name
-        names = [n for n in r.get("names", []) if n and str(n).strip() and str(n).lower() != "nan" and str(n) != code_str]
-        name = names[0] if names else f"District {code_str}"
+        # Get name from p_district - filter for valid names
+        all_names = r.get("names", [])
+        valid_names = [n for n in all_names if _is_valid_name(str(n)) and str(n).strip() != code_str]
+        
+        # If no valid name found, try to use the code itself (if it's not purely numeric)
+        if valid_names:
+            # Use the most common valid name (first one in the set)
+            name = str(valid_names[0]).strip()
+        else:
+            # Fallback: if code looks like it might be a name, use it; otherwise use a generic format
+            if not code_str.replace(".", "").isdigit() and len(code_str) > 2:
+                name = code_str
+            else:
+                # For numeric codes, just use the code without "District" prefix
+                name = code_str
         
         districts.append({
             "code": code_str,
-            "name": str(name).strip()
+            "name": name
         })
     
     # Remove duplicates and sort by name

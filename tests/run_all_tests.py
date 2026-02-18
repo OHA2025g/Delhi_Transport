@@ -73,6 +73,9 @@ def main():
         ("test_performance.py", "Performance/Load Testing"),
         ("test_regression.py", "Regression Testing"),
         ("test_compatibility.py", "Compatibility Testing"),
+        ("test_frontend_integration.py", "Frontend Integration Testing"),
+        ("test_accessibility.py", "Accessibility Testing"),
+        ("test_usability.py", "Usability Testing"),
     ]
     
     results = {}

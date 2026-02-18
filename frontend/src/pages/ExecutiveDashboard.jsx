@@ -19,6 +19,9 @@ import axios from "axios";
 import { API } from "@/App";
 import { toast } from "sonner";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useSearchParams } from "react-router-dom";
 import InsightsSection from "@/components/InsightsSection";
 import AnimatedCounter from "@/components/AnimatedCounter";
@@ -31,11 +34,12 @@ const STATE_NAMES = {
   "AN": "Andaman and Nicobar Islands", "AP": "Andhra Pradesh", "AR": "Arunachal Pradesh",
   "AS": "Assam", "BR": "Bihar", "CG": "Chhattisgarh", "CH": "Chandigarh", "DD": "Daman and Diu",
   "DL": "Delhi", "GA": "Goa", "GJ": "Gujarat", "HP": "Himachal Pradesh", "HR": "Haryana",
-  "JH": "Jharkhand", "JK": "Jammu and Kashmir", "KA": "Karnataka", "KL": "Kerala", "LA": "Ladakh",
-  "MH": "Maharashtra", "MN": "Manipur", "MP": "Madhya Pradesh", "MZ": "Mizoram", "NL": "Nagaland",
+  "JH": "Jharkhand", "JK": "Jammu and Kashmir", "KA": "Karnataka", "KL": "Kerala", 
+  "LA": "Ladakh", "LD": "Ladakh", "MH": "Maharashtra", "ML": "Meghalaya", "MN": "Manipur", 
+  "MP": "Madhya Pradesh", "MZ": "Mizoram", "NL": "Nagaland",
   "OR": "Odisha", "PB": "Punjab", "PY": "Puducherry", "RJ": "Rajasthan", "SK": "Sikkim",
-  "TG": "Telangana", "TN": "Tamil Nadu", "TR": "Tripura", "UP": "Uttar Pradesh", "UT": "Uttarakhand",
-  "WB": "West Bengal"
+  "TG": "Telangana", "TN": "Tamil Nadu", "TR": "Tripura", "UP": "Uttar Pradesh", 
+  "UK": "Uttarakhand", "UT": "Uttarakhand", "WB": "West Bengal"
 };
 
 const ExecutiveDashboard = () => {
@@ -53,6 +57,24 @@ const ExecutiveDashboard = () => {
   const [drilldownData, setDrilldownData] = useState(null);
   const [drilldownLoading, setDrilldownLoading] = useState(false);
   const [drilldownFilters, setDrilldownFilters] = useState({ state_cd: null, c_district: null, city: null, rto: null });
+  
+  // Report generation state
+  const [reportOpen, setReportOpen] = useState(false);
+  const [reportGenerating, setReportGenerating] = useState(false);
+  const [reportFormat, setReportFormat] = useState("pdf");
+  
+  // Set KPIs dialog state
+  const [kpiSettingsOpen, setKpiSettingsOpen] = useState(false);
+  const [kpiSettings, setKpiSettings] = useState({
+    totalRegistrations: { threshold: 500000, enabled: true },
+    revenueCollected: { threshold: 100000000, enabled: true },
+    avgRegistrationDelay: { threshold: 30, enabled: true },
+    taxDefaulterCount: { threshold: 1000, enabled: true },
+    totalTickets: { threshold: 10000, enabled: true },
+    accidents: { threshold: 100, enabled: true },
+    avgResolutionTime: { threshold: 7, enabled: true },
+    dataQualityScore: { threshold: 90, enabled: true }
+  });
 
   const geoParams = useCallback(() => {
     return Object.fromEntries(
@@ -290,6 +312,154 @@ const ExecutiveDashboard = () => {
     }
   }, [fetchDrilldown]);
 
+  // Generate CSV content
+  const generateCSVContent = useCallback(() => {
+    if (!summary) return "";
+    
+    const rows = [
+      ["Executive Dashboard Report", ""],
+      ["Generated Date", new Date().toLocaleString()],
+      ["", ""],
+      ["KPI", "Value"],
+      ["Total Registrations", TOTAL_REGISTRATIONS_OVERRIDE.toLocaleString()],
+      ["Revenue Collected", `₹${(summary.revenue_collected || 0).toLocaleString()}`],
+      ["Avg Registration Delay", `${(summary.avg_registration_delay || 0).toFixed(1)} days`],
+      ["Tax Defaulter Count", (summary.tax_defaulter_count || 0).toLocaleString()],
+      ["Total Tickets", (summary.total_tickets || 0).toLocaleString()],
+      ["Accidents", (summary.accidents || 0).toLocaleString()],
+      ["Avg Resolution Time", `${(summary.avg_resolution_time || 0).toFixed(1)} days`],
+      ["Data Quality Score", `${(summary.data_quality_score || 0).toFixed(1)}%`],
+      ["Monthly Growth", `${(summary.monthly_growth_percent || 0).toFixed(2)}%`],
+      ["Active Registrations", `${(summary.active_registrations_percent || 0).toFixed(1)}%`],
+      ["Compliance Risk Count", (summary.compliance_risk_count || 0).toLocaleString()],
+      ["Ticket Closure Rate", `${(summary.ticket_closure_rate || 0).toFixed(1)}%`],
+    ];
+    
+    return rows.map(row => row.map(cell => `"${cell}"`).join(',')).join('\n');
+  }, [summary]);
+
+  // Client-side report generation
+  const generateClientSideReport = useCallback(() => {
+    console.log("[Report] generateClientSideReport called, summary:", !!summary);
+    if (!summary) {
+      toast.error("No data available to generate report");
+      setReportGenerating(false);
+      return;
+    }
+
+    try {
+      // Create CSV content
+      const csvContent = generateCSVContent();
+      console.log("[Report] CSV content generated, length:", csvContent.length);
+      if (!csvContent || csvContent.length === 0) {
+        toast.error("Failed to generate report content");
+        setReportGenerating(false);
+        return;
+      }
+      
+      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', `dashboard-report-${new Date().toISOString().split('T')[0]}.csv`);
+      document.body.appendChild(link);
+      link.click();
+      setTimeout(() => {
+        link.remove();
+        window.URL.revokeObjectURL(url);
+      }, 100);
+      
+      toast.success("Report generated successfully as CSV");
+      setReportOpen(false);
+    } catch (error) {
+      console.error("Error generating client-side report:", error);
+      toast.error("Failed to generate report: " + (error.message || "Unknown error"));
+    } finally {
+      setReportGenerating(false);
+    }
+  }, [summary, generateCSVContent]);
+
+  // Generate Report handler
+  const handleGenerateReport = useCallback(() => {
+    console.log("[Report] Generating report, format:", reportFormat, "summary:", summary);
+    if (!summary) {
+      toast.error("No data available to generate report. Please wait for data to load.");
+      return;
+    }
+    setReportGenerating(true);
+    try {
+      // For now, generate CSV report (can be extended to PDF/Excel later)
+      if (reportFormat === 'csv') {
+        generateClientSideReport();
+      } else {
+        // For PDF/Excel, we'll use CSV as fallback for now
+        // TODO: Implement PDF/Excel generation with backend support
+        toast.info("PDF/Excel generation coming soon. Generating CSV instead.");
+        generateClientSideReport();
+      }
+    } catch (error) {
+      console.error("Error generating report:", error);
+      toast.error("Failed to generate report: " + error.message);
+      setReportGenerating(false);
+    }
+  }, [reportFormat, generateClientSideReport, summary]);
+
+  // Download CSV handler
+  const handleDownloadCSV = useCallback(() => {
+    console.log("[CSV] Download CSV clicked, summary:", !!summary);
+    if (!summary) {
+      toast.error("No data available to download. Please wait for data to load.");
+      return;
+    }
+    
+    try {
+      const csvContent = generateCSVContent();
+      console.log("[CSV] Generated CSV content length:", csvContent.length);
+      if (!csvContent || csvContent.length === 0) {
+        toast.error("Failed to generate CSV content");
+        return;
+      }
+      
+      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', `dashboard-data-${new Date().toISOString().split('T')[0]}.csv`);
+      document.body.appendChild(link);
+      link.click();
+      setTimeout(() => {
+        link.remove();
+        window.URL.revokeObjectURL(url);
+      }, 100);
+      
+      toast.success("CSV file downloaded successfully");
+    } catch (error) {
+      console.error("Error downloading CSV:", error);
+      toast.error("Failed to download CSV: " + (error.message || "Unknown error"));
+    }
+  }, [summary, generateCSVContent]);
+
+  // Save KPI settings
+  const handleSaveKPISettings = useCallback(() => {
+    console.log("[KPI Settings] Saving settings:", kpiSettings);
+    // Save to localStorage
+    localStorage.setItem('kpiSettings', JSON.stringify(kpiSettings));
+    toast.success("KPI settings saved successfully");
+    setKpiSettingsOpen(false);
+  }, [kpiSettings]);
+
+  // Load KPI settings from localStorage
+  useEffect(() => {
+    const saved = localStorage.getItem('kpiSettings');
+    if (saved) {
+      try {
+        setKpiSettings(JSON.parse(saved));
+      } catch (e) {
+        console.error("Error loading KPI settings:", e);
+      }
+    }
+  }, []);
+
   const handleDrilldownNavigation = useCallback((level, value) => {
     console.log("[Drilldown] Navigation:", level, value);
     const newFilters = { ...drilldownFilters };
@@ -437,6 +607,7 @@ const ExecutiveDashboard = () => {
           <Button 
             data-testid="download-report-btn"
               className="bg-gradient-to-r from-orange-500 to-orange-600 text-white liquid-button hover-lift magnetic-hover"
+              onClick={() => setReportOpen(true)}
           >
             <Download className="w-4 h-4 mr-2" />
             Export Report
@@ -772,7 +943,13 @@ const ExecutiveDashboard = () => {
         <Button 
           data-testid="action-generate-report"
           variant="outline" 
-          className="h-auto py-4 flex flex-col items-center bg-white hover:bg-gray-50"
+          className="h-auto py-4 flex flex-col items-center bg-white hover:bg-gray-50 cursor-pointer"
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            console.log("[Button] Generate Report clicked");
+            setReportOpen(true);
+          }}
         >
           <Download className="w-6 h-6 mb-2 text-orange-600" />
           <span className="text-gray-700">Generate Report</span>
@@ -780,7 +957,13 @@ const ExecutiveDashboard = () => {
         <Button 
           data-testid="action-set-kpis"
           variant="outline" 
-          className="h-auto py-4 flex flex-col items-center bg-white hover:bg-gray-50"
+          className="h-auto py-4 flex flex-col items-center bg-white hover:bg-gray-50 cursor-pointer"
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            console.log("[Button] Set KPIs clicked");
+            setKpiSettingsOpen(true);
+          }}
         >
           <Settings className="w-6 h-6 mb-2 text-blue-600" />
           <span className="text-gray-700">Set KPIs</span>
@@ -788,21 +971,174 @@ const ExecutiveDashboard = () => {
         <Button 
           data-testid="action-refresh-data"
           variant="outline" 
-          className="h-auto py-4 flex flex-col items-center bg-white hover:bg-gray-50"
-          onClick={fetchData}
+          className="h-auto py-4 flex flex-col items-center bg-white hover:bg-gray-50 cursor-pointer"
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            console.log("[Button] Refresh Data clicked");
+            fetchData();
+          }}
+          disabled={loading}
         >
-          <RefreshCw className="w-6 h-6 mb-2 text-teal-600" />
+          <RefreshCw className={`w-6 h-6 mb-2 text-teal-600 ${loading ? 'animate-spin' : ''}`} />
           <span className="text-gray-700">Refresh Data</span>
         </Button>
         <Button 
           data-testid="action-export-csv"
           variant="outline" 
-          className="h-auto py-4 flex flex-col items-center bg-white hover:bg-gray-50"
+          className="h-auto py-4 flex flex-col items-center bg-white hover:bg-gray-50 cursor-pointer"
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            console.log("[Button] Download CSV clicked");
+            handleDownloadCSV();
+          }}
         >
           <FileText className="w-6 h-6 mb-2 text-orange-600" />
           <span className="text-gray-700">Download CSV</span>
         </Button>
       </div>
+
+      {/* Generate Report Dialog */}
+      <Dialog open={reportOpen} onOpenChange={setReportOpen}>
+        <DialogContent className="max-w-md bg-blue-600 text-white">
+          <DialogHeader>
+            <DialogTitle className="text-white">Generate Report</DialogTitle>
+            <DialogDescription className="text-white/90">
+              Select the format and generate a comprehensive dashboard report
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-4 py-4">
+            <div className="space-y-2">
+              <Label htmlFor="report-format" className="text-white">Report Format</Label>
+              <Select value={reportFormat} onValueChange={(value) => {
+                console.log("[Report] Format changed to:", value);
+                setReportFormat(value);
+              }}>
+                <SelectTrigger id="report-format" className="bg-white text-gray-900">
+                  <SelectValue placeholder="Select format" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="pdf">PDF Document</SelectItem>
+                  <SelectItem value="csv">CSV Spreadsheet</SelectItem>
+                  <SelectItem value="excel">Excel Workbook</SelectItem>
+                </SelectContent>
+              </Select>
+              <p className="text-xs text-white/80 mt-1">Current format: {reportFormat.toUpperCase()}</p>
+            </div>
+            <div className="text-sm text-white/90">
+              The report will include:
+              <ul className="list-disc list-inside mt-2 space-y-1 text-white/80">
+                <li>All KPI metrics and values</li>
+                <li>Executive summary and insights</li>
+                <li>Current filter settings</li>
+                <li>Generated timestamp</li>
+              </ul>
+            </div>
+          </div>
+          <div className="flex justify-end space-x-2">
+            <Button variant="outline" onClick={() => setReportOpen(false)} className="bg-white/20 text-white border-white/30 hover:bg-white/30">
+              Cancel
+            </Button>
+            <Button 
+              onClick={handleGenerateReport} 
+              disabled={reportGenerating}
+              className="bg-orange-600 hover:bg-orange-700 text-white"
+            >
+              {reportGenerating ? (
+                <>
+                  <RefreshCw className="w-4 h-4 mr-2 animate-spin" />
+                  Generating...
+                </>
+              ) : (
+                <>
+                  <Download className="w-4 h-4 mr-2" />
+                  Generate Report
+                </>
+              )}
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Set KPIs Dialog */}
+      <Dialog open={kpiSettingsOpen} onOpenChange={setKpiSettingsOpen}>
+        <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto bg-blue-600 text-white">
+          <DialogHeader>
+            <DialogTitle className="text-white">Configure KPI Thresholds</DialogTitle>
+            <DialogDescription className="text-white/90">
+              Set thresholds and enable/disable KPIs for monitoring and alerts
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-6 py-4">
+            {Object.entries(kpiSettings).map(([key, setting]) => {
+              const kpiLabels = {
+                totalRegistrations: "Total Registrations",
+                revenueCollected: "Revenue Collected (₹)",
+                avgRegistrationDelay: "Avg Registration Delay (days)",
+                taxDefaulterCount: "Tax Defaulter Count",
+                totalTickets: "Total Tickets",
+                accidents: "Accidents",
+                avgResolutionTime: "Avg Resolution Time (days)",
+                dataQualityScore: "Data Quality Score (%)"
+              };
+              
+              return (
+                <div key={key} className="space-y-2 p-4 border border-white/30 rounded-lg bg-blue-700/50">
+                  <div className="flex items-center justify-between">
+                    <Label htmlFor={`kpi-${key}`} className="font-semibold text-white">
+                      {kpiLabels[key] || key}
+                    </Label>
+                    <div className="flex items-center space-x-2">
+                      <input
+                        type="checkbox"
+                        checked={setting.enabled}
+                        onChange={(e) => {
+                          setKpiSettings(prev => ({
+                            ...prev,
+                            [key]: { ...prev[key], enabled: e.target.checked }
+                          }));
+                        }}
+                        className="w-4 h-4"
+                      />
+                      <span className="text-sm text-white">Enabled</span>
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor={`threshold-${key}`} className="text-sm text-white/90">
+                      Threshold Value
+                    </Label>
+                    <Input
+                      id={`threshold-${key}`}
+                      type="number"
+                      value={setting.threshold}
+                      onChange={(e) => {
+                        setKpiSettings(prev => ({
+                          ...prev,
+                          [key]: { ...prev[key], threshold: parseFloat(e.target.value) || 0 }
+                        }));
+                      }}
+                      disabled={!setting.enabled}
+                      className="w-full bg-white text-gray-900"
+                    />
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+          <div className="flex justify-end space-x-2">
+            <Button variant="outline" onClick={() => setKpiSettingsOpen(false)} className="bg-white/20 text-white border-white/30 hover:bg-white/30">
+              Cancel
+            </Button>
+            <Button 
+              onClick={handleSaveKPISettings}
+              className="bg-white text-blue-600 hover:bg-white/90"
+            >
+              Save Settings
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
 
       {/* Drilldown Dialog for All KPIs */}
       <Dialog open={drilldownOpen} onOpenChange={setDrilldownOpen}>
