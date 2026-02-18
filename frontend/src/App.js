@@ -27,25 +27,28 @@ import GeoFilterBar from "@/components/GeoFilterBar";
 
 // Backend URL configuration - using relative paths in production (proxied through nginx)
 // In production, always use relative path /api which nginx proxies to backend
-// In development, use explicit backend URL
+// In development, use relative path /api which is proxied by setupProxy.js
 const _isDev = process.env.NODE_ENV !== "production";
 
 // Determine API URL based on environment
 // In production, always use relative path (nginx proxy handles it)
-// In development, use environment variable or default to localhost
+// In development, use relative path (setupProxy.js handles it) unless explicitly overridden
 let API_URL;
 if (_isDev) {
-  // Development: use explicit backend URL from env or default to localhost
+  // Development: check for explicit API URL override, otherwise use proxy
   const _rawBackendUrl = (process.env.REACT_APP_BACKEND_URL || process.env.REACT_APP_API_URL || "").trim();
   const _hasExplicitBackend = !!_rawBackendUrl && !["undefined", "null"].includes(_rawBackendUrl.toLowerCase());
   
   if (process.env.REACT_APP_API_URL) {
+    // If REACT_APP_API_URL is set, use it directly
     API_URL = process.env.REACT_APP_API_URL.trim().replace(/\/+$/, "");
   } else if (_hasExplicitBackend) {
+    // If REACT_APP_BACKEND_URL is set, append /api
     const backendUrl = _rawBackendUrl.replace(/\/+$/, "");
     API_URL = `${backendUrl}/api`;
   } else {
-    API_URL = "http://localhost:8003/api";
+    // Default: use relative path which goes through setupProxy.js
+    API_URL = "/api";
   }
 } else {
   // Production: always use relative path (nginx proxy)

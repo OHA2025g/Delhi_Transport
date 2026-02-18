@@ -191,7 +191,7 @@ const FleetAnalytics = () => {
       >
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <CardTitle className="text-sm font-medium text-gray-900 dark:text-white">{title}</CardTitle>
-          {Icon && <Icon className="h-4 w-4 text-gray-600 dark:text-gray-300 floating-particle" />}
+          {Icon && <Icon className="h-4 w-4 text-gray-600 dark:text-gray-300" />}
         </CardHeader>
         <CardContent>
           <div className="text-2xl font-bold text-gray-900 dark:text-white">
@@ -342,7 +342,7 @@ const FleetAnalytics = () => {
       <div className="flex items-center justify-center h-screen animated-gradient">
         <div className="text-center space-y-4">
           <div className="relative">
-            <RefreshCw className="h-12 w-12 animate-spin mx-auto text-primary glow-effect" />
+            <RefreshCw className="h-12 w-12 animate-spin mx-auto text-primary" />
             <div className="absolute inset-0 flex items-center justify-center">
               <div className="w-16 h-16 border-4 border-orange-200 border-t-orange-500 rounded-full animate-spin"></div>
             </div>

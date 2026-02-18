@@ -163,7 +163,7 @@ const LandingPage = () => {
             <Badge 
                 className="mb-6 px-4 py-2 glass-enhanced text-white border-white/20 badge-interactive scale-in"
             >
-                <Zap className="w-4 h-4 mr-2 inline text-orange-400 glow-effect" />
+                <Zap className="w-4 h-4 mr-2 inline text-orange-400" />
               Powered by Advanced AI & Machine Learning
             </Badge>
             
@@ -212,28 +212,28 @@ const LandingPage = () => {
           <ScrollReveal delay={200}>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
               <div className="stat-card glass-enhanced p-4 text-center hover-lift card-3d" data-testid="stat-registrations">
-                <TrendingUp className="w-6 h-6 text-orange-400 mx-auto mb-2 floating-particle" />
+                <TrendingUp className="w-6 h-6 text-orange-400 mx-auto mb-2" />
               <div className="text-2xl md:text-3xl font-bold text-white">
                   {loading ? "..." : <AnimatedCounter value={stats.totalRegistrations} />}
               </div>
               <div className="text-white/60 text-sm">Vehicle Registrations</div>
             </div>
               <div className="stat-card glass-enhanced p-4 text-center hover-lift card-3d" data-testid="stat-tickets">
-                <Users className="w-6 h-6 text-blue-400 mx-auto mb-2 floating-particle" />
+                <Users className="w-6 h-6 text-blue-400 mx-auto mb-2" />
               <div className="text-2xl md:text-3xl font-bold text-white">
                   {loading ? "..." : <AnimatedCounter value={stats.ticketsClosed} />}
               </div>
               <div className="text-white/60 text-sm">Tickets Managed</div>
             </div>
               <div className="stat-card glass-enhanced p-4 text-center hover-lift card-3d" data-testid="stat-insights">
-                <Database className="w-6 h-6 text-teal-400 mx-auto mb-2 floating-particle" />
+                <Database className="w-6 h-6 text-teal-400 mx-auto mb-2" />
               <div className="text-2xl md:text-3xl font-bold text-white">
                   {loading ? "..." : <AnimatedCounter value={2200000} suffix="M" />}
               </div>
               <div className="text-white/60 text-sm">Data Points Analyzed</div>
             </div>
               <div className="stat-card glass-enhanced p-4 text-center hover-lift card-3d" data-testid="stat-users">
-                <Zap className="w-6 h-6 text-amber-400 mx-auto mb-2 floating-particle" />
+                <Zap className="w-6 h-6 text-amber-400 mx-auto mb-2" />
               <div className="text-2xl md:text-3xl font-bold text-white">
                   {loading ? "..." : <AnimatedCounter value={37} suffix="%" decimals={0} />}
               </div>
@@ -288,7 +288,7 @@ const LandingPage = () => {
               >
                   <Card className="module-card h-full cursor-pointer group kpi-card-enhanced magnetic-hover ripple-effect">
                   <CardContent className="p-6">
-                      <div className={`w-12 h-12 rounded-lg bg-gradient-to-br ${module.color} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform glow-effect`}>
+                      <div className={`w-12 h-12 rounded-lg bg-gradient-to-br ${module.color} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}>
                       <module.icon className="w-6 h-6 text-white" />
                     </div>
                       <h3 className="font-semibold text-gray-900 mb-2 group-hover:text-orange-600 transition-colors gradient-text-animated">
@@ -318,7 +318,7 @@ const LandingPage = () => {
             <CardContent className="p-8 md:p-12 text-center relative">
               <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'0.05\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')]"></div>
               <div className="relative z-10">
-                  <Shield className="w-12 h-12 text-white/80 mx-auto mb-4 floating-particle glow-effect" />
+                  <Shield className="w-12 h-12 text-white/80 mx-auto mb-4" />
                   <h3 className="text-2xl md:text-3xl font-bold text-white mb-4 gradient-text-animated">
                   Ready to Transform Citizen Services?
                 </h3>

@@ -428,7 +428,7 @@ const ExecutiveDashboard = () => {
               className="border-white/20 text-white hover:bg-white/10 liquid-button magnetic-hover"
             disabled={loading}
           >
-            <RefreshCw className={`w-4 h-4 mr-2 ${loading ? 'animate-spin' : ''}`} />
+            <RefreshCw className="w-4 h-4 mr-2" />
             Refresh
           </Button>
           <Button 
@@ -473,7 +473,7 @@ const ExecutiveDashboard = () => {
                       )}
                     </p>
                 </div>
-                  <div className={`w-10 h-10 rounded-lg flex items-center justify-center floating-particle glow-effect ${
+                  <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${
                   kpi.color === 'primary' ? 'bg-orange-100' :
                   kpi.color === 'secondary' ? 'bg-blue-100' :
                   kpi.color === 'accent' ? 'bg-teal-100' :
@@ -491,9 +491,9 @@ const ExecutiveDashboard = () => {
               </div>
               <div className="flex items-center mt-3">
                 {kpi.trend === 'up' ? (
-                    <TrendingUp className="w-4 h-4 text-emerald-500 mr-1 floating-particle" />
+                    <TrendingUp className="w-4 h-4 text-emerald-500 mr-1" />
                 ) : (
-                    <TrendingDown className="w-4 h-4 text-emerald-500 mr-1 floating-particle" />
+                    <TrendingDown className="w-4 h-4 text-emerald-500 mr-1" />
                 )}
                 <span className="text-emerald-600 text-sm font-medium">
                   {kpi.change > 0 ? '+' : ''}{kpi.change}%
@@ -816,7 +816,7 @@ const ExecutiveDashboard = () => {
 
               {drilldownLoading ? (
             <div className="flex items-center justify-center py-20">
-              <RefreshCw className="w-8 h-8 animate-spin text-orange-500 mr-3" />
+              <RefreshCw className="w-8 h-8 text-orange-500 mr-3" />
               <span style={{ color: '#111827' }}>Loading drilldown data...</span>
             </div>
           ) : drilldownData ? (
@@ -860,144 +860,310 @@ const ExecutiveDashboard = () => {
                 )}
               </div>
 
-              {/* Data Tables */}
+              {/* State Level - Bar Chart */}
               {drilldownData.hierarchy_level === 'states' && drilldownData.data.states.length > 0 && (
                 <div>
-                  <h3 style={{ color: '#111827' }} className="text-lg font-semibold mb-4">States</h3>
-                  <div className="overflow-x-auto">
-                    <table className="w-full border-collapse" style={{ color: '#111827' }}>
-                      <thead>
-                        <tr style={{ backgroundColor: '#F3F4F6' }}>
-                          <th style={{ color: '#111827' }} className="border p-2 text-left font-semibold">State</th>
-                          <th style={{ color: '#111827' }} className="border p-2 text-right font-semibold">Value</th>
-                          <th style={{ color: '#111827' }} className="border p-2 text-right font-semibold">Count</th>
-                          <th style={{ color: '#111827' }} className="border p-2 text-center font-semibold">Action</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {drilldownData.data.states.map((item, idx) => (
-                          <tr key={idx} style={{ backgroundColor: '#ffffff' }} className="hover:bg-gray-50">
-                            <td style={{ color: '#111827', backgroundColor: '#ffffff' }} className="border p-2">{item.name}</td>
-                            <td style={{ color: '#111827', backgroundColor: '#ffffff' }} className="border p-2 text-right">{typeof item.value === 'number' ? item.value.toLocaleString() : item.value}</td>
-                            <td style={{ color: '#111827', backgroundColor: '#ffffff' }} className="border p-2 text-right">{item.count?.toLocaleString() || '-'}</td>
-                            <td style={{ backgroundColor: '#ffffff' }} className="border p-2 text-center">
-                              <Button
-                                size="sm"
-                                variant="outline"
-                                onClick={() => handleDrilldownNavigation('state', item.code || item.name)}
-                                style={{ color: '#111827', borderColor: '#D1D5DB', backgroundColor: '#ffffff' }}
-                                className="hover:bg-gray-100"
-                              >
-                                Drill Down
-                              </Button>
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
+                  <h3 style={{ color: '#111827' }} className="text-lg font-semibold mb-4">States Distribution</h3>
+                  
+                  {/* Summary Cards */}
+                  <div className="grid grid-cols-3 gap-4 mb-4">
+                    <Card>
+                      <CardContent className="pt-4">
+                        <div className="text-sm text-gray-600">Total States</div>
+                        <div className="text-2xl font-bold text-orange-600">{drilldownData.data.states.length}</div>
+                      </CardContent>
+                    </Card>
+                    <Card>
+                      <CardContent className="pt-4">
+                        <div className="text-sm text-gray-600">Total Value</div>
+                        <div className="text-2xl font-bold text-blue-600">
+                          {drilldownData.data.states.reduce((sum, item) => sum + (typeof item.value === 'number' ? item.value : 0), 0).toLocaleString()}
+                        </div>
+                      </CardContent>
+                    </Card>
+                    <Card>
+                      <CardContent className="pt-4">
+                        <div className="text-sm text-gray-600">Total Count</div>
+                        <div className="text-2xl font-bold text-teal-600">
+                          {drilldownData.data.states.reduce((sum, item) => sum + (item.count || 0), 0).toLocaleString()}
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </div>
+
+                  <Card className="mb-4">
+                    <CardContent className="pt-6">
+                      <ResponsiveContainer width="100%" height={400}>
+                        <BarChart data={drilldownData.data.states.map(item => ({
+                          name: item.name || item.code || 'Unknown',
+                          value: typeof item.value === 'number' ? item.value : 0,
+                          count: item.count || 0,
+                          code: item.code || item.name
+                        }))}>
+                          <CartesianGrid strokeDasharray="3 3" />
+                          <XAxis 
+                            dataKey="name" 
+                            angle={-45}
+                            textAnchor="end"
+                            height={100}
+                            style={{ fontSize: '12px' }}
+                          />
+                          <YAxis />
+                          <Tooltip 
+                            formatter={(value, name) => {
+                              if (name === 'value') return [typeof value === 'number' ? value.toLocaleString() : value, drilldownKpi?.title || 'Value'];
+                              return [value, 'Count'];
+                            }}
+                          />
+                          <Bar 
+                            dataKey="value" 
+                            fill="#F97316"
+                            onClick={(data) => {
+                              if (data && data.code) {
+                                handleDrilldownNavigation('state', data.code);
+                              }
+                            }}
+                            style={{ cursor: 'pointer' }}
+                          >
+                            {drilldownData.data.states.map((entry, index) => (
+                              <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                            ))}
+                          </Bar>
+                        </BarChart>
+                      </ResponsiveContainer>
+                    </CardContent>
+                  </Card>
+                  <div className="text-sm text-gray-600 mb-4">
+                    Click on any bar to drill down into districts
                   </div>
                 </div>
               )}
 
+              {/* District Level - Bar Chart */}
               {drilldownData.hierarchy_level === 'districts' && drilldownData.data.districts.length > 0 && (
                 <div>
-                  <h3 style={{ color: '#111827' }} className="text-lg font-semibold mb-4">Districts</h3>
-                  <div className="overflow-x-auto">
-                    <table className="w-full border-collapse" style={{ color: '#111827' }}>
-                      <thead>
-                        <tr style={{ backgroundColor: '#F3F4F6' }}>
-                          <th style={{ color: '#111827' }} className="border p-2 text-left font-semibold">District</th>
-                          <th style={{ color: '#111827' }} className="border p-2 text-right font-semibold">Value</th>
-                          <th style={{ color: '#111827' }} className="border p-2 text-right font-semibold">Count</th>
-                          <th style={{ color: '#111827' }} className="border p-2 text-center font-semibold">Action</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {drilldownData.data.districts.map((item, idx) => (
-                          <tr key={idx} style={{ backgroundColor: '#ffffff' }} className="hover:bg-gray-50">
-                            <td style={{ color: '#111827', backgroundColor: '#ffffff' }} className="border p-2">{item.name}</td>
-                            <td style={{ color: '#111827', backgroundColor: '#ffffff' }} className="border p-2 text-right">{typeof item.value === 'number' ? item.value.toLocaleString() : item.value}</td>
-                            <td style={{ color: '#111827', backgroundColor: '#ffffff' }} className="border p-2 text-right">{item.count?.toLocaleString() || '-'}</td>
-                            <td style={{ backgroundColor: '#ffffff' }} className="border p-2 text-center">
-                              <Button
-                                size="sm"
-                                variant="outline"
-                                onClick={() => handleDrilldownNavigation('district', item.code || item.name)}
-                                style={{ color: '#111827', borderColor: '#D1D5DB', backgroundColor: '#ffffff' }}
-                                className="hover:bg-gray-100"
-                              >
-                                Drill Down
-                              </Button>
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
+                  <h3 style={{ color: '#111827' }} className="text-lg font-semibold mb-4">
+                    Districts in {STATE_NAMES[drilldownFilters.state_cd] || drilldownFilters.state_cd}
+                  </h3>
+                  
+                  {/* Summary Cards */}
+                  <div className="grid grid-cols-3 gap-4 mb-4">
+                    <Card>
+                      <CardContent className="pt-4">
+                        <div className="text-sm text-gray-600">Total Districts</div>
+                        <div className="text-2xl font-bold text-orange-600">{drilldownData.data.districts.length}</div>
+                      </CardContent>
+                    </Card>
+                    <Card>
+                      <CardContent className="pt-4">
+                        <div className="text-sm text-gray-600">Total Value</div>
+                        <div className="text-2xl font-bold text-blue-600">
+                          {drilldownData.data.districts.reduce((sum, item) => sum + (typeof item.value === 'number' ? item.value : 0), 0).toLocaleString()}
+                        </div>
+                      </CardContent>
+                    </Card>
+                    <Card>
+                      <CardContent className="pt-4">
+                        <div className="text-sm text-gray-600">Total Count</div>
+                        <div className="text-2xl font-bold text-teal-600">
+                          {drilldownData.data.districts.reduce((sum, item) => sum + (item.count || 0), 0).toLocaleString()}
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </div>
+
+                  <Card className="mb-4">
+                    <CardContent className="pt-6">
+                      <ResponsiveContainer width="100%" height={400}>
+                        <BarChart data={drilldownData.data.districts.map(item => ({
+                          name: item.name || item.code || 'Unknown',
+                          value: typeof item.value === 'number' ? item.value : 0,
+                          count: item.count || 0,
+                          code: item.code || item.name
+                        }))}>
+                          <CartesianGrid strokeDasharray="3 3" />
+                          <XAxis 
+                            dataKey="name" 
+                            angle={-45}
+                            textAnchor="end"
+                            height={100}
+                            style={{ fontSize: '12px' }}
+                          />
+                          <YAxis />
+                          <Tooltip 
+                            formatter={(value, name) => {
+                              if (name === 'value') return [typeof value === 'number' ? value.toLocaleString() : value, drilldownKpi?.title || 'Value'];
+                              return [value, 'Count'];
+                            }}
+                          />
+                          <Bar 
+                            dataKey="value" 
+                            fill="#3B82F6"
+                            onClick={(data) => {
+                              if (data && data.code) {
+                                handleDrilldownNavigation('district', data.code);
+                              }
+                            }}
+                            style={{ cursor: 'pointer' }}
+                          >
+                            {drilldownData.data.districts.map((entry, index) => (
+                              <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                            ))}
+                          </Bar>
+                        </BarChart>
+                      </ResponsiveContainer>
+                    </CardContent>
+                  </Card>
+                  <div className="text-sm text-gray-600 mb-4">
+                    Click on any bar to drill down into cities
                   </div>
                 </div>
               )}
 
+              {/* City Level - Bar Chart */}
               {drilldownData.hierarchy_level === 'cities' && drilldownData.data.cities.length > 0 && (
                 <div>
-                  <h3 style={{ color: '#111827' }} className="text-lg font-semibold mb-4">Cities</h3>
-                  <div className="overflow-x-auto">
-                    <table className="w-full border-collapse" style={{ color: '#111827' }}>
-                      <thead>
-                        <tr style={{ backgroundColor: '#F3F4F6' }}>
-                          <th style={{ color: '#111827' }} className="border p-2 text-left font-semibold">City</th>
-                          <th style={{ color: '#111827' }} className="border p-2 text-right font-semibold">Value</th>
-                          <th style={{ color: '#111827' }} className="border p-2 text-right font-semibold">Count</th>
-                          <th style={{ color: '#111827' }} className="border p-2 text-center font-semibold">Action</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {drilldownData.data.cities.map((item, idx) => (
-                          <tr key={idx} style={{ backgroundColor: '#ffffff' }} className="hover:bg-gray-50">
-                            <td style={{ color: '#111827', backgroundColor: '#ffffff' }} className="border p-2">{item.name}</td>
-                            <td style={{ color: '#111827', backgroundColor: '#ffffff' }} className="border p-2 text-right">{typeof item.value === 'number' ? item.value.toLocaleString() : item.value}</td>
-                            <td style={{ color: '#111827', backgroundColor: '#ffffff' }} className="border p-2 text-right">{item.count?.toLocaleString() || '-'}</td>
-                            <td style={{ backgroundColor: '#ffffff' }} className="border p-2 text-center">
-                              <Button
-                                size="sm"
-                                variant="outline"
-                                onClick={() => handleDrilldownNavigation('city', item.code || item.name)}
-                                style={{ color: '#111827', borderColor: '#D1D5DB', backgroundColor: '#ffffff' }}
-                                className="hover:bg-gray-100"
-                              >
-                                Drill Down
-                              </Button>
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
+                  <h3 style={{ color: '#111827' }} className="text-lg font-semibold mb-4">
+                    Cities in {drilldownFilters.c_district}
+                  </h3>
+                  
+                  {/* Summary Cards */}
+                  <div className="grid grid-cols-3 gap-4 mb-4">
+                    <Card>
+                      <CardContent className="pt-4">
+                        <div className="text-sm text-gray-600">Total Cities</div>
+                        <div className="text-2xl font-bold text-orange-600">{drilldownData.data.cities.length}</div>
+                      </CardContent>
+                    </Card>
+                    <Card>
+                      <CardContent className="pt-4">
+                        <div className="text-sm text-gray-600">Total Value</div>
+                        <div className="text-2xl font-bold text-blue-600">
+                          {drilldownData.data.cities.reduce((sum, item) => sum + (typeof item.value === 'number' ? item.value : 0), 0).toLocaleString()}
+                        </div>
+                      </CardContent>
+                    </Card>
+                    <Card>
+                      <CardContent className="pt-4">
+                        <div className="text-sm text-gray-600">Total Count</div>
+                        <div className="text-2xl font-bold text-teal-600">
+                          {drilldownData.data.cities.reduce((sum, item) => sum + (item.count || 0), 0).toLocaleString()}
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </div>
+
+                  <Card className="mb-4">
+                    <CardContent className="pt-6">
+                      <ResponsiveContainer width="100%" height={400}>
+                        <BarChart data={drilldownData.data.cities.map(item => ({
+                          name: item.name || item.code || 'Unknown',
+                          value: typeof item.value === 'number' ? item.value : 0,
+                          count: item.count || 0,
+                          code: item.code || item.name
+                        }))}>
+                          <CartesianGrid strokeDasharray="3 3" />
+                          <XAxis 
+                            dataKey="name" 
+                            angle={-45}
+                            textAnchor="end"
+                            height={100}
+                            style={{ fontSize: '12px' }}
+                          />
+                          <YAxis />
+                          <Tooltip 
+                            formatter={(value, name) => {
+                              if (name === 'value') return [typeof value === 'number' ? value.toLocaleString() : value, drilldownKpi?.title || 'Value'];
+                              return [value, 'Count'];
+                            }}
+                          />
+                          <Bar 
+                            dataKey="value" 
+                            fill="#0D9488"
+                            onClick={(data) => {
+                              if (data && data.code) {
+                                handleDrilldownNavigation('city', data.code);
+                              }
+                            }}
+                            style={{ cursor: 'pointer' }}
+                          >
+                            {drilldownData.data.cities.map((entry, index) => (
+                              <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                            ))}
+                          </Bar>
+                        </BarChart>
+                      </ResponsiveContainer>
+                    </CardContent>
+                  </Card>
+                  <div className="text-sm text-gray-600 mb-4">
+                    Click on any bar to drill down into RTOs
                   </div>
                 </div>
               )}
 
+              {/* RTO Level - Table (Final Level) */}
               {drilldownData.hierarchy_level === 'rtos' && drilldownData.data.rtos.length > 0 && (
                 <div>
-                  <h3 style={{ color: '#111827' }} className="text-lg font-semibold mb-4">RTOs</h3>
+                  <h3 style={{ color: '#111827' }} className="text-lg font-semibold mb-4">
+                    RTOs in {drilldownFilters.city}
+                  </h3>
+                  
+                  {/* Summary Cards */}
+                  <div className="grid grid-cols-3 gap-4 mb-4">
+                    <Card>
+                      <CardContent className="pt-4">
+                        <div className="text-sm text-gray-600">Total RTOs</div>
+                        <div className="text-2xl font-bold text-orange-600">{drilldownData.data.rtos.length}</div>
+                      </CardContent>
+                    </Card>
+                    <Card>
+                      <CardContent className="pt-4">
+                        <div className="text-sm text-gray-600">Total Value</div>
+                        <div className="text-2xl font-bold text-blue-600">
+                          {drilldownData.data.rtos.reduce((sum, item) => sum + (typeof item.value === 'number' ? item.value : 0), 0).toLocaleString()}
+                        </div>
+                      </CardContent>
+                    </Card>
+                    <Card>
+                      <CardContent className="pt-4">
+                        <div className="text-sm text-gray-600">Total Count</div>
+                        <div className="text-2xl font-bold text-teal-600">
+                          {drilldownData.data.rtos.reduce((sum, item) => sum + (item.count || 0), 0).toLocaleString()}
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </div>
+
+                  <Card>
+                    <CardContent className="pt-6">
                   <div className="overflow-x-auto">
                     <table className="w-full border-collapse" style={{ color: '#111827' }}>
                       <thead>
                         <tr style={{ backgroundColor: '#F3F4F6' }}>
-                          <th style={{ color: '#111827' }} className="border p-2 text-left font-semibold">RTO</th>
-                          <th style={{ color: '#111827' }} className="border p-2 text-right font-semibold">Value</th>
-                          <th style={{ color: '#111827' }} className="border p-2 text-right font-semibold">Count</th>
+                              <th style={{ color: '#111827' }} className="border p-3 text-left font-semibold">RTO</th>
+                              <th style={{ color: '#111827' }} className="border p-3 text-right font-semibold">Value</th>
+                              <th style={{ color: '#111827' }} className="border p-3 text-right font-semibold">Count</th>
+                              <th style={{ color: '#111827' }} className="border p-3 text-right font-semibold">Percentage</th>
                         </tr>
                       </thead>
                       <tbody>
-                        {drilldownData.data.rtos.map((item, idx) => (
+                            {drilldownData.data.rtos.map((item, idx) => {
+                              const totalValue = drilldownData.data.rtos.reduce((sum, i) => sum + (typeof i.value === 'number' ? i.value : 0), 0);
+                              const percentage = totalValue > 0 ? ((typeof item.value === 'number' ? item.value : 0) / totalValue * 100).toFixed(2) : 0;
+                              return (
                           <tr key={idx} style={{ backgroundColor: '#ffffff' }} className="hover:bg-gray-50">
-                            <td style={{ color: '#111827', backgroundColor: '#ffffff' }} className="border p-2">{item.name}</td>
-                            <td style={{ color: '#111827', backgroundColor: '#ffffff' }} className="border p-2 text-right">{typeof item.value === 'number' ? item.value.toLocaleString() : item.value}</td>
-                            <td style={{ color: '#111827', backgroundColor: '#ffffff' }} className="border p-2 text-right">{item.count?.toLocaleString() || '-'}</td>
+                                  <td style={{ color: '#111827', backgroundColor: '#ffffff' }} className="border p-3 font-medium">{item.name || item.code || 'Unknown'}</td>
+                                  <td style={{ color: '#111827', backgroundColor: '#ffffff' }} className="border p-3 text-right">{typeof item.value === 'number' ? item.value.toLocaleString() : item.value}</td>
+                                  <td style={{ color: '#111827', backgroundColor: '#ffffff' }} className="border p-3 text-right">{item.count?.toLocaleString() || '-'}</td>
+                                  <td style={{ color: '#111827', backgroundColor: '#ffffff' }} className="border p-3 text-right">{percentage}%</td>
                           </tr>
-                        ))}
+                              );
+                            })}
                       </tbody>
                     </table>
                   </div>
+                    </CardContent>
+                  </Card>
                 </div>
               )}
 

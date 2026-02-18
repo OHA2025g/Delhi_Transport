@@ -43,8 +43,8 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
         {/* Header */}
         <div className="p-4 border-b border-gray-100">
           <div className="flex items-center justify-between">
-            <Link to="/" className="flex items-center space-x-3 magnetic-hover">
-              <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-orange-500 to-orange-600 flex items-center justify-center flex-shrink-0 glow-effect hover-lift">
+            <Link to="/" className="flex items-center space-x-3">
+              <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-orange-500 to-orange-600 flex items-center justify-center flex-shrink-0">
                 <span className="text-white font-bold text-lg">C</span>
               </div>
               {isOpen && (
@@ -58,7 +58,7 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
               variant="ghost"
               size="icon"
               onClick={() => setIsOpen(!isOpen)}
-              className="text-gray-400 hover:text-gray-600 liquid-button magnetic-hover"
+              className="text-gray-400 hover:text-gray-600 liquid-button"
               data-testid="toggle-sidebar"
             >
               {isOpen ? <ChevronLeft className="w-5 h-5" /> : <ChevronRight className="w-5 h-5" />}
@@ -78,13 +78,13 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
                   data-testid={`nav-${item.label.toLowerCase().replace(/\s+/g, '-')}`}
                 >
                   <div
-                    className={`nav-item flex items-center space-x-3 px-3 py-2.5 rounded-lg transition-all magnetic-hover ripple-effect ${
+                    className={`nav-item flex items-center space-x-3 px-3 py-2.5 rounded-lg transition-all ${
                       isActive 
-                        ? 'active bg-gradient-to-r from-orange-50 to-blue-50 text-orange-700 glow-effect' 
+                        ? 'active bg-gradient-to-r from-orange-50 to-blue-50 text-orange-700' 
                         : 'text-gray-600 hover:bg-gray-50'
                     }`}
                   >
-                    <item.icon className={`w-5 h-5 flex-shrink-0 floating-particle ${isActive ? 'text-orange-600' : ''}`} />
+                    <item.icon className={`w-5 h-5 flex-shrink-0 ${isActive ? 'text-orange-600' : ''}`} />
                     {isOpen && (
                       <span className={`font-medium text-sm transition-all ${isActive ? 'text-orange-700 gradient-text-animated' : ''}`}>
                         {item.label}

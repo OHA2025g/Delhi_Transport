@@ -547,7 +547,7 @@ const RTOAnalysis = () => {
     return (
       <div className="min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-gray-900 p-6">
         <div className="flex items-center justify-center h-screen">
-          <RefreshCw className="w-8 h-8 animate-spin text-white" />
+          <RefreshCw className="w-8 h-8 text-white" />
           <span className="ml-3 text-white">Loading RTO Analysis...</span>
         </div>
       </div>
@@ -572,7 +572,7 @@ const RTOAnalysis = () => {
               className="border-white/20 text-white hover:bg-white/10"
               disabled={loading}
             >
-              <RefreshCw className={`w-4 h-4 mr-2 ${loading ? 'animate-spin' : ''}`} />
+              <RefreshCw className="w-4 h-4 mr-2" />
               Refresh
             </Button>
           </div>
@@ -853,7 +853,7 @@ const RTOAnalysis = () => {
           <TabsContent value="revenue" className="space-y-6">
             {loading ? (
               <div className="flex items-center justify-center py-20">
-                <RefreshCw className="w-8 h-8 animate-spin text-white mr-3" />
+                <RefreshCw className="w-8 h-8 text-white mr-3" />
                 <span className="text-white">Loading revenue data...</span>
               </div>
             ) : onlineRevenue ? (
@@ -964,7 +964,7 @@ const RTOAnalysis = () => {
           <TabsContent value="pendency" className="space-y-6">
             {loading ? (
               <div className="flex items-center justify-center py-20">
-                <RefreshCw className="w-8 h-8 animate-spin text-white mr-3" />
+                <RefreshCw className="w-8 h-8 text-white mr-3" />
                 <span className="text-white">Loading pendency data...</span>
               </div>
             ) : (
@@ -1068,7 +1068,7 @@ const RTOAnalysis = () => {
           <TabsContent value="enforcement" className="space-y-6">
             {loading ? (
               <div className="flex items-center justify-center py-20">
-                <RefreshCw className="w-8 h-8 animate-spin text-white mr-3" />
+                <RefreshCw className="w-8 h-8 text-white mr-3" />
                 <span className="text-white">Loading enforcement data...</span>
               </div>
             ) : challanPendency ? (
@@ -1171,7 +1171,7 @@ const RTOAnalysis = () => {
           <TabsContent value="drivers" className="space-y-6">
             {loading ? (
               <div className="flex items-center justify-center py-20">
-                <RefreshCw className="w-8 h-8 animate-spin text-white mr-3" />
+                <RefreshCw className="w-8 h-8 text-white mr-3" />
                 <span className="text-white">Loading KPI drivers data...</span>
               </div>
             ) : kpiDrivers && kpiDrivers.driver_ranking && Array.isArray(kpiDrivers.driver_ranking) && kpiDrivers.driver_ranking.length > 0 ? (
@@ -1233,7 +1233,7 @@ const RTOAnalysis = () => {
           <TabsContent value="rto-level" className="space-y-6">
             {loading ? (
               <div className="flex items-center justify-center py-20">
-                <RefreshCw className="w-8 h-8 animate-spin text-white mr-3" />
+                <RefreshCw className="w-8 h-8 text-white mr-3" />
                 <span className="text-white">Loading RTO Level KPIs...</span>
               </div>
             ) : (
@@ -1500,7 +1500,7 @@ const RTOAnalysis = () => {
           <TabsContent value="intelligence" className="space-y-6">
             {loading ? (
               <div className="flex items-center justify-center py-20">
-                <RefreshCw className="w-8 h-8 animate-spin text-white mr-3" />
+                <RefreshCw className="w-8 h-8 text-white mr-3" />
                 <span className="text-white">Loading RTO Performance Intelligence KPIs...</span>
               </div>
             ) : rtoPerformanceKPIs ? (
@@ -1606,7 +1606,7 @@ const RTOAnalysis = () => {
           </DialogHeader>
           {drillDownLoading && (
             <div className="py-10 text-center text-gray-300">
-              <RefreshCw className="h-8 w-8 animate-spin mx-auto mb-4 text-white" />
+              <RefreshCw className="h-8 w-8 mx-auto mb-4 text-white" />
               <span className="text-white">Loading drill-down data...</span>
             </div>
           )}
