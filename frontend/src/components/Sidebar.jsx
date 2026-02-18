@@ -10,7 +10,6 @@ import {
 const navItems = [
   { icon: Home, label: "Home", path: "/" },
   { icon: LayoutDashboard, label: "Executive Dashboard", path: "/dashboard" },
-  { icon: BarChart3, label: "KPI Dashboard", path: "/kpi-dashboard" },
   { icon: Brain, label: "Advanced KPIs", path: "/advanced-kpi-dashboard" },
   { icon: TrendingUp, label: "RTO Analysis", path: "/rto-analysis" },
   { icon: Car, label: "Vehicle Analytics", path: "/vehicle-analytics" },
